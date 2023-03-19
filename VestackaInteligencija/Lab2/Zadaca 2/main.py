@@ -592,5 +592,5 @@ if __name__ == '__main__':
                 illegal_positions_ball.append((i, j))
 
     football = Football(opponents, illegal_positions_ball, (man_pos, ball_pos), ((7, 2), (7, 3)))  # (man,ball)
-    ans = greedy_best_first_graph_search(football)
+    ans = astar_search(football)
     print(ans.solution())
