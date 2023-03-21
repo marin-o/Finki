@@ -454,6 +454,7 @@ class Snake(Problem):
     def __init__(self, initial, goal=None):
         super().__init__(initial, goal)
 
+
     def successor(self, state):
         direction = state[0]
         snake = list(state[1])
@@ -470,8 +471,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0,new_head)
-                direction = 'dolu'
-                successors['ProdolzhiPravo'] = (direction, tuple(snake), tuple(apples))
+                successors['ProdolzhiPravo'] = ('dolu', tuple(snake), tuple(apples))
             # svrti desno
             new_head = (snake[0][0]-1, snake[0][1])
             if new_head[0] >= 0 and new_head not in snake:
@@ -481,8 +481,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'levo'
-                successors['SvrtiDesno'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiDesno'] = ('levo', tuple(snake), tuple(apples))
             # svrti levo
             new_head = (snake[0][0]+1, snake[0][1])
             if new_head[0] < 10 and new_head not in snake:
@@ -492,8 +491,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'desno'
-                successors['SvrtiLevo'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiLevo'] = ('desno', tuple(snake), tuple(apples))
         if direction == 'gore':
             #Prodolzi pravo
             new_head = (snake[0][0], snake[0][1]+1)
@@ -504,8 +502,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'gore'
-                successors['ProdolzhiPravo'] = (direction, tuple(snake), tuple(apples))
+                successors['ProdolzhiPravo'] = ('gore', tuple(snake), tuple(apples))
             #svrti desno
             new_head = (snake[0][0]+1, snake[0][1])
             if new_head[0] < 10 and new_head not in snake:
@@ -515,8 +512,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'desno'
-                successors['SvrtiDesno'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiDesno'] = ('desno', tuple(snake), tuple(apples))
             #svrti levo
             new_head = (snake[0][0] - 1, snake[0][1])
             if new_head[0] >= 0 and new_head not in snake:
@@ -526,8 +522,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'levo'
-                successors['SvrtiLevo'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiLevo'] = ('levo', tuple(snake), tuple(apples))
         if direction == 'levo':
             #prodolzhi pravo
             new_head = (snake[0][0]-1, snake[0][1])
@@ -538,8 +533,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'levo'
-                successors['ProdolzhiPravo'] = (direction, tuple(snake), tuple(apples))
+                successors['ProdolzhiPravo'] = ('levo', tuple(snake), tuple(apples))
             #svrti desno
             new_head = (snake[0][0], snake[0][1]+1)
             if new_head[1]+1 < 10 and new_head not in snake:
@@ -549,8 +543,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'gore'
-                successors['SvrtiDesno'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiDesno'] = ('gore', tuple(snake), tuple(apples))
             #svrti levo
             new_head = (snake[0][0], snake[0][1] - 1)
             if new_head[1] - 1 > 0 and new_head not in snake:
@@ -560,8 +553,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'dolu'
-                successors['SvrtiLevo'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiLevo'] = ('dolu', tuple(snake), tuple(apples))
         if direction == 'desno':
             #prodolzhi pravo
             new_head = (snake[0][0]+1, snake[0][1])
@@ -572,8 +564,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'desno'
-                successors['ProdolzhiPravo'] = (direction, tuple(snake), tuple(apples))
+                successors['ProdolzhiPravo'] = ('desno', tuple(snake), tuple(apples))
             #svrti desno
             new_head = (snake[0][0], snake[0][1]-1)
             if new_head[1] >= 0 and new_head not in snake:
@@ -583,8 +574,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'dolu'
-                successors['SvrtiDesno'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiDesno'] = ('dolu', tuple(snake), tuple(apples))
             # svrti levo
             new_head = (snake[0][0], snake[0][1]+1)
             if new_head[1] < 10 and new_head not in snake:
@@ -594,8 +584,7 @@ class Snake(Problem):
                 else:
                     snake.remove(snake[-1])
                     snake.insert(0, new_head)
-                direction = 'gore'
-                successors['SvrtiLevo'] = (direction, tuple(snake), tuple(apples))
+                successors['SvrtiLevo'] = ('gore', tuple(snake), tuple(apples))
         return successors
 
     def actions(self, state):
@@ -605,16 +594,25 @@ class Snake(Problem):
         return self.successor(state)[action]
 
     def goal_test(self, state):
-        return super().goal_test(state)
+        lista = list(state[2])
+        return len(lista) == 0
 
     def h(self, node):
         state = node.state
-        return len(state[2])
+        snake_head = state[1][0]
+        apples = list(state[2])
+        manhattans = list()
+        for (a,b) in apples:
+            intermediate = abs(snake_head[0]-a) + abs(snake_head[1]-b)
+            manhattans.append(intermediate)
+        if len(manhattans) == 0:
+            return 0
+        return min(manhattans)
 
 
 if __name__ == "__main__":
     n = int(input())
     zeleni_jabolki = [tuple(map(int, input().split(','))) for _ in range(n)]
     s = Snake(('dolu', ((0, 7), (0, 8), (0, 9)), tuple(zeleni_jabolki)))
-    ans = greedy_best_first_graph_search(s)
-    print(ans)
+    ans = astar_search(s)
+    print(ans.solution())
