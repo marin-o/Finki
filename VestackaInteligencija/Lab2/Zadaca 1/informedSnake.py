@@ -603,7 +603,7 @@ class Snake(Problem):
         apples = list(state[2])
         manhattans = list()
         for (a, b) in apples:
-            intermediate = abs(snake_head[0]-a) + abs(snake_head[1]-b)
+            intermediate = abs(snake_head[0] - a) + abs(snake_head[1] - b)
             manhattans.append(intermediate)
         if len(manhattans) == 0:
             return 0
