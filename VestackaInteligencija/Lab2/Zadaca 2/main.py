@@ -563,15 +563,18 @@ class Football(Problem):
         return successors
 
     def h(self, node):
-
-        b_x, b_y = node.state[1]
+        m_x, m_y = node.state[0]
+        # b_x, b_y = node.state[1]
         g1_x, g1_y = self.goal[0]
         g2_x, g2_y = self.goal[1]
 
-        distance1 = abs(b_x-g1_x) + abs(b_y-g1_y)
-        distance2 = abs(b_x-g2_x) + abs(b_y-g2_y)
+        euclid1 = math.sqrt((g1_x-1-m_x)**2 + (g1_y-1-m_y)**2)
+        euclid2 = math.sqrt((g2_x-1-m_x)**2 + (g2_y-1-m_y)**2)
 
-        return min(distance1, distance2)
+        # distance1 = abs(b_x-g1_x) + abs(b_y-g1_y)
+        # distance2 = abs(b_x-g2_x) + abs(b_y-g2_y)
+
+        return min(euclid1, euclid2)
 
 
 if __name__ == '__main__':
