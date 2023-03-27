@@ -1,10 +1,11 @@
 import java.lang.Thread;
-public class CountThreads {
+import java.util.*;
+public class Main {
 
 
 public static void main(String[] args) throws InterruptedException {
-    Thread t1 = new Thread(new ThreadPair(new ArrayList<Character>(Arrays.asList('A','B','C','D','E','F','G','H','I','J'));
-    Thread t2 = new Thread(new ThreadPair(new ArrayList<Character>(Arrays.asList('1','2','3','4','5','6','7','8','9','10'));
+    Thread t1 = new Thread(new ThreadPair(new ArrayList<Character>(Arrays.asList('A','B','C','D','E','F','G','H','I','J'))));
+    Thread t2 = new Thread(new ThreadPair(new ArrayList<Character>(Arrays.asList('0','1','2','3','4','5','6','7','8','9'))));
     t1.start();
     t1.join();
     t2.start();
@@ -14,7 +15,7 @@ public static void main(String[] args) throws InterruptedException {
 }
 
 class ThreadPair implements Runnable{
-    ArrayList<Character> chars
+    ArrayList<Character> chars;
 
     public ThreadPair(ArrayList<Character> chars){
         this.chars=chars;
