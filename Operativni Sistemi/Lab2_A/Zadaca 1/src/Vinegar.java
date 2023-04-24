@@ -16,9 +16,10 @@ public class Vinegar {
 
     static Semaphore cHere = new Semaphore(0);
     static Semaphore oHere = new Semaphore(0);
-
+    static Semaphore hHere = new Semaphore(0);
     static Semaphore bond = new Semaphore(0);
     static Semaphore done = new Semaphore(0);
+    static Semaphore leave = new Semaphore(0);
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -79,32 +80,37 @@ public class Vinegar {
             System.out.println("C here.");
             cHere.release();
 
+            atomsLock.lock();
+            atoms++;
+            if(atoms == 2){
+                cHere.acquire(2);
+                oHere.acquire(2);
+                hHere.acquire(4);
+                bond.release(8);
+                atoms = 8;
+            }
+            atomsLock.unlock();
             // after all atoms are present, they should start with the bonding process together
             bond.acquire();
             System.out.println("Molecule bonding.");
 
             Thread.sleep(100);// this represent the bonding process
 
-            atomsLock.lock();
-            atoms++;
-            if(atoms == 8){
-                done.release(8);
-                atoms = 0;
-            }
-            atomsLock.unlock();
-
-            done.acquire();
             System.out.println("C done.");
 
+            done.release();
 
-            // only one atom should print the next line, representing that the molecule is created
             atomsLock.lock();
-            atoms++;
-            if(atoms == 8){
+            atoms--;
+            if(atoms == 0){
+                done.acquire(8);
+                leave.release(8);
+                // only one atom should print the next line, representing that the molecule is created
                 System.out.println("Molecule created.");
-                atoms = 0;
             }
             atomsLock.unlock();
+
+            leave.acquire();
 
             carbon.release();
 
@@ -128,40 +134,31 @@ public class Vinegar {
 
             // at most 4 atoms should print this in parallel
             hydrogen.acquire();
-            System.out.println("H here.");
 
-            atomsLock.lock();
-            atoms++;
-            if(atoms == 4){
-                cHere.acquire(2);
-                oHere.acquire(2);
-                bond.release(8);
-            }
-            atomsLock.unlock();
+            System.out.println("H here.");
+            hHere.release();
+
             // after all atoms are present, they should start with the bonding process together
             bond.acquire();
             System.out.println("Molecule bonding.");
 
             Thread.sleep(100);// this represent the bonding process
 
-            atomsLock.lock();
-            atoms++;
-            if(atoms == 8){
-                done.release(8);
-                atoms = 0;
-            }
-            atomsLock.unlock();
-            done.acquire();
-            System.out.println("H done.");
 
-            // only one atom should print the next line, representing that the molecule is created
+            done.release();
+            System.out.println("H done.");
+            // only one atom should print the next line, representing that the molecule is created\
             atomsLock.lock();
-            atoms++;
-            if(atoms == 8){
+            atoms--;
+            if(atoms == 0){
+                done.acquire(8);
+                leave.release(8);
+                // only one atom should print the next line, representing that the molecule is created
                 System.out.println("Molecule created.");
-                atoms = 0;
             }
             atomsLock.unlock();
+
+            leave.acquire();
 
             hydrogen.release();
 
@@ -183,8 +180,9 @@ public class Vinegar {
 
         public void execute() throws InterruptedException {
 
-            // at most 2 atoms should print this in parallel
+            // at most 4 atoms should print this in parallel
             oxygen.acquire();
+
             System.out.println("O here.");
             oHere.release();
 
@@ -194,26 +192,21 @@ public class Vinegar {
 
             Thread.sleep(100);// this represent the bonding process
 
-            atomsLock.lock();
-            atoms++;
-            if(atoms == 8){
-                done.release(8);
-                atoms = 0;
-            }
-            atomsLock.unlock();
 
-            done.acquire();
+            done.release();
             System.out.println("O done.");
-
-
-            // only one atom should print the next line, representing that the molecule is created
+            // only one atom should print the next line, representing that the molecule is created\
             atomsLock.lock();
-            atoms++;
-            if(atoms == 8){
+            atoms--;
+            if(atoms == 0){
+                done.acquire(8);
+                leave.release(8);
+                // only one atom should print the next line, representing that the molecule is created
                 System.out.println("Molecule created.");
-                atoms = 0;
             }
             atomsLock.unlock();
+
+            leave.acquire();
 
             oxygen.release();
 
