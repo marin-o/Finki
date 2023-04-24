@@ -8,6 +8,7 @@ class OSMidterm {
 
     //TODO: Initialize the semaphores you need
     static Semaphore textLock = new Semaphore(1);
+    static int row = 0;
     public static void main(String[] args) throws InterruptedException {
 
         //STARTING CODE, DON'T MAKE CHANGES
@@ -48,7 +49,7 @@ class OSMidterm {
         HashSet<Concatenation> threads = new HashSet<>();
 
         for ( int i=0; i < m; i++ ) {
-            threads.add(new Concatenation(matrix, statisticsResource, i));
+            threads.add(new Concatenation(matrix, statisticsResource));
         }
 
         threads.forEach(Thread::start);
@@ -75,13 +76,11 @@ class OSMidterm {
     static class Concatenation extends Thread{
 
         private DataMatrix matrix;
-        public int row;
         private StatisticsResource statisticsResource;
 
-        public Concatenation(DataMatrix matrix, StatisticsResource statisticsResource, int row) {
+        public Concatenation(DataMatrix matrix, StatisticsResource statisticsResource) {
             this.matrix = matrix;
             this.statisticsResource = statisticsResource;
-            this.row = row;
         }
         //concatenation function implemented on the whole matrix, so you can take a look of the task's logic
         public void concatenate() {
@@ -98,15 +97,15 @@ class OSMidterm {
             //TODO: Implement this function
             // add  arguments in the function if needed
             StringBuilder sb = new StringBuilder();
-            for ( int i=0; i < row; i++ ) {
+            textLock.acquire();
+
                 for(int j = 0; j < matrix.n; j++){
-                    Character c = !Character.isDigit(matrix.getEl(i,j).toString().charAt(0)) ? matrix.getEl(i,j).toString().charAt(0) : null;
+                    Character c = !Character.isDigit(matrix.getEl(row,j).toString().charAt(0)) ? matrix.getEl(row,j).toString().charAt(0) : null;
                     if(c != null)
                         sb.append(c);
                 }
-            }
-            textLock.acquire();
             statisticsResource.concatenateString(sb.toString());
+            row++;
             textLock.release();
         }
         public void execute() throws InterruptedException{
