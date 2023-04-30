@@ -1417,4 +1417,5 @@ if __name__ == '__main__':
 
     entry_encoded = encoder.transform([entry])
     print(classifier.predict(entry_encoded)[0])  # klasata na vnesenoto
-    print(f'[{classifier.predict_proba(entry_encoded)[0]}]')  # verojatnost na vnesenoto
+    string = str(classifier.predict_proba(entry_encoded)[0]).replace("\n","\n ")
+    print(f'[{string}]')  # verojatnost na vnesenoto
