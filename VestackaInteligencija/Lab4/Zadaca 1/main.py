@@ -1411,7 +1411,7 @@ if __name__ == '__main__':
 
     accuracy = accuracy / len(test_set)
 
-    print(accuracy) # tochnost na modelot
+    print(accuracy)  # tochnost na modelot
 
     entry = input().split(" ")
 
