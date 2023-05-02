@@ -58,8 +58,8 @@ if __name__ == '__main__':
     train_x = [row[:-1] for row in train_set]
     train_y = [row[-1] for row in train_set]
     test_set = dataset[int(0.85 * len(dataset)):]
-    test_x = [row[:-1] for row in train_set]
-    test_y = [row[-1] for row in train_set]
+    test_x = [row[:-1] for row in test_set]
+    test_y = [row[-1] for row in test_set]
 
     classifier = GaussianNB()
 
