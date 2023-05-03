@@ -15,9 +15,12 @@ public class TreePlanting {
     private static int count = 0;
 
     static Semaphore countLock;
+    static Semaphore mainLock;
+    static String[] printOrdered = new String[NUM_THREADS];  //ova samo za izmenetata verzija za vreme na lab
 
     public static void init() {
         countLock = new Semaphore(1);
+        mainLock = new Semaphore(0);
     }
 
 
@@ -43,11 +46,12 @@ public class TreePlanting {
         }
 
         threadList.forEach(Thread::start);
-        for (Thread T : threadList) {
-            T.join();
-        }
+        
+        mainLock.acquire(NUM_THREADS);
 
         checkSynchronization();
+        for (String s : printOrdered)  //ova samo za izmenetata verzija za vreme na lab
+            System.out.println(s);
 
         System.out.printf("The number of trees is: %d\n", count);
     }
@@ -107,8 +111,10 @@ public class TreePlanting {
                 }
             }
             countLock.acquire();
+            printOrdered[startRow / (M / NUM_THREADS)] = String.format("%d - %d:%d",startRow,endRow,trees); //ova samo za izmenetata verzija za vreme na lab
             count+=trees;
             countLock.release();
+            mainLock.release();
         }
 
         @Override
