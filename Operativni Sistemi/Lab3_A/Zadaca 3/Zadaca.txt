@@ -52,10 +52,15 @@ mv ALL.csv results/
   4   3 130 results/ALL.csv
 7. (за ова додадов нов студент во датотеката бидејќи до тој момент немаше студенти со индекс кој започнува со 18)
 grep '^18' results/ALL.csv
-181011,Трајко,Трајкоски,100
+
 8.(за ова додадов два нови студенти од кои едниот има >50 поени, а другиот <50, поради истата причина како и за 7.)
-grep "^20.*[5-9][0-9]" results/ALL.csv
-201111,Мартин,Мартинов,54
+awk -F, '$1~/^20/&&$4>=50 {print$2,$3}' ALL.csv
+
+//modifikacija od termin za labs
+
+//site studenti polozeni vo 2020ta, so poveke od 60 poeni na kolokviumi(1) ili site studenti od 2018ta so >60 i polozeni na ispit(2)
+//(i za ova dodadov extra studenti)
+awk -F, '$1~/^20/&&$4>60&&$5==1||$1~/^18/&&$4>60&&$5==2 {print$2,$3}' ALL.csv
 
 
 

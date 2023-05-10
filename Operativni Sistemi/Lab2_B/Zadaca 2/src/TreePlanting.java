@@ -8,8 +8,8 @@ import java.util.concurrent.Semaphore;
 
 public class TreePlanting {
     private static final int NUM_THREADS = 100;
-    private static final int M = 50000;
-    private static final int N = 20000;
+    private static final int M = 5000;
+    private static final int N = 2000;
 
     // store the number of elements in count
     private static int count = 0;
