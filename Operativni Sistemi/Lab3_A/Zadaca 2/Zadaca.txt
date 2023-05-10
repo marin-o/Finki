@@ -6,6 +6,8 @@
 
 4. chmod ug+rx,o-rwx file123.txt
 
-5. rm -R dir1/
+5. who
+
+6. rm -R dir1/
 rm: remove write-protected regular empty file `dir1//file123.txt'? Y
 
