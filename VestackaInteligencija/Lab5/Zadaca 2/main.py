@@ -174,11 +174,11 @@ if __name__ == '__main__':
         row_removed_col = [row[i] for i in range(len(row)) if i != col_index]
         dataset_removed_col.append(row_removed_col)
 
-    train_set = dataset_removed_col[:int(0.85 * len(dataset))]
+    train_set = dataset_removed_col[:int(0.85 * len(dataset_removed_col))]
     train_x = [row[:-1] for row in train_set]
     train_y = [row[-1] for row in train_set]
 
-    test_set = dataset_removed_col[int(0.85 * len(dataset)):]
+    test_set = dataset_removed_col[int(0.85 * len(dataset_removed_col)):]
     test_x = [row[:-1] for row in test_set]
     test_y = [row[-1] for row in test_set]
 
@@ -193,4 +193,4 @@ if __name__ == '__main__':
 
     print(f'Accuracy: {accuracy}')
     print(classifier.predict([new_entry])[0])
-    print(classifier.feature_importances_)
+    print(classifier.predict_proba([new_entry])[0])
