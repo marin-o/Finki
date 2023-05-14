@@ -1738,53 +1738,13 @@ def calculate(true_classes, predicted_classes):
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=ConvergenceWarning)
-    # neurons = int(input())
-    #
-    # for row in data:
-    #     row[0] = 0 if row[0] == 'B' else 1
-    #
-    # malignant = [row for row in data if row[0] == 1]
-    # benign = [row for row in data if row[0] == 0]
-    #
-    # train_set = malignant[:int(0.7 * len(malignant))] + benign[:int(0.7 * len(benign))]
-    # test_set = malignant[int(0.7 * len(malignant)):] + benign[int(0.7 * len(benign)):]
-    #
-    # train_x = [row[1:] for row in train_set]
-    # train_y = [row[0] for row in train_set]
-    #
-    # test_x = [row[1:] for row in test_set]
-    # test_y = [row[0] for row in test_set]
-    #
-    # classifier = MLPClassifier(neurons, activation='relu', max_iter=20, learning_rate_init=0.001, random_state=0)
-    #
-    # scaler = MinMaxScaler(feature_range=(-1, 1))
-    #
-    # scaler.fit(train_x)
-    #
-    # classifier.fit(scaler.transform(train_x), train_y)
-    #
-    # predictions = classifier.predict(train_x)
-    #
-    # preciznost_train, odziv_train = calculate(train_y, predictions)
-    #
-    # predictions = classifier.predict(test_x)
-    #
-    # preciznost_test, odziv_test = calculate(test_y, predictions)
-    #
-    # print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost_train}')
-    # print(f'Odziv so trenirachkoto mnozhestvo: {odziv_train}')
-    # print(f'Preciznost so testirachkoto mnozhestvo: {preciznost_test}')
-    # print(f'Odziv so testirachkoto mnozhestvo: {odziv_test}')
-
     neurons = int(input())
 
-    malignant = [row for row in data if row[0] == 'M']
-    benign = [row for row in data if row[0] == 'B']
+    for row in data:
+        row[0] = 0 if row[0] == 'B' else 1
 
-    for row in malignant:
-        row[0] = 1
-    for row in benign:
-        row[0] = 0
+    malignant = [row for row in data if row[0] == 1]
+    benign = [row for row in data if row[0] == 0]
 
     train_set = malignant[:int(0.7 * len(malignant))] + benign[:int(0.7 * len(benign))]
     test_set = malignant[int(0.7 * len(malignant)):] + benign[int(0.7 * len(benign)):]
@@ -1798,49 +1758,21 @@ if __name__ == '__main__':
     classifier = MLPClassifier(neurons, activation='relu', max_iter=20, learning_rate_init=0.001, random_state=0)
 
     scaler = MinMaxScaler(feature_range=(-1, 1))
+
     scaler.fit(train_x)
 
     classifier.fit(scaler.transform(train_x), train_y)
 
-    predictions = classifier.predict(train_x)
+    predictions = classifier.predict(scaler.transform(train_x))
 
-    tp_train, tn_train, fp_train, fn_train = 0, 0, 0, 0
+    preciznost_train, odziv_train = calculate(train_y, predictions)
 
-    for true, pred in zip(train_y, predictions):
-        if true == 1:
-            if pred == true:
-                tp_train += 1
-            else:
-                fn_train += 1
-        else:
-            if pred == true:
-                tn_train += 1
-            else:
-                fp_train += 1
+    predictions = classifier.predict(scaler.transform(test_x))
 
-    preciznost_train = 0 if (tp_train + fp_train) == 0 else tp_train / (tp_train + fp_train)
-    odziv_train = 0 if (tp_train + fn_train) == 0 else tp_train / (tp_train + tn_train)
-
-    predictions = classifier.predict(test_x)
-
-    tp_test, tn_test, fp_test, fn_test = 0, 0, 0, 0
-
-    for true, pred in zip(train_y, predictions):
-        if true == 1:
-            if pred == true:
-                tp_test += 1
-            else:
-                fn_test += 1
-        else:
-            if pred == true:
-                tn_test += 1
-            else:
-                fp_test += 1
-
-    preciznost_test = 0 if (tp_test + fp_test) == 0 else tp_test / (tp_test + fp_test)
-    odziv_test = 0 if (tp_test + fn_test) == 0 else tp_test / (tp_test + tn_test)
+    preciznost_test, odziv_test = calculate(test_y, predictions)
 
     print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost_train}')
     print(f'Odziv so trenirachkoto mnozhestvo: {odziv_train}')
     print(f'Preciznost so testirachkoto mnozhestvo: {preciznost_test}')
     print(f'Odziv so testirachkoto mnozhestvo: {odziv_test}')
+
