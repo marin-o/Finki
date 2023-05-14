@@ -1712,24 +1712,86 @@ data = [['M', 17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.241
          0.007189, 0.00466, 0.0, 0.0, 0.02676, 0.002783, 9.456, 30.37, 59.16, 268.6, 0.08996, 0.06444, 0.0, 0.0, 0.2871,
          0.07039]]
 
+
+def calculate(true_classes, predicted_classes):
+    tp, fp, tn, fn = 0, 0, 0, 0
+    for true, pred in zip(true_classes, predicted_classes):
+        if true == 0:
+            if pred == true:
+                tn += 1
+            else:
+                fp += 1
+        else:
+            if pred == true:
+                tp += 1
+            else:
+                fn += 1
+
+    if tp + fn == 0:
+        return 0, 0
+
+    preciznost = tp / (tp + fp)
+    odziv = tp / (tp + fn)
+
+    return preciznost, odziv
+
+
 if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=ConvergenceWarning)
+    # neurons = int(input())
+    #
+    # for row in data:
+    #     row[0] = 0 if row[0] == 'B' else 1
+    #
+    # malignant = [row for row in data if row[0] == 1]
+    # benign = [row for row in data if row[0] == 0]
+    #
+    # train_set = malignant[:int(0.7 * len(malignant))] + benign[:int(0.7 * len(benign))]
+    # test_set = malignant[int(0.7 * len(malignant)):] + benign[int(0.7 * len(benign)):]
+    #
+    # train_x = [row[1:] for row in train_set]
+    # train_y = [row[0] for row in train_set]
+    #
+    # test_x = [row[1:] for row in test_set]
+    # test_y = [row[0] for row in test_set]
+    #
+    # classifier = MLPClassifier(neurons, activation='relu', max_iter=20, learning_rate_init=0.001, random_state=0)
+    #
+    # scaler = MinMaxScaler(feature_range=(-1, 1))
+    #
+    # scaler.fit(train_x)
+    #
+    # classifier.fit(scaler.transform(train_x), train_y)
+    #
+    # predictions = classifier.predict(train_x)
+    #
+    # preciznost_train, odziv_train = calculate(train_y, predictions)
+    #
+    # predictions = classifier.predict(test_x)
+    #
+    # preciznost_test, odziv_test = calculate(test_y, predictions)
+    #
+    # print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost_train}')
+    # print(f'Odziv so trenirachkoto mnozhestvo: {odziv_train}')
+    # print(f'Preciznost so testirachkoto mnozhestvo: {preciznost_test}')
+    # print(f'Odziv so testirachkoto mnozhestvo: {odziv_test}')
+
     neurons = int(input())
 
     malignant = [row for row in data if row[0] == 'M']
     benign = [row for row in data if row[0] == 'B']
-    
+
     for row in malignant:
         row[0] = 1
     for row in benign:
         row[0] = 0
-    
+
     train_set = malignant[:int(0.7 * len(malignant))] + benign[:int(0.7 * len(benign))]
     test_set = malignant[int(0.7 * len(malignant)):] + benign[int(0.7 * len(benign)):]
-    
+
     train_x = [row[1:] for row in train_set]
     train_y = [row[0] for row in train_set]
-    
+
     test_x = [row[1:] for row in test_set]
     test_y = [row[0] for row in test_set]
 
@@ -1737,13 +1799,13 @@ if __name__ == '__main__':
 
     scaler = MinMaxScaler(feature_range=(-1, 1))
     scaler.fit(train_x)
-    
+
     classifier.fit(scaler.transform(train_x), train_y)
-    
+
     predictions = classifier.predict(train_x)
-    
+
     tp_train, tn_train, fp_train, fn_train = 0, 0, 0, 0
-    
+
     for true, pred in zip(train_y, predictions):
         if true == 1:
             if pred == true:
@@ -1760,7 +1822,7 @@ if __name__ == '__main__':
     odziv_train = 0 if (tp_train + fn_train) == 0 else tp_train / (tp_train + tn_train)
 
     predictions = classifier.predict(test_x)
-    
+
     tp_test, tn_test, fp_test, fn_test = 0, 0, 0, 0
 
     for true, pred in zip(train_y, predictions):
