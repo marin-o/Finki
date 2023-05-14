@@ -1716,68 +1716,69 @@ if __name__ == '__main__':
     warnings.filterwarnings('ignore', category=ConvergenceWarning)
     neurons = int(input())
 
-    m_class = [x for x in data if x[0] == 'M']
-    b_class = [x for x in data if x[0] == 'B']
-
-    train_set = m_class[:int(0.7 * len(m_class))] + b_class[:int(0.7 * len(b_class))]
-    test_set = m_class[int(0.7 * len(m_class)):] + b_class[int(0.7 * len(b_class)):]
-
+    malignant = [row for row in data if row[0] == 'M']
+    benign = [row for row in data if row[0] == 'B']
+    
+    for row in malignant:
+        row[0] = 1
+    for row in benign:
+        row[0] = 0
+    
+    train_set = malignant[:int(0.7 * len(malignant))] + benign[:int(0.7 * len(benign))]
+    test_set = malignant[int(0.7 * len(malignant)):] + benign[int(0.7 * len(benign)):]
+    
     train_x = [row[1:] for row in train_set]
-    train_y = list(map(lambda x: 0 if x == 'B' else 1, [row[0] for row in train_set]))
-
+    train_y = [row[0] for row in train_set]
+    
     test_x = [row[1:] for row in test_set]
-    test_y = list(map(lambda x: 0 if x == 'B' else 1, [row[0] for row in test_set]))
+    test_y = [row[0] for row in test_set]
+
+    classifier = MLPClassifier(neurons, activation='relu', max_iter=20, learning_rate_init=0.001, random_state=0)
 
     scaler = MinMaxScaler(feature_range=(-1, 1))
     scaler.fit(train_x)
-
-    classifier = MLPClassifier(neurons, activation='relu', learning_rate_init=0.001, max_iter=20, random_state=0)
+    
     classifier.fit(scaler.transform(train_x), train_y)
-
-    tp0, fp0, tn0, fn0 = 0, 0, 0, 0
-    for true, pred in zip(train_y, classifier.predict(train_x)):
+    
+    predictions = classifier.predict(train_x)
+    
+    tp_train, tn_train, fp_train, fn_train = 0, 0, 0, 0
+    
+    for true, pred in zip(train_y, predictions):
         if true == 1:
             if pred == true:
-                tp0 += 1
+                tp_train += 1
             else:
-                fn0 += 1
-        if true == 0:
+                fn_train += 1
+        else:
             if pred == true:
-                tn0 += 1
+                tn_train += 1
             else:
-                fp0 += 1
+                fp_train += 1
 
-    if (tp0 + fp0) != 0:
-        preciznost0 = tp0 / (tp0 + fp0)
-    else:
-        preciznost0 = 0
-    if (tp0 + fp0) != 0:
-        odziv0 = tp0 / (tp0 + fn0)
-    else:
-        odziv0 = 0
-    tp1, fp1, tn1, fn1 = 0, 0, 0, 0
-    for true, pred in zip(test_y, classifier.predict(test_x)):
+    preciznost_train = 0 if (tp_train + fp_train) == 0 else tp_train / (tp_train + fp_train)
+    odziv_train = 0 if (tp_train + fn_train) == 0 else tp_train / (tp_train + tn_train)
+
+    predictions = classifier.predict(test_x)
+    
+    tp_test, tn_test, fp_test, fn_test = 0, 0, 0, 0
+
+    for true, pred in zip(train_y, predictions):
         if true == 1:
             if pred == true:
-                tp1 += 1
+                tp_test += 1
             else:
-                fn1 += 1
-        if true == 0:
+                fn_test += 1
+        else:
             if pred == true:
-                tn1 += 1
+                tn_test += 1
             else:
-                fp1 += 1
+                fp_test += 1
 
-    if (tp1 + fp1) != 0:
-        preciznost1 = tp1 / (tp1 + fp1)
-    else:
-        preciznost1 = 0
-    if (tp1 + fp1) != 0:
-        odziv1 = tp1 / (tp1 + fn1)
-    else:
-        odziv1 = 0
+    preciznost_test = 0 if (tp_test + fp_test) == 0 else tp_test / (tp_test + fp_test)
+    odziv_test = 0 if (tp_test + fn_test) == 0 else tp_test / (tp_test + tn_test)
 
-    print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost0}')
-    print(f'Odziv so trenirachkoto mnozhestvo: {odziv0}')
-    print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost1}')
-    print(f'Odziv so trenirachkoto mnozhestvo: {odziv1}')
+    print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost_train}')
+    print(f'Odziv so trenirachkoto mnozhestvo: {odziv_train}')
+    print(f'Preciznost so testirachkoto mnozhestvo: {preciznost_test}')
+    print(f'Odziv so testirachkoto mnozhestvo: {odziv_test}')
