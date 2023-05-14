@@ -425,7 +425,7 @@ if __name__ == '__main__':
     learning_rate = float(input())
     epoch_num = int(input())
 
-    classifier = MLPClassifier(max_iter=epoch_num, learning_rate_init=learning_rate, random_state=0)
+    classifier = MLPClassifier(6, activation='tanh', max_iter=epoch_num, learning_rate_init=learning_rate, random_state=0)
 
     zero_class = [x for x in data if x[-1] == 0]
     one_class = [x for x in data if x[-1] == 1]
