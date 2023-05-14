@@ -1,4 +1,5 @@
 import warnings
+
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import MinMaxScaler
@@ -1722,49 +1723,59 @@ if __name__ == '__main__':
     test_set = m_class[int(0.7 * len(m_class)):] + b_class[int(0.7 * len(b_class)):]
 
     train_x = [row[1:] for row in train_set]
-    train_y = [row[1] for row in train_set]
+    train_y = list(map(lambda x: 0 if x == 'B' else 1, [row[0] for row in train_set]))
 
     test_x = [row[1:] for row in test_set]
-    test_y = [row[1] for row in test_set]
+    test_y = list(map(lambda x: 0 if x == 'B' else 1, [row[0] for row in test_set]))
 
-    scaler = MinMaxScaler((-1, 1))
+    scaler = MinMaxScaler(feature_range=(-1, 1))
     scaler.fit(train_x)
 
     classifier = MLPClassifier(neurons, activation='relu', learning_rate_init=0.001, max_iter=20, random_state=0)
     classifier.fit(scaler.transform(train_x), train_y)
 
-
     tp0, fp0, tn0, fn0 = 0, 0, 0, 0
-    for true, pred in zip(train_y, classifier.predict(train_y)):
-        if true == 'M':
+    for true, pred in zip(train_y, classifier.predict(train_x)):
+        if true == 1:
             if pred == true:
                 tp0 += 1
             else:
                 fn0 += 1
-        if true == 'B':
+        if true == 0:
             if pred == true:
                 tn0 += 1
             else:
                 fp0 += 1
 
-    preciznost0 = tp0 / (tp0 + fp0)
-    odziv0 = tp0 / (tp0 + fn0)
-
+    if (tp0 + fp0) != 0:
+        preciznost0 = tp0 / (tp0 + fp0)
+    else:
+        preciznost0 = 0
+    if (tp0 + fp0) != 0:
+        odziv0 = tp0 / (tp0 + fn0)
+    else:
+        odziv0 = 0
     tp1, fp1, tn1, fn1 = 0, 0, 0, 0
-    for true, pred in zip(test_y, classifier.predict(test_y)):
-        if true == 'M':
+    for true, pred in zip(test_y, classifier.predict(test_x)):
+        if true == 1:
             if pred == true:
                 tp1 += 1
             else:
                 fn1 += 1
-        if true == 'B':
+        if true == 0:
             if pred == true:
                 tn1 += 1
             else:
                 fp1 += 1
 
-    preciznost1 = tp1 / (tp1 + fp1)
-    odziv1 = tp1 / (tp1 + fn1)
+    if (tp1 + fp1) != 0:
+        preciznost1 = tp1 / (tp1 + fp1)
+    else:
+        preciznost1 = 0
+    if (tp1 + fp1) != 0:
+        odziv1 = tp1 / (tp1 + fn1)
+    else:
+        odziv1 = 0
 
     print(f'Preciznost so trenirachkoto mnozhestvo: {preciznost0}')
     print(f'Odziv so trenirachkoto mnozhestvo: {odziv0}')
