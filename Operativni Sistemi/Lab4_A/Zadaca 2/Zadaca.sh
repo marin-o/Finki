@@ -5,12 +5,10 @@ destination="$2"
 
 if echo "$source" | grep -q "/$"; then
         source=$(echo "$source" | sed 's/\/$//')
-        echo "source: $source"
 fi
 
 if echo "$destination" | grep -q "/$"; then
         destination=$(echo "$destination" | sed 's/\/$//')
-        echo "destination: $destination"
 fi
 
 if [ ! -d "$source" ]; then
@@ -19,6 +17,7 @@ if [ ! -d "$source" ]; then
 fi
 
 
+echo "Creating dummy files for purposes of lab exercise..."
 touch  "$source"/hasUpperCase.txt
 touch  "$source"/lowercase.txt
 touch  "$source"/nottxtfilelowercase.sh
@@ -34,11 +33,8 @@ for file in "$source"/*
 do
         echo "file: $file"
         if [ -f "$file" ]; then
-                echo "passed file check: $file"
                 filename=$(echo "$file" | awk -F "/" '{print $NF}')
-                echo "file without folder:$filename"
                 if echo "$filename" | grep -E "^[a-z]+\.txt$"; then
-                        echo "passed regex check: $filename"
                         extensionRemoved=$(echo "$filename" | sed 's/\.txt$//')
                         mv "$file" "$destination/$extensionRemoved.moved_txt"
                 fi
