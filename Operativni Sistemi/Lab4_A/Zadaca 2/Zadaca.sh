@@ -35,7 +35,7 @@ do
         echo "file: $file"
         if [ -f "$file" ]; then
                 echo "passed file check: $file"
-                filename=$(echo "$file" | sed "s/^$source\///")
+                filename=$(echo "$file" | awk -F "/" '{print $NF}')
                 echo "file without folder:$filename"
                 if echo "$filename" | grep -E "^[a-z]+\.txt$"; then
                         echo "passed regex check: $filename"
