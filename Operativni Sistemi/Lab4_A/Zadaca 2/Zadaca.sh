@@ -24,7 +24,7 @@ touch  "$source"/anotherlowercase.txt
 
 if [ ! -d "$destination" ]; then
         echo "Destination directory does not exist, creating..."
-        mkdir ./"$destination"
+        mkdir -p ./"$destination"
 fi
 
 
