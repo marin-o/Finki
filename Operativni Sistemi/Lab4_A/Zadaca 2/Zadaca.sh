@@ -16,12 +16,11 @@ if [ ! -d "$source" ]; then
         exit 1
 fi
 
-
-echo "Creating dummy files for purposes of lab exercise..."
 touch  "$source"/hasUpperCase.txt
 touch  "$source"/lowercase.txt
 touch  "$source"/nottxtfilelowercase.sh
 touch  "$source"/notTxtHasUppercase.sh
+touch  "$source"/anotherlowercase.txt
 
 if [ ! -d "$destination" ]; then
         echo "Destination directory does not exist, creating..."
@@ -31,11 +30,10 @@ fi
 
 for file in "$source"/*
 do
-        echo "file: $file"
         if [ -f "$file" ]; then
                 filename=$(echo "$file" | awk -F "/" '{print $NF}')
-                if echo "$filename" | grep -E "^[a-z]+\.txt$"; then
-                        extensionRemoved=$(echo "$filename" | sed 's/\.txt$//')
+                if echo "$filename" | grep -qE "^[a-z]+\.txt$"; then
+                        extensionRemoved=$(echo "$filename" | sed 's/\.txt$//i')
                         mv "$file" "$destination/$extensionRemoved.moved_txt"
                 fi
         fi
