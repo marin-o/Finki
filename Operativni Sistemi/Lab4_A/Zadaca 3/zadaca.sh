@@ -57,3 +57,41 @@ done
 
 totalsize=$(ls -l "$destination" | awk '{ sum += $6 } END {print "Total file size:", sum}')
 echo "$totalsize"
+
+modifikacija:
+
+for file in "$source"/*
+
+do
+
+        if [ -f "$file" ]; then
+
+                filename=$(echo "$file" | awk -F "/" '{print $NF}')
+
+                if echo "$filename" | grep -qE "^[a-z]+\.sh$"; then
+
+                        size=$(ls -l "$source" | grep "$filename" | awk '{print $6}')
+
+                        if [ $size -gt 49 ]; then
+
+                                extensionRemoved=$(echo "$filename" | sed 's/\.sh$//i')
+
+                                mv "$file" "$destination/$extensionRemoved.moved_sh"
+
+                        fi
+
+                fi
+
+        fi
+
+done
+
+
+
+totalsize=$(ls -l "$destination" | awk '{ sum += $6 } END {print "Total file size:", sum}')
+
+echo "$totalsize"
+
+
+
+
