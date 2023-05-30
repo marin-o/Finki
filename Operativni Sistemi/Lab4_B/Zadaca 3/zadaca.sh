@@ -1,0 +1,1 @@
+Maka mi e iskreno ista e ko od prva grupa samo razlicen tip na fajl i [A-Z] namesto [a-z]
