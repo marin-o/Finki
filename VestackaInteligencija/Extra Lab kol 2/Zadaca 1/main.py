@@ -423,7 +423,10 @@ dataset = [
 
 def calculate(predicts, y):
     tp, fp, tn, fn = 0, 0, 0, 0
+    tocnost = 0
     for real, predicted in zip(predicts, y):
+        if real == predicted:
+            tocnost += 1
         if real == 1:
             if predicted == real:
                 tp += 1
@@ -434,14 +437,9 @@ def calculate(predicts, y):
                 tn += 1
             else:
                 fp += 1
-    if (tp+fp) != 0 and (tp+fn) != 0:
-        return tp / (tp+fp), tp / (tp+fn)
-    if (tp+fp) == 0 and (tp+fn) != 0:
-        return 0, tp / (tp+fn)
-    if (tp+fp) != 0 and (tp+fn) == 0:
-        return tp / (tp+fp), 0
-    return 0, 0
-
+    if (tp + fp) != 0:
+        return tp / (tp + fp), tocnost / len(y)
+    return 0, tocnost / len(y)
 
 
 if __name__ == "__main__":
@@ -449,8 +447,8 @@ if __name__ == "__main__":
     split = int(input()) * 0.01
 
     if mode == "balanced":
-        zero_class = [row for row in dataset if row[len(row)-1] == 0]
-        one_class = [row for row in dataset if row[len(row)-1] == 1]
+        zero_class = [row for row in dataset if row[15] == 0]
+        one_class = [row for row in dataset if row[15] == 1]
 
         train_set = one_class[:int(split * len(one_class))] + zero_class[:int(split * len(zero_class))]
         test_set = one_class[int(split * len(one_class)):] + zero_class[int(split * len(zero_class)):]
@@ -476,13 +474,13 @@ if __name__ == "__main__":
     tree_train_predicts = tree_classifier.predict(test_x)
     neuron_train_predicts = neuron_classifier.predict(test_x)
 
-    naive_preciznost, naive_odziv = calculate(naive_train_predicts, test_y)
-    tree_preciznost, tree_odziv = calculate(tree_train_predicts, test_y)
-    neuron_preciznost, neuron_odziv = calculate(neuron_train_predicts, test_y)
+    naive_preciznost, naive_tochnost = calculate(naive_train_predicts, test_y)
+    tree_preciznost, tree_tochnost = calculate(tree_train_predicts, test_y)
+    neuron_preciznost, neuron_tochnost = calculate(neuron_train_predicts, test_y)
 
-    if naive_preciznost > tree_preciznost and naive_preciznost > neuron_preciznost:
-        print(f'Najvisoka preciznost ima prviot klasifikator\nNegovata tochnost e: {naive_preciznost}')
-    if tree_preciznost > naive_preciznost and tree_preciznost > neuron_preciznost:
-        print(f'Najvisoka preciznost ima vtoriot klasifikator\nNegovata tochnost e: {tree_preciznost}')
-    if neuron_preciznost > tree_preciznost and neuron_preciznost > naive_preciznost:
-        print(f'Najvisoka preciznost ima tretiot klasifikator\nNegovata tochnost e: {neuron_preciznost}')
+    if max(naive_preciznost, tree_preciznost, neuron_preciznost) == naive_preciznost:
+        print(f'Najvisoka preciznost ima prviot klasifikator\nNegovata tochnost e: {naive_tochnost}')
+    elif max(naive_preciznost, tree_preciznost, neuron_preciznost) == tree_preciznost:
+        print(f'Najvisoka preciznost ima vtoriot klasifikator\nNegovata tochnost e: {tree_tochnost}')
+    else:
+        print(f'Najvisoka preciznost ima tretiot klasifikator\nNegovata tochnost e: {neuron_tochnost}')
