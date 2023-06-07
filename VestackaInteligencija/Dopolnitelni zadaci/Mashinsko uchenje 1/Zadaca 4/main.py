@@ -198,5 +198,5 @@ if __name__ == "__main__":
     probabilities = classifier.predict_proba(sample)
 
     print(f'Accuracy: {accuracy}\n'
-          f'{predicted_class}\n'
+          f'{predicted_class[0]}\n'
           f'{probabilities[0]}')
