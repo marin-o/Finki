@@ -1,0 +1,11 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\bin\Debug\IspitniElipis.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\bin\Debug\IspitniElipis.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\bin\Debug\IspitniElipis.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniElipis\obj\Debug\IspitniElipis.pdb

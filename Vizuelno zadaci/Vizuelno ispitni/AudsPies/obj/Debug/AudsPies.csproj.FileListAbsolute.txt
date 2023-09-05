@@ -1,0 +1,11 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\bin\Debug\AudsPies.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\bin\Debug\AudsPies.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\bin\Debug\AudsPies.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\AudsPies\obj\Debug\AudsPies.pdb

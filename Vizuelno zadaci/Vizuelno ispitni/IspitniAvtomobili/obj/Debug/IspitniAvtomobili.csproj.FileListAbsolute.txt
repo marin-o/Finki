@@ -1,0 +1,12 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\bin\Debug\IspitniAvtomobili.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\bin\Debug\IspitniAvtomobili.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\bin\Debug\IspitniAvtomobili.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.NewMakeForm.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniAvtomobili\obj\Debug\IspitniAvtomobili.pdb
