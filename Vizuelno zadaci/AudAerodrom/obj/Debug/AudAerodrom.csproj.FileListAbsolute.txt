@@ -1,0 +1,13 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\bin\Debug\AudAerodrom.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\bin\Debug\AudAerodrom.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\bin\Debug\AudAerodrom.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.AddAirportForm.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.AddDestinationForm.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudAerodrom\obj\Debug\AudAerodrom.pdb
