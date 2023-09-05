@@ -1,0 +1,12 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\bin\Debug\IspitniF1race.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\bin\Debug\IspitniF1race.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\bin\Debug\IspitniF1race.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.Form2.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniF1race\obj\Debug\IspitniF1race.pdb

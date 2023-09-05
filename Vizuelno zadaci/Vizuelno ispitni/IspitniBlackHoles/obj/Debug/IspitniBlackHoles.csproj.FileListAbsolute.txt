@@ -1,0 +1,5 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniBlackHoles\obj\Debug\IspitniBlackHoles.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniBlackHoles\obj\Debug\IspitniBlackHoles.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniBlackHoles\obj\Debug\IspitniBlackHoles.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniBlackHoles\obj\Debug\IspitniBlackHoles.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniBlackHoles\obj\Debug\IspitniBlackHoles.csproj.CoreCompileInputs.cache

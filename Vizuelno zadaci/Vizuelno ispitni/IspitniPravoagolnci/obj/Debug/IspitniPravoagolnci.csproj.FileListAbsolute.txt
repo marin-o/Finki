@@ -1,0 +1,11 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\bin\Debug\IspitniPravoagolnci.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\bin\Debug\IspitniPravoagolnci.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\bin\Debug\IspitniPravoagolnci.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\Vizuelno ispitni\IspitniPravoagolnci\obj\Debug\IspitniPravoagolnci.pdb
