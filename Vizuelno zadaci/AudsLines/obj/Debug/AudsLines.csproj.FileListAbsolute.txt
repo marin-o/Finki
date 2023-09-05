@@ -1,0 +1,11 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\bin\Debug\AudsLines.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\bin\Debug\AudsLines.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\bin\Debug\AudsLines.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsLines\obj\Debug\AudsLines.pdb

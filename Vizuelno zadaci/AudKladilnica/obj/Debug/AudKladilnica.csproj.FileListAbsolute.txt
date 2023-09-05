@@ -1,0 +1,12 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\bin\Debug\AudKladilnica.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\bin\Debug\AudKladilnica.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\bin\Debug\AudKladilnica.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.TeamForm.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudKladilnica\obj\Debug\AudKladilnica.pdb

@@ -1,0 +1,11 @@
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\bin\Debug\AudsHangman.exe.config
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\bin\Debug\AudsHangman.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\bin\Debug\AudsHangman.pdb
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.csproj.AssemblyReference.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.csproj.SuggestedBindingRedirects.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.Form1.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.Properties.Resources.resources
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.csproj.GenerateResource.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.csproj.CoreCompileInputs.cache
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.exe
+Z:\Users\onira\Documents\_FINKI\Vizuelno auds\AudsHangman\obj\Debug\AudsHangman.pdb
