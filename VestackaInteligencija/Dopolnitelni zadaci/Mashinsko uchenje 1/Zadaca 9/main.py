@@ -512,7 +512,7 @@ if __name__ == '__main__':
         train_set_x_1, train_set_y_1, test_set_x_1, test_set_y_1 = createSets(train_set_1, test_set_1)
         classifier.fit(train_set_x_1, train_set_y_1)
 
-        accuracyCol = calculateAccuracy(classifier, test_set_x_1, test_set_y_1)
+        accuracyCol = accuracy1  # calculateAccuracy(classifier, test_set_x_1, test_set_y_1)
     elif maxAccuracy == accuracy2:
         for row in train_set_2:
             row.pop(col)
@@ -521,7 +521,7 @@ if __name__ == '__main__':
         train_set_x_2, train_set_y_2, test_set_x_2, test_set_y_2 = createSets(train_set_2, test_set_2)
         classifier.fit(train_set_x_2, train_set_y_2)
 
-        accuracyCol = calculateAccuracy(classifier, test_set_x_2, test_set_y_2)
+        accuracyCol = accuracy2  # calculateAccuracy(classifier, test_set_x_2, test_set_y_2)
     elif maxAccuracy == accuracy2:
         for row in train_set_3:
             row.pop(col)
@@ -530,7 +530,7 @@ if __name__ == '__main__':
         train_set_x_3, train_set_y_3, test_set_x_3, test_set_y_3 = createSets(train_set_3, test_set_3)
         classifier.fit(train_set_x_3, train_set_y_3)
 
-        accuracyCol = calculateAccuracy(classifier, test_set_x_3, test_set_y_3)
+        accuracyCol = accuracy3 # calculateAccuracy(classifier, test_set_x_3, test_set_y_3)
     else:
         for row in train_set_4:
             row.pop(col)
@@ -539,6 +539,6 @@ if __name__ == '__main__':
         train_set_x_4, train_set_y_4, test_set_x_4, test_set_y_4 = createSets(train_set_4, test_set_4)
         classifier.fit(train_set_x_4, train_set_y_4)
 
-        accuracyCol = calculateAccuracy(classifier, test_set_x_4, test_set_y_4)
+        accuracyCol = accuracy4 # calculateAccuracy(classifier, test_set_x_4, test_set_y_4)
 
     print(f'Tochnost so otstraneta kolona: {accuracyCol}')
