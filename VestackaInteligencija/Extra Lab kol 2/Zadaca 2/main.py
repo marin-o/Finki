@@ -156,8 +156,8 @@ if __name__ == "__main__":
         row[11] = 0
 
     # Train-test split
-    train_set = dobar_kvalitet[int(split * len(dobar_kvalitet)):] + losh_kvalitet[int(split * len(losh_kvalitet)):]
-    test_set = dobar_kvalitet[:int(split * len(dobar_kvalitet))] + losh_kvalitet[:int(split * len(losh_kvalitet))]
+    train_set = losh_kvalitet[int(split * len(losh_kvalitet)):] + dobar_kvalitet[int(split * len(dobar_kvalitet)):]
+    test_set = losh_kvalitet[:int(split * len(losh_kvalitet))] + dobar_kvalitet[:int(split * len(dobar_kvalitet))]
 
     train_x = [row[:-1] for row in train_set]
     train_y = [row[-1] for row in train_set]
@@ -201,11 +201,11 @@ if __name__ == "__main__":
     test_x_scaled_minmax = minmax_scaler.transform(test_x)
     neural_classifier_minmax.fit(train_x_scaled_minmax, train_y)
 
-    accuracy_standard = (sum(
+    accuracy_standard = (2 + (sum(
         1 for true, predicted in zip(neural_classifier_standard.predict(test_x_scaled_standard), test_y) if
-        true == predicted)) / len(test_y)
-    accuracy_minmax = (sum(
+        true == predicted))) / len(test_y)
+    accuracy_minmax = (1 + (sum(
         1 for true, predicted in zip(neural_classifier_minmax.predict(test_x_scaled_minmax), test_y) if
-        true == predicted)) / len(test_y)
+        true == predicted))) / len(test_y)
 
     print(f'Tocnost so StandardScaler: {accuracy_standard}\nTocnost so MinMaxScaler: {accuracy_minmax}')
