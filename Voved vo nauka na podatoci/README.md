@@ -1,1 +1,1 @@
-Nauka na podatoci labs
+Voved vo naukata na podatoci labs
