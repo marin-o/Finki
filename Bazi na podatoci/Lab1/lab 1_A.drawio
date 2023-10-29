@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-10-25T21:33:53.124Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0" etag="nhKdg-Hw0IQqDDhTpFq9" version="22.0.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-28T12:39:11.729Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/119.0" etag="Kl71el5ilj0wn_yT051r" version="22.0.8" type="github">
   <diagram name="Page-1" id="4vaZD6aFRvWip1wH8n_Y">
-    <mxGraphModel dx="2284" dy="782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1322" dy="781" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -318,8 +318,8 @@
         <mxCell id="oy7YL8Xd5E4N8mvJYCTs-111" value="Patuvanje" style="shape=ext;margin=3;double=1;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="230" y="370" width="100" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="oy7YL8Xd5E4N8mvJYCTs-112" value="(1,M)" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="oy7YL8Xd5E4N8mvJYCTs-106" target="oy7YL8Xd5E4N8mvJYCTs-25" edge="1">
-          <mxGeometry x="0.9392" y="-17" width="50" height="50" relative="1" as="geometry">
+        <mxCell id="oy7YL8Xd5E4N8mvJYCTs-112" value="M" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;shape=link;" parent="1" source="oy7YL8Xd5E4N8mvJYCTs-106" target="oy7YL8Xd5E4N8mvJYCTs-25" edge="1">
+          <mxGeometry x="-0.9699" y="15" width="50" height="50" relative="1" as="geometry">
             <mxPoint x="300" y="420" as="sourcePoint" />
             <mxPoint x="450" y="420" as="targetPoint" />
             <mxPoint as="offset" />
@@ -422,10 +422,10 @@
             <mxPoint x="430" y="210" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="NbHenBSnprE0DpPrcXFl-4" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.arc;startAngle=0.3209158277514807;endAngle=0.6810716750262913;rotation=45;" vertex="1" parent="1">
+        <mxCell id="NbHenBSnprE0DpPrcXFl-4" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.arc;startAngle=0.3209158277514807;endAngle=0.6810716750262913;rotation=45;" parent="1" vertex="1">
           <mxGeometry x="633" y="625" width="30" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="NbHenBSnprE0DpPrcXFl-6" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.arc;startAngle=0.3209158277514807;endAngle=0.6810716750262913;rotation=-45;" vertex="1" parent="1">
+        <mxCell id="NbHenBSnprE0DpPrcXFl-6" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.arc;startAngle=0.3209158277514807;endAngle=0.6810716750262913;rotation=-45;" parent="1" vertex="1">
           <mxGeometry x="773" y="626" width="30" height="100" as="geometry" />
         </mxCell>
       </root>
