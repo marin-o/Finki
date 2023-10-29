@@ -29,8 +29,8 @@
     <form th:method="POST" th:action="@{/ticketOrder}">
         <h2>Choose movie:</h2>
         <label th:each="movie : ${movies}" style="list-style-type: none">
-            <input type="radio" name="movieTitle" th:value="${movie.title}">
-            Title: <span th:text="${movie.title}"></span>, Summary: <span th:text="${movie.summary}"></span>, Rating: <span th:text="${movie.rating}"></span><br/>
+            <input type="radio" name="movieTitle" th:value="${movie.getTitle()}">
+            <span  th:text="'Title: '+${movie.getTitle()}+', Summary: '+${movie.getSummary()}+', Rating: '+${movie.getRating()}"></span><br/>
         </label>
         <h2>Choose number of tickets:</h2>
             <label>
