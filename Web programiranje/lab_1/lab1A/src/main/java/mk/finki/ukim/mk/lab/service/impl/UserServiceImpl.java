@@ -1,6 +1,7 @@
 package mk.finki.ukim.mk.lab.service.impl;
 
 import lombok.AllArgsConstructor;
+import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.model.User;
 import mk.finki.ukim.mk.lab.repository.UserRepository;
 import mk.finki.ukim.mk.lab.service.UserService;
@@ -23,4 +24,11 @@ public class UserServiceImpl implements UserService {
     public User findUser(String username) {
         return userRepository.findUser(username).orElse(null);
     }
+
+    @Override
+    public void addTicketToUser(String username, TicketOrder ticket) {
+        userRepository.addTicketToUser(username, ticket);
+    }
+
+
 }

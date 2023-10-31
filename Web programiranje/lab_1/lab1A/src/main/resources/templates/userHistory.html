@@ -5,5 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+<h2>hi</h2>
+<form>
+    <label>
+        Select user:
+        <select>
+            <option th:each="user : ${users}"></option>
+        </select>
+    </label>
+</form>
 </body>
 </html>
