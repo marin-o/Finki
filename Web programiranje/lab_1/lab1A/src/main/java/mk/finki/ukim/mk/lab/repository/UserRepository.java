@@ -13,14 +13,7 @@ import java.util.Optional;
 public class UserRepository {
     public final List<User> users = new ArrayList<>();
 
-    @PostConstruct
-    private void init(){
-//        users.add(new User("Marino"));
-//        users.add(new User("Nikola"));
-//        users.add(new User("Andrej"));
-//        users.add(new User("Miki"));
-//        users.add(new User("Zdr"));
-    }
+
 
     public List<User> listAll() {
         return users;
