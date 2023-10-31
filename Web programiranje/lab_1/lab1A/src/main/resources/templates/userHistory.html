@@ -5,14 +5,25 @@
     <title>Title</title>
 </head>
 <body>
-<h2>hi</h2>
-<form>
+<h2 th:if="${selectedUser}">
+    <span th:text="'Hi '+${selectedUser.getUsername()}"></span>
+</h2>
+<form th:method="POST" th:action="@{/users}">
     <label>
         Select user:
-        <select>
-            <option th:each="user : ${users}"></option>
+        <select name="username">
+            <option th:each="user : ${users}" th:value="${user.getUsername()}">
+                <th:block th:text="${user.getUsername()}"/>
+            </option>
         </select>
     </label>
+    <input type="submit" value="Submit">
+</form>
+<ul th:if="${currentUserTickets}" th:each="ticket : ${currentUserTickets}">
+    <li th:text="'Movie title: '+${ticket.movieTitle}+', Number of tickets: '+${ticket.numberOfTickets}"></li>
+</ul>
+<form th:method="GET" th:action="@{/}">
+    <input type="Submit" value="Go back to movies">
 </form>
 </body>
 </html>
