@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.service.impl.TicketOrderServiceImpl;
+import mk.finki.ukim.mk.lab.service.impl.UserServiceImpl;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.web.IWebExchange;
@@ -20,6 +22,7 @@ public class TicketOrderServlet extends HttpServlet {
 
     private final TicketOrderServiceImpl ticketOrderService;
     private final SpringTemplateEngine templateEngine;
+    private final UserServiceImpl userService;
     @Override
     protected void doGet( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
         IWebExchange webExchange = JakartaServletWebApplication
@@ -33,14 +36,13 @@ public class TicketOrderServlet extends HttpServlet {
             title = "Invalid movie";
         if(tickets == null || tickets.isEmpty())
             tickets = "-1";
-
-        context.setVariable("ticket",
-                ticketOrderService.placeOrder(
-                        title,
-                        username,req.getRemoteAddr(),
-                        Integer.parseInt(tickets)
-                )
+        TicketOrder ticket = ticketOrderService.placeOrder(
+                title,
+                username,req.getRemoteAddr(),
+                Integer.parseInt(tickets)
         );
+        userService.addTicketToUser(username,ticket);
+        context.setVariable("ticket", ticket);
         templateEngine.process("orderConfirmation.html",context,resp.getWriter());
     }
 

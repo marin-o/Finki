@@ -13,8 +13,6 @@ import java.util.Optional;
 public class UserRepository {
     public final List<User> users = new ArrayList<>();
 
-
-
     public List<User> listAll() {
         return users;
     }
@@ -23,14 +21,17 @@ public class UserRepository {
         return users.stream().filter(u -> u.getUsername().equals(username)).findFirst();
     }
 
-    public void addUser(String username){
-        users.add(new User(username));
+    public User addUser(String username){
+        User u = new User(username);
+        users.add(u);
+        return u;
     }
 
     public void addTicketToUser(String username, TicketOrder ticket){
         User user = findUser(username).orElse(null);
-        if(user == null)
-            return;
+        if(user == null) {
+            user = addUser(username);
+        }
         user.getOrders().add(ticket);
     }
 }
