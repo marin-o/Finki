@@ -30,11 +30,21 @@ public class UserServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
         List<User> users = userService.listAll();
         context.setVariable("users",users);
+        String username = req.getParameter("username");
+        if(username != null && !username.isEmpty()) {
+            User u = userService.findUser(username);
+            context.setVariable("currentUserTickets", u.getOrders());
+            context.setVariable("selectedUser", u);
+        }
         templateEngine.process("userHistory.html",context,resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("test");
+        String username = req.getParameter("username");
+        if(username != null)
+            resp.sendRedirect("/users?&username="+username);
+        else
+            resp.sendRedirect("/users");
     }
 }
