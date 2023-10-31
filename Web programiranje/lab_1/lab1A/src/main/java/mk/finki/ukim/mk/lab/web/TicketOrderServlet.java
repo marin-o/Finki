@@ -31,6 +31,7 @@ public class TicketOrderServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
         String title = req.getParameter("movieTitle");
         String tickets = req.getParameter("tickets");
+        String username = req.getParameter("username");
         if (title == null || title.isEmpty() || title.equals("null"))
             title = "Invalid movie";
         if(tickets == null || tickets.isEmpty())
@@ -39,7 +40,7 @@ public class TicketOrderServlet extends HttpServlet {
         context.setVariable("ticket",
                 ticketOrderService.placeOrder(
                         title,
-                        "Marino Jakimoski",req.getRemoteAddr(),
+                        username,req.getRemoteAddr(),
                         Integer.parseInt(tickets)
                 )
         );
@@ -50,7 +51,8 @@ public class TicketOrderServlet extends HttpServlet {
     protected void doPost( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
         String movie = req.getParameter("movieTitle");
         String tickets = req.getParameter("numTickets");
+        String user = req.getParameter("username");
 
-        resp.sendRedirect("/ticketOrder?movieTitle="+movie+"&tickets="+tickets);
+        resp.sendRedirect("/ticketOrder?movieTitle="+movie+"&tickets="+tickets+"&username="+user);
     }
 }
