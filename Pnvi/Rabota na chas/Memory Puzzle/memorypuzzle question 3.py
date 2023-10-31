@@ -12,8 +12,8 @@ WINDOWHEIGHT = 480 # size of windows' height in pixels
 REVEALSPEED = 8 # speed boxes' sliding reveals and covers
 BOXSIZE = 40 # size of box height & width in pixels
 GAPSIZE = 10 # size of gap between boxes in pixels
-BOARDWIDTH = 6 # number of columns of icons
-BOARDHEIGHT = 3 # number of rows of icons
+BOARDWIDTH = 5 # number of columns of icons
+BOARDHEIGHT = 6 # number of rows of icons
 assert (BOARDWIDTH * BOARDHEIGHT) % 3 == 0, 'Board needs to have a number of boxes divisible by three for triplets of matches.'
 XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
 YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
