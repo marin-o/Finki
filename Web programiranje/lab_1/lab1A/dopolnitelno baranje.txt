@@ -1,1 +1,3 @@
-na posebna strana da se prikazat kartite kupeni od korisnikot X
+na posebna strana da se prikazat kartite kupeni od site korisnici cela nivna istorija
+
+selekcija na korisnik preku dropdown lista
