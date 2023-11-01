@@ -12,9 +12,9 @@ WINDOWHEIGHT = 480 # size of windows' height in pixels
 REVEALSPEED = 8 # speed boxes' sliding reveals and covers
 BOXSIZE = 40 # size of box height & width in pixels
 GAPSIZE = 10 # size of gap between boxes in pixels
-BOARDWIDTH = 2 # number of columns of icons
+BOARDWIDTH = 3 # number of columns of icons
 BOARDHEIGHT = 2 # number of rows of icons
-assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
+assert (BOARDWIDTH * BOARDHEIGHT) % 3 == 0, 'Board needs to have a number of boxes divisible by three for triplets of matches.'
 XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
 YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
 
@@ -41,10 +41,17 @@ DIAMOND = 'diamond'
 LINES = 'lines'
 OVAL = 'oval'
 
-ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN)
+ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN, (100,100,100),(123,45,233),(40,55,255))
 ALLSHAPES = (DONUT, SQUARE, DIAMOND, LINES, OVAL)
-assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, "Board is too big for the number of shapes/colors defined."
+assert len(ALLCOLORS) * len(ALLSHAPES) * 3 >= BOARDWIDTH * BOARDHEIGHT, "Board is too big for the number of shapes/colors defined."
 
+'''Искоментираната верзија од main функцијата е финалниот дел од промените за третото прашање
+Овде се наоѓаат главните промени
+Додадена е secondSelection променлива која ја чува второселектираната кутија
+Додаден е elif услов кој проверува дали моменталната селекција е втората селекција
+И проширен е if условот кој проверува дали двете форми се исти или не, за да провери дали *три* форми се исти.
+Исто така соодветно е додаден и ресет за secondSelection, и покривање на сите три селекции доколку се селектирани 3 форми кои не се исти 
+'''
 def main():
     global FPSCLOCK, DISPLAYSURF
     pygame.init()
@@ -59,6 +66,7 @@ def main():
     revealedBoxes = generateRevealedBoxesData(False)
 
     firstSelection = None # stores the (x, y) of the first box clicked.
+    secondSelection = None # -//- second box clicked
 
     DISPLAYSURF.fill(BGCOLOR)
     startGameAnimation(mainBoard)
@@ -89,16 +97,25 @@ def main():
                 revealedBoxes[boxx][boxy] = True # set the box as "revealed"
                 if firstSelection == None: # the current box was the first box clicked
                     firstSelection = (boxx, boxy)
-                else: # the current box was the second box clicked
-                    # Check if there is a match between the two icons.
+                elif secondSelection == None: # the current box was the second box clicked
+                    secondSelection = (boxx, boxy)
+                else: # the current box was the third box clicked
                     icon1shape, icon1color = getShapeAndColor(mainBoard, firstSelection[0], firstSelection[1])
-                    icon2shape, icon2color = getShapeAndColor(mainBoard, boxx, boxy)
+                    icon2shape, icon2color = getShapeAndColor(mainBoard, secondSelection[0], secondSelection[1])
+                    icon3shape, icon3color = getShapeAndColor(mainBoard, boxx, boxy)
 
-                    if icon1shape != icon2shape or icon1color != icon2color:
+                    if icon1shape != icon2shape or\
+                        icon1color != icon2color or\
+                        icon1shape != icon3shape or\
+                        icon1color != icon3color or\
+                        icon2shape != icon3shape or\
+                        icon2color != icon3color :
+
                         # Icons don't match. Re-cover up both selections.
                         pygame.time.wait(1000) # 1000 milliseconds = 1 sec
-                        coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1]), (boxx, boxy)])
+                        coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1]), (secondSelection[0],secondSelection[1]), (boxx,boxy)])
                         revealedBoxes[firstSelection[0]][firstSelection[1]] = False
+                        revealedBoxes[secondSelection[0]][secondSelection[1]] = False
                         revealedBoxes[boxx][boxy] = False
                     elif hasWon(revealedBoxes): # check if all pairs found
                         gameWonAnimation()
@@ -116,11 +133,11 @@ def main():
                         # Replay the start game animation.
                         startGameAnimation(mainBoard)
                     firstSelection = None # reset firstSelection variable
+                    secondSelection = None
 
         # Redraw the screen and wait a clock tick.
         pygame.display.update()
         FPSCLOCK.tick(FPS)
-
 
 def generateRevealedBoxesData(val):
     revealedBoxes = []
@@ -137,8 +154,8 @@ def getRandomizedBoard():
             icons.append( (shape, color) )
 
     random.shuffle(icons) # randomize the order of the icons list
-    numIconsUsed = int(BOARDWIDTH * BOARDHEIGHT / 2) # calculate how many icons are needed
-    icons = icons[:numIconsUsed] * 2 # make two of each
+    numIconsUsed = int(BOARDWIDTH * BOARDHEIGHT / 3) # calculate how many icons are needed
+    icons = icons[:numIconsUsed] * 3 # make two of each
     random.shuffle(icons)
 
     # Create the board data structure, with randomly placed icons.
