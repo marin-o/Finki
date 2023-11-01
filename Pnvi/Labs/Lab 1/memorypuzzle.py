@@ -12,8 +12,8 @@ WINDOWHEIGHT = 480 # size of windows' height in pixels
 REVEALSPEED = 8 # speed boxes' sliding reveals and covers
 BOXSIZE = 40 # size of box height & width in pixels
 GAPSIZE = 10 # size of gap between boxes in pixels
-BOARDWIDTH = 10 # number of columns of icons
-BOARDHEIGHT = 7 # number of rows of icons
+BOARDWIDTH = 2 # number of columns of icons
+BOARDHEIGHT = 2 # number of rows of icons
 assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
 XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
 YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
@@ -101,7 +101,7 @@ def main():
                         revealedBoxes[firstSelection[0]][firstSelection[1]] = False
                         revealedBoxes[boxx][boxy] = False
                     elif hasWon(revealedBoxes): # check if all pairs found
-                        gameWonAnimation(mainBoard)
+                        gameWonAnimation()
                         pygame.time.wait(2000)
 
                         # Reset the board
@@ -266,19 +266,28 @@ def startGameAnimation(board):
         coverBoxesAnimation(board, boxGroup)
 
 
-def gameWonAnimation(board):
-    # flash the background color when the player has won
-    coveredBoxes = generateRevealedBoxesData(True)
-    color1 = LIGHTBGCOLOR
-    color2 = BGCOLOR
+def gameWonAnimation():
+    # Load the image
+    image = pygame.image.load("kuche.png")
+
+    # Create a font for the text
+    font = pygame.font.Font(None, 36)
+    text_surface = font.render("You won!!!!!", True, (255, 255, 0))
 
     for i in range(13):
-        color1, color2 = color2, color1 # swap colors
-        DISPLAYSURF.fill(color1)
-        drawBoard(board, coveredBoxes)
+        DISPLAYSURF.fill((0, 0, 0))
         pygame.display.update()
         pygame.time.wait(300)
 
+        DISPLAYSURF.blit(image, (0, 0))
+
+        # Calculate the position for the text above the image
+        text_x = (DISPLAYSURF.get_width() - text_surface.get_width()) // 2
+        text_y = 20
+
+        DISPLAYSURF.blit(text_surface, (text_x, text_y))
+        pygame.display.update()
+        pygame.time.wait(300)
 
 def hasWon(revealedBoxes):
     # Returns True if all the boxes have been revealed, otherwise False
