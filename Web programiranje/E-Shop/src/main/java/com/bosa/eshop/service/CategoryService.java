@@ -1,6 +1,6 @@
-package com.bosa.wpaudsprogression.service;
+package com.bosa.eshop.service;
 
-import com.bosa.wpaudsprogression.model.Category;
+import com.bosa.eshop.model.Category;
 
 import java.util.List;
 

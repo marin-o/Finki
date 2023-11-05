@@ -1,6 +1,6 @@
-package com.bosa.wpaudsprogression.web.servlet;
+package com.bosa.eshop.web.servlet;
 
-import com.bosa.wpaudsprogression.service.CategoryService;
+import com.bosa.eshop.service.CategoryService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

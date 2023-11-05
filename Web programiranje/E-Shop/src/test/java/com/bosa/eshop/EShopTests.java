@@ -1,10 +1,10 @@
-package com.bosa.wpaudsprogression;
+package com.bosa.eshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WpAudsProgressionApplicationTests {
+class EShopTests {
 
     @Test
     void contextLoads() {

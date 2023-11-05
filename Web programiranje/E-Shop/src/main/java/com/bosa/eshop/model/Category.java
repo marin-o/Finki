@@ -1,4 +1,4 @@
-package com.bosa.wpaudsprogression.model;
+package com.bosa.eshop.model;
 
 import lombok.Data;
 
