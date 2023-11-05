@@ -8,6 +8,14 @@
     <h2>Info about our request</h2>
     <div>IP address:<th:block th:text="${ipAddress}"/></div>
     <div>Client agent:<th:block th:text="${clientAgent}"/></div>
+    <th:block th:if="${session.user!=null}">
+        <div>Client name and surname:
+            <th:block th:text="${session.user.getName()+' '+session.user.getSurname()}"/>
+        </div>
+        <div>
+            <a href="/logout">Logout</a>
+        </div>
+    </th:block>
     <h2>Categories</h2>
     <ul>
         <li th:each="category : ${categories}"><th:block th:text="${category.name}"/> (<th:block th:text=" ${category.desc}"/>)</li>
