@@ -13,21 +13,21 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns="/categories")
+@WebServlet(urlPatterns="")
 public class CategoryServlet extends HttpServlet {
     private final CategoryService categoryService;
-    private final SpringTemplateEngine spe;
+    private final SpringTemplateEngine templateEngine;
 
-    public CategoryServlet(CategoryService c, SpringTemplateEngine spe){
+    public CategoryServlet(CategoryService c, SpringTemplateEngine templateEngine ){
         this.categoryService= c;
-        this.spe = spe;
+        this.templateEngine=templateEngine;
     }
     @Override
     protected void doPost( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
         String name = (String)req.getParameter("name");
         String desc = (String)req.getParameter("description");
         categoryService.create(name,desc);
-        resp.sendRedirect("/hello");
+        resp.sendRedirect("/");
 
         /*String name = req.getParameter("name");
         String desc = req.getParameter("desc");
@@ -45,7 +45,7 @@ public class CategoryServlet extends HttpServlet {
         context.setVariable("clientAgent",req.getHeader("User-Agent"));
         context.setVariable("categories", categoryService.listCategories());
 
-        spe.process("categories.html",context,resp.getWriter());
+        templateEngine.process("categories.html",context,resp.getWriter());
 
         /*PrintWriter pw = resp.getWriter();
         String ip = req.getRemoteAddr();

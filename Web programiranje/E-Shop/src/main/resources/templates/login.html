@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/login}">
+    <label >
+        Username:
+        <input type="text" name="username"/>
+    </label>
+    <label>
+        Password:
+        <input type="password" name="password"/>
+    </label>
+    <div th:if="${invalidCredentials}">
+        <div th:text="${invalidCredentials}"></div>
+    </div>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
