@@ -14,8 +14,8 @@
         Password:
         <input type="password" name="password"/>
     </label>
-    <div th:if="${invalidCredentials}">
-        <div th:text="${invalidCredentials}"></div>
+    <div th:if="${hasError}">
+        <div th:text="${theError}"></div>
     </div>
     <input type="submit" value="Submit">
 </form>

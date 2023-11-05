@@ -1,6 +1,7 @@
 package com.bosa.eshop.web.servlet;
 
 import com.bosa.eshop.model.User;
+import com.bosa.eshop.model.exception.InvalidArgumentsException;
 import com.bosa.eshop.model.exception.InvalidUserCredentialsException;
 import com.bosa.eshop.service.AuthService;
 import jakarta.servlet.ServletException;
@@ -33,22 +34,24 @@ public class LoginServlet extends HttpServlet {
     }
     @Override
     protected void doPost( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
+        IWebExchange webExchange = JakartaServletWebApplication
+                .buildApplication(getServletContext())
+                .buildExchange(req,resp);
+        WebContext context = new WebContext(webExchange);
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         User user = null;
         try{
             user = authService.login(username,password);
-        } catch( InvalidUserCredentialsException e){
-            IWebExchange webExchange = JakartaServletWebApplication
-                    .buildApplication(getServletContext())
-                    .buildExchange(req,resp);
-            WebContext context = new WebContext(webExchange);
-            context.setVariable("invalidCredentials",e.getMessage());
+            req.getSession().setAttribute("user",user);
+            resp.sendRedirect("/");
+        } catch( InvalidUserCredentialsException | InvalidArgumentsException e){
+            context.setVariable("hasError",true);
+            context.setVariable("theError",e.getMessage());
             templateEngine.process("login.html",context,resp.getWriter());
-            resp.sendRedirect("/login");
         }
-        req.getSession().setAttribute("user",user);
-        resp.sendRedirect("/");
+
     }
 }
