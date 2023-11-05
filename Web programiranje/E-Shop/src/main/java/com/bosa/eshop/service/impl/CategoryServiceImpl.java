@@ -1,8 +1,8 @@
-package com.bosa.wpaudsprogression.service.impl;
+package com.bosa.eshop.service.impl;
 
-import com.bosa.wpaudsprogression.model.Category;
-import com.bosa.wpaudsprogression.repository.InMemoryCatRepository;
-import com.bosa.wpaudsprogression.service.CategoryService;
+import com.bosa.eshop.model.Category;
+import com.bosa.eshop.repository.InMemoryCatRepository;
+import com.bosa.eshop.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

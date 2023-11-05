@@ -1,10 +1,9 @@
-package com.bosa.wpaudsprogression.repository;
+package com.bosa.eshop.repository;
 
-import com.bosa.wpaudsprogression.bootstrap.DataHolder;
-import com.bosa.wpaudsprogression.model.Category;
+import com.bosa.eshop.bootstrap.DataHolder;
+import com.bosa.eshop.model.Category;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

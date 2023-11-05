@@ -1,6 +1,6 @@
-package com.bosa.wpaudsprogression.bootstrap;
+package com.bosa.eshop.bootstrap;
 
-import com.bosa.wpaudsprogression.model.Category;
+import com.bosa.eshop.model.Category;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
