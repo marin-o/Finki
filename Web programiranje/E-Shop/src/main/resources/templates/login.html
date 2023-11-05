@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Form</title>
+    <link href="/main.css" rel="stylesheet"/>
 </head>
 <body>
 <form th:method="POST" th:action="@{/login}">
@@ -15,7 +16,7 @@
         <input type="password" name="password"/>
     </label>
     <div th:if="${hasError}">
-        <div th:text="${theError}"></div>
+        <div th:text="${theError}" class="error"></div>
     </div>
     <input type="submit" value="Submit">
 </form>
