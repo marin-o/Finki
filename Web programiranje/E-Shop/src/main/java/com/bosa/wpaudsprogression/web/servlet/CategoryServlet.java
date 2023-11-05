@@ -13,7 +13,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns="/hello")
+@WebServlet(urlPatterns="/categories")
 public class CategoryServlet extends HttpServlet {
     private final CategoryService categoryService;
     private final SpringTemplateEngine spe;
