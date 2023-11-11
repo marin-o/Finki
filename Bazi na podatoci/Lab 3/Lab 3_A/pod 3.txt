@@ -1,0 +1,4 @@
+james_id = π Person_ID (σ Firstname='James' and Lastname='Cameron' Persons)
+films_id = π Movie_ID (james_id ⨝ Persons.Person_ID = PersonsMovies.Person_ID PersonsMovies)
+films = films_id ⨝ PersonsMovies.Movie_ID = Movies.MovieID Movies
+σ Runtime<120 or Runtime>180 films
