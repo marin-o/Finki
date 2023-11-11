@@ -1,0 +1,53 @@
+group: lab1
+Movies = {
+MovieID, Title, ReleaseDate, Genre_ID, Budget, OpeningWeek, Profit, Runtime, Certificate, SequelOf, Distribution
+1, 'Movie 1', '1990-1-1', 1, 200000001, '1990-1-2', 1, 150, 'C', 1, 'D'
+2, 'Movie 2', '1990-1-1', 2, 1, '1990-1-2', 1, 444, 'C', 2, 'D'
+3, 'Movie 3', '1990-1-1', 1, 4, '1990-1-2', 1, 150, 'C', 4, 'D'
+4, 'Movie 4', '1990-1-1', 3, 5, '1990-1-2', 1, 150, 'C', 5, 'D'
+5, 'Movie 5', '1990-1-1', 5, 200000001, '1990-1-2', 1, 4444, 'C', 7, 'D'
+6, 'Movie 6', '1990-1-1', 4, 200000001, '1990-1-2', 1, 150, 'C', 9, 'D'
+7, 'Movie 7', '1990-1-1', 3, 4, '1990-1-2', 1, 112, 'C', 0, D
+8, 'Movie 8', '1990-1-1', 2, 5, '1990-1-2', 1, 3, 'C', 0, D
+9, 'Movie 9', '1990-1-1', 5, 6, '1990-1-2', 1, 150, 'C', 0, D
+10, 'Movie 10', '1990-1-1', 1, 200000001, '1990-1-2', 1, 150, 'C', 0, D
+}
+
+Genres = {
+Genre_ID, Name
+1, Action
+2, Sci-Fi
+3, Comedy
+4, Romance
+5, Thriller
+}
+Persons = {
+Person_ID, Firstname, Lastname
+1, 'James', 'Cameron'
+2, 'Jeniffer', 'Lawrence'
+3, 'Chriss', 'Pratt'
+4, 'Liam', 'Neeson'
+5, 'Idris', 'Elba'
+6, 'Keanu', 'Reeves'
+7, 'Tom', 'Holland'
+8, 'Marino', 'Jakimoski'
+9, 'Viktor', 'Saveski'
+10, 'Chris', 'Hemsworth'
+}
+PersonsMovies = {
+Person_ID, Movie_ID, Role
+1, 1, Producer
+1, 3, Producer
+1, 4, Producer
+1, 5, Producer
+1, 7, Producer
+1, 8, Producer
+1, 10, Producer
+2, 2, Actor
+2, 4, Actor
+3, 5, Actor
+6, 4, Actor
+10, 10, Actor
+4, 5, Actor
+}
+

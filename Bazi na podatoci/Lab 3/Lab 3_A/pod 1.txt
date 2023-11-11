@@ -1,0 +1,3 @@
+Scifigenre = π Genre_ID (σName='Sci-Fi'(Genres))
+joined = Scifigenre ⨝ Genres.Genre_ID=Movies.Genre_ID Movies
+π Movies.Title joined

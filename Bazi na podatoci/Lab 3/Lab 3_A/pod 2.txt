@@ -1,0 +1,5 @@
+filmovi = σ Movies.Runtime>150 or Movies.Budget>200000000 Movies
+filmovi_ids = π Movies.MovieID filmovi
+lugje_ids = filmovi_ids ⨝ Movies.MovieID=PersonsMovies.Movie_ID PersonsMovies
+lugje = lugje_ids ⨝ PersonsMovies.Person_ID = Persons.Person_ID Persons
+π Persons.Firstname,Lastname lugje
