@@ -17,7 +17,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns="/login")
+@WebServlet(urlPatterns="/servlet/login")
 @AllArgsConstructor
 public class LoginServlet extends HttpServlet {
     private final AuthService authService;
@@ -42,11 +42,11 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        User user = null;
+        User user;
         try{
             user = authService.login(username,password);
             req.getSession().setAttribute("user",user);
-            resp.sendRedirect("/");
+            resp.sendRedirect("/servlet/categories");
         } catch( InvalidUserCredentialsException | InvalidArgumentsException e){
             context.setVariable("hasError",true);
             context.setVariable("theError",e.getMessage());
