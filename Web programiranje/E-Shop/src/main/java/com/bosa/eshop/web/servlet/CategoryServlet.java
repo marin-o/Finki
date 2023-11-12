@@ -13,7 +13,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns="")
+@WebServlet(urlPatterns="/servlet/categories")
 public class CategoryServlet extends HttpServlet {
     private final CategoryService categoryService;
     private final SpringTemplateEngine templateEngine;
@@ -24,10 +24,10 @@ public class CategoryServlet extends HttpServlet {
     }
     @Override
     protected void doPost( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
-        String name = (String)req.getParameter("name");
-        String desc = (String)req.getParameter("description");
+        String name = req.getParameter("name");
+        String desc = req.getParameter("description");
         categoryService.create(name,desc);
-        resp.sendRedirect("/");
+        resp.sendRedirect("/servlet/categories");
 
         /*String name = req.getParameter("name");
         String desc = req.getParameter("desc");

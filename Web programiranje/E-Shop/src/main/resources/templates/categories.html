@@ -1,30 +1,48 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Categories</title>
-</head>
-<body>
-    <h2>Info about our request</h2>
-    <div>IP address:<th:block th:text="${ipAddress}"/></div>
-    <div>Client agent:<th:block th:text="${clientAgent}"/></div>
-    <th:block th:if="${session.user!=null}">
-        <div>Client name and surname:
-            <th:block th:text="${session.user.getName()+' '+session.user.getSurname()}"/>
+<!--<a th:href="@{/hello}">Home</a>-->
+<!--<th:block>-->
+<!--    <div th:text="${userViews?:0}"></div>-->
+<!--</th:block>-->
+
+<!--<h3>User Info</h3>-->
+<!--<p th:text="'Hello' + ${ipAddress}"></p>-->
+
+<!--<form th:method="post" th:action="@{/servlet/category}">-->
+<!--    <label for="cname">Category name</label>-->
+<!--    <input type="text" name="cname" id="cname">-->
+<!--    <label for="cdesc">Category description</label>-->
+<!--    <input type="text" name="cdesc" id="cdesc">-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+            <h3 class="jumbotron-heading">All categories</h3>
         </div>
-        <div>
-            <a href="/logout">Logout</a>
+    </section>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${categories.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Category name</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td th:text="${category.getName()}"></td>
+                            <td th:text="${category.getDescription()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </th:block>
-    <h2>Categories</h2>
-    <ul>
-        <li th:each="category : ${categories}"><th:block th:text="${category.name}"/> (<th:block th:text=" ${category.desc}"/>)</li>
-    </ul>
-    <h3>Add new category</h3>
-    <form th:method="POST" th:action="@{/}">
-        <label for='name'>Name:</label>:<input id='name' type="text" name="name"/>
-        <label for="desc">Description:</label>:<input id="desc" type="text" name="description"/>
-        <input type="submit" value="Submit"/>
-    </form>
-</body>
-</html>
+    </div>
+</div>
+
