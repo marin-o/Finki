@@ -43,7 +43,7 @@ public class CategoryServlet extends HttpServlet {
         WebContext context = new WebContext(webExchange);
         context.setVariable("ipAddress",req.getRemoteAddr());
         context.setVariable("clientAgent",req.getHeader("User-Agent"));
-        context.setVariable("categories", categoryService.listCategories());
+        context.setVariable("categories", categoryService.findAll());
 
         templateEngine.process("categories.html",context,resp.getWriter());
 

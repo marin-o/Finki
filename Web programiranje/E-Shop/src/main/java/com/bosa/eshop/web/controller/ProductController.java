@@ -43,7 +43,7 @@ public class ProductController {
     @GetMapping("/add-form")
     public String addProductPage( Model model ){
         List<Manufacturer> manufacturers = this.manufacturerService.findAll();
-        List<Category> categories = this.categoryService.listCategories();
+        List<Category> categories = this.categoryService.findAll();
         model.addAttribute("manufacturers", manufacturers);
         model.addAttribute("categories", categories);
         model.addAttribute("bodyContent", "add-product");
@@ -65,7 +65,7 @@ public class ProductController {
         if (this.productService.findById(id).isPresent()) {
             Product product = this.productService.findById(id).get();
             List<Manufacturer> manufacturers = this.manufacturerService.findAll();
-            List<Category> categories = this.categoryService.listCategories();
+            List<Category> categories = this.categoryService.findAll();
             model.addAttribute("manufacturers", manufacturers);
             model.addAttribute("categories", categories);
             model.addAttribute("product", product);

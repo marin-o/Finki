@@ -112,9 +112,17 @@ def runGame():
             wormCoords.insert(0, newHead)
             del wormCoords[-1]
 
-        for wormBody in wormCoords[1:]:
+        ind = 1
+        while ind < len(wormCoords):
+            wormBody = wormCoords[ind]
+
             if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody['y'] == wormCoords[HEAD]['y']:
-                return  # game over
+                if len(wormCoords) >= 3 and ind > 3:
+                    RED_APPLES_EATEN -= len(wormCoords[ind:])
+                    del wormCoords[ind:]
+                break
+
+            ind += 1
 
         if not GOLDEN_APPLE_VISIBLE and random.random() < 0.005:
             valid_location = False
