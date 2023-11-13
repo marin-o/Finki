@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="utf-8">
+    <title>Movie Ticket Order page - Welcome and choose a Movie</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Movie Ticket Shop App</h1>
+</header>
+<main>
+    <form th:method="POST" th:action="@{/}">
+        <h2>Search for movie</h2>
+        <label>
+            Enter movie title text:
+            <input type="text" name="movieText"/>
+        </label>
+        <label>
+            Enter movie rating:
+            <input type="number" name="minRating" min="0" max="10"/>
+        </label>
+        <input type="submit" value="Submit">
+    </form>
+    <a th:href="@{/movies/add-form}"><h2>Add new movie</h2></a>
+    <form th:method="POST" th:action="@{/servlet/ticketOrder}">
+        <h2>Choose movie:</h2>
+        <h2 th:if="${notFoundError!=null}" >
+            <span th:text="${notFoundError}" style="color: darkred"></span>
+        </h2>
+        <label th:each="movie : ${movies}" style="list-style-type: none">
+            <input type="radio" name="movieTitle" th:value="${movie.getTitle()}">
+            <span  th:text="'Title: '+${movie.getTitle()}+', Summary: '+${movie.getSummary()}+', Rating: '+${movie.getRating()}+', Production: '+${movie.getProduction().getName()}"></span><br/>
+            <th:block>
+               <a th:href="@{'/movies/edit-form/{id}' (id=${movie.getId()})}"><i>Edit</i></a>
+            </th:block>
+            <th:block>
+                <a th:href="@{'/movies/delete/{id}' (id=${movie.getId()})}"><i>Delete</i></a><br>
+            </th:block>
+        </label>
+        <h2>Choose number of tickets:</h2>
+            <label>
+                <input type="number" name="numTickets" min="1" max="10">
+            </label><br/>
+        <h2>Enter username</h2>
+        <label>
+            <input type="text" name="username" minlength="1">
+        </label>
+        <br/>
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+</main>
+</body>
+</html>
