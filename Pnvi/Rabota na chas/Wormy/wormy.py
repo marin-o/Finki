@@ -16,12 +16,12 @@ CELLWIDTH = int(WINDOWWIDTH / CELLSIZE)
 CELLHEIGHT = int(WINDOWHEIGHT / CELLSIZE)
 
 #             R    G    B
-WHITE     = (255, 255, 255)
-BLACK     = (  0,   0,   0)
-RED       = (255,   0,   0)
-GREEN     = (  0, 255,   0)
-DARKGREEN = (  0, 155,   0)
-DARKGRAY  = ( 40,  40,  40)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+DARKGREEN = (0, 155, 0)
+DARKGRAY = (40, 40, 40)
 BGCOLOR = BLACK
 
 UP = 'up'
@@ -29,7 +29,14 @@ DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
-HEAD = 0 # syntactic sugar: index of the worm's head
+HEAD = 0  # syntactic sugar: index of the worm's head
+
+GOLDEN_APPLE_DURATION = 5
+GOLDEN_APPLE_TIMER = 0
+GOLDEN_APPLE_VISIBLE = False
+GOLDEN_APPLE_LOCATION = {'x':-5,'y':-5}
+RED_APPLES_EATEN = 0
+
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT
@@ -50,7 +57,7 @@ def runGame():
     # Set a random start point.
     startx = random.randint(5, CELLWIDTH - 6)
     starty = random.randint(5, CELLHEIGHT - 6)
-    wormCoords = [{'x': startx,     'y': starty},
+    wormCoords = [{'x': startx, 'y': starty},
                   {'x': startx - 1, 'y': starty},
                   {'x': startx - 2, 'y': starty}]
     direction = RIGHT
@@ -58,8 +65,11 @@ def runGame():
     # Start the apple in a random place.
     apple = getRandomLocation()
 
-    while True: # main game loop
-        for event in pygame.event.get(): # event handling loop
+    global GOLDEN_APPLE_DURATION, GOLDEN_APPLE_TIMER, GOLDEN_APPLE_VISIBLE, GOLDEN_APPLE_LOCATION, \
+        RED_APPLES_EATEN
+
+    while True:  # main game loop
+        for event in pygame.event.get():  # event handling loop
             if event.type == QUIT:
                 terminate()
             elif event.type == KEYDOWN:
@@ -83,7 +93,7 @@ def runGame():
             Го бришам и последниот дел од телото од црвот, како при нормално придвижување на црвот.
         '''
         if wormCoords[HEAD]['x'] == -1:
-            newHead = {'x': CELLWIDTH-1, 'y': wormCoords[HEAD]['y']}
+            newHead = {'x': CELLWIDTH - 1, 'y': wormCoords[HEAD]['y']}
             wormCoords.insert(0, newHead)
             del wormCoords[-1]
 
@@ -93,7 +103,7 @@ def runGame():
             del wormCoords[-1]
 
         if wormCoords[HEAD]['y'] == -1:
-            newHead = {'x': wormCoords[HEAD]['x'], 'y': CELLHEIGHT-1}
+            newHead = {'x': wormCoords[HEAD]['x'], 'y': CELLHEIGHT - 1}
             wormCoords.insert(0, newHead)
             del wormCoords[-1]
 
@@ -104,14 +114,38 @@ def runGame():
 
         for wormBody in wormCoords[1:]:
             if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody['y'] == wormCoords[HEAD]['y']:
-                return # game over
+                return  # game over
+
+        if not GOLDEN_APPLE_VISIBLE and random.random() < 0.005:
+            valid_location = False
+            while not valid_location:
+                GOLDEN_APPLE_LOCATION = getRandomLocation()
+                if GOLDEN_APPLE_LOCATION != apple:
+                    valid_location = True
+            GOLDEN_APPLE_VISIBLE = True
+            GOLDEN_APPLE_TIMER = pygame.time.get_ticks()
+
+        if (GOLDEN_APPLE_VISIBLE and
+                pygame.time.get_ticks() - GOLDEN_APPLE_TIMER >= GOLDEN_APPLE_DURATION * 1000):
+            GOLDEN_APPLE_VISIBLE = False
+            GOLDEN_APPLE_LOCATION = {'x':-5,'y':-5}
 
         # check if worm has eaten an apple
         if wormCoords[HEAD]['x'] == apple['x'] and wormCoords[HEAD]['y'] == apple['y']:
             # don't remove worm's tail segment
-            apple = getRandomLocation() # set a new apple somewhere
+            apple = getRandomLocation()  # set a new apple somewhere
+            RED_APPLES_EATEN += 1
+        elif GOLDEN_APPLE_VISIBLE and wormCoords[HEAD]['x'] == GOLDEN_APPLE_LOCATION['x'] and wormCoords[HEAD]['y'] == \
+                GOLDEN_APPLE_LOCATION['y']:
+
+            GOLDEN_APPLE_VISIBLE = False
+            if len(wormCoords) > 3:
+                del wormCoords[-1]
+                del wormCoords[-1]
+            else:
+                del wormCoords[-1]
         else:
-            del wormCoords[-1] # remove worm's tail segment
+            del wormCoords[-1]  # remove worm's tail segment
 
         # move the worm by adding a segment in the direction it is moving
         if direction == UP:
@@ -127,9 +161,12 @@ def runGame():
         drawGrid()
         drawWorm(wormCoords)
         drawApple(apple)
-        drawScore(len(wormCoords) - 3)
+        if GOLDEN_APPLE_VISIBLE:
+            drawGoldenApple(GOLDEN_APPLE_LOCATION)
+        drawScore(RED_APPLES_EATEN)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
+
 
 def drawPressKeyMsg():
     pressKeySurf = BASICFONT.render('Press a key to play.', True, DARKGRAY)
@@ -172,12 +209,12 @@ def showStartScreen():
         drawPressKeyMsg()
 
         if checkForKeyPress():
-            pygame.event.get() # clear event queue
+            pygame.event.get()  # clear event queue
             return
         pygame.display.update()
         FPSCLOCK.tick(FPS)
-        degrees1 += 3 # rotate by 3 degrees each frame
-        degrees2 += 7 # rotate by 7 degrees each frame
+        degrees1 += 3  # rotate by 3 degrees each frame
+        degrees2 += 7  # rotate by 7 degrees each frame
 
 
 def terminate():
@@ -203,12 +240,13 @@ def showGameOverScreen():
     drawPressKeyMsg()
     pygame.display.update()
     pygame.time.wait(500)
-    checkForKeyPress() # clear out any key presses in the event queue
+    checkForKeyPress()  # clear out any key presses in the event queue
 
     while True:
         if checkForKeyPress():
-            pygame.event.get() # clear event queue
+            pygame.event.get()  # clear event queue
             return
+
 
 def drawScore(score):
     scoreSurf = BASICFONT.render('Score: %s' % (score), True, WHITE)
@@ -234,10 +272,19 @@ def drawApple(coord):
     pygame.draw.rect(DISPLAYSURF, RED, appleRect)
 
 
+def drawGoldenApple(coord):
+    if not GOLDEN_APPLE_VISIBLE:
+        return
+    x = coord['x'] * CELLSIZE
+    y = coord['y'] * CELLSIZE
+    goldenAppleRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
+    pygame.draw.rect(DISPLAYSURF, (255, 255, 0), goldenAppleRect)
+
+
 def drawGrid():
-    for x in range(0, WINDOWWIDTH, CELLSIZE): # draw vertical lines
+    for x in range(0, WINDOWWIDTH, CELLSIZE):  # draw vertical lines
         pygame.draw.line(DISPLAYSURF, DARKGRAY, (x, 0), (x, WINDOWHEIGHT))
-    for y in range(0, WINDOWHEIGHT, CELLSIZE): # draw horizontal lines
+    for y in range(0, WINDOWHEIGHT, CELLSIZE):  # draw horizontal lines
         pygame.draw.line(DISPLAYSURF, DARKGRAY, (0, y), (WINDOWWIDTH, y))
 
 
