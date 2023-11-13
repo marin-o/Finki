@@ -11,7 +11,7 @@ public interface CategoryService {
 
     void delete(String name);
 
-    List<Category> listCategories();
+    List<Category> findAll();
 
     List<Category> searchCategories(String searchText);
 }
