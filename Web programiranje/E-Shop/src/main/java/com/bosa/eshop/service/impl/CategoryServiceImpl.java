@@ -1,7 +1,7 @@
 package com.bosa.eshop.service.impl;
 
 import com.bosa.eshop.model.Category;
-import com.bosa.eshop.repository.InMemoryCatRepository;
+import com.bosa.eshop.repository.InMemoryCategoryRepository;
 import com.bosa.eshop.service.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final InMemoryCatRepository catRepository;
+    private final InMemoryCategoryRepository catRepository;
 
-    public CategoryServiceImpl(InMemoryCatRepository catRepository){
+    public CategoryServiceImpl( InMemoryCategoryRepository catRepository){
         this.catRepository = catRepository;
     }
     @Override

@@ -9,12 +9,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class InMemoryCatRepository {
+public class InMemoryCategoryRepository {
     public List<Category> findAll(){
         return DataHolder.categories;
     }
     public Category save(Category c){
-        if (c==null || c.getName().isEmpty() || c.getDesc().isEmpty())
+        if (c==null || c.getName().isEmpty() || c.getDescription().isEmpty())
             return null;
         DataHolder.categories.removeIf(r->r.getName().equals(c.getName()));
         DataHolder.categories.add(c);
@@ -27,7 +27,7 @@ public class InMemoryCatRepository {
     }
 
     public List<Category> search(String text){
-        return DataHolder.categories.stream().filter(r->r.getName().contains(text) || r.getDesc().contains(text))
+        return DataHolder.categories.stream().filter(r->r.getName().contains(text) || r.getDescription().contains(text))
                 .collect(Collectors.toList());
     }
 
@@ -35,5 +35,10 @@ public class InMemoryCatRepository {
         if(name == null)
             return;
         DataHolder.categories.removeIf(r->r.getName().equals(name));
+    }
+
+    public Optional<Category> findById( Long id ) {
+        return DataHolder.categories.stream().filter(r->r.getId().equals(id))
+                .findFirst();
     }
 }
