@@ -27,7 +27,7 @@
         <input type="submit" value="Submit">
     </form>
     <a th:href="@{/movies/add-form}"><h2>Add new movie</h2></a>
-    <form th:method="POST" th:action="@{/servlet/ticketOrder}">
+    <form th:method="POST" th:action="@{/movies/ticketOrder}">
         <h2>Choose movie:</h2>
         <h2 th:if="${notFoundError!=null}" >
             <span th:text="${notFoundError}" style="color: darkred"></span>
