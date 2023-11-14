@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping("/edit-order/{id}")
-    public String editOrder(@PathVariable Long ticketId, Model model){
-        Optional<TicketOrder> o = ticketOrderService.findById(ticketId);
+    public String editOrder(@PathVariable Long id, Model model){
+        Optional<TicketOrder> o = ticketOrderService.findById(id);
         if(o.isPresent()){
             TicketOrder order = o.get();
             model.addAttribute("order", order);
