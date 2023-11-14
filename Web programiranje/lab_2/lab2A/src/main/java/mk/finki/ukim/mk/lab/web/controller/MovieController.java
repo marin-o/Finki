@@ -27,6 +27,23 @@ public class MovieController {
          return "listMovies";
     }
 
+    @GetMapping("/filter")
+    public String getMoviesPageFiltered( @RequestParam(required=false) String movieText,
+                                 @RequestParam(required=false) String minRating,
+                                 Model model ){
+        if(movieText!=null && !movieText.isEmpty()) {
+            if(minRating != null && !minRating.isEmpty())
+                model.addAttribute("movies", movieService.searchMovies(movieText, Double.parseDouble(minRating)));
+            else model.addAttribute("movies", movieService.searchMovies(movieText));
+        }
+        else if(minRating != null && !minRating.isEmpty()){
+            model.addAttribute("movies", movieService.searchMovies(Double.parseDouble(minRating)));
+        }
+        else
+            model.addAttribute("movies",movieService.findAll());
+        return "listMovies";
+    }
+
     @GetMapping("/edit-form/{id}")
     public String getEditMovieForm( @PathVariable Long id, Model model ){
         Optional<Movie> m = movieService.findById(id);
