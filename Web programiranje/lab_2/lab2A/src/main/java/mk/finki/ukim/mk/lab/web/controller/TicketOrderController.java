@@ -20,16 +20,18 @@ public class TicketOrderController {
     private final UserService userService;
 
     @GetMapping()
-    public String getTicketOrderPage(
-                                      HttpServletRequest request, Model model ){
+    public String getTicketOrderPage( @RequestParam(required=false, defaultValue="Invalid movie") String movieTitle,
+                                      @RequestParam(required=false, defaultValue="-1") String numTickets,
+                                      @RequestParam(required=false, defaultValue="Invalid username") String username,
+                                      HttpServletRequest req,
+                                      Model model ){
         TicketOrder ticket = ticketOrderService.placeOrder(
-                request.getParameter("movieTitle"),
-                request.getParameter("username"),
-                request.getRemoteAddr(),
-                Integer.parseInt(request.getParameter("tickets"))
+                movieTitle,
+                username,req.getRemoteAddr(),
+                Integer.parseInt(numTickets)
         );
-        userService.addTicketToUser(request.getParameter("username"),ticket);
-        model.addAttribute("ticket",ticket);
+        userService.addTicketToUser(username,ticket);
+        model.addAttribute("ticket", ticket);
         return "orderConfirmation";
     }
 
