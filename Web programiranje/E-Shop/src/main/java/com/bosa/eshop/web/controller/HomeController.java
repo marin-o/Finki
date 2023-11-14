@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/home")
 public class HomeController {
     @GetMapping
-    public String getHomePage( Model model ){
+    public String getHomePage( Model model, HttpServletRequest req){
         model.addAttribute("bodyContent","home");
+        Integer userViews = (Integer) req.getServletContext().getAttribute("userViews");
+        req.getServletContext().setAttribute("userViews",++userViews);
+        model.addAttribute("userViews", req.getServletContext().getAttribute("userViews"));
         return "master-template";
     }
 }

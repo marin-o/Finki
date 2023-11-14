@@ -12,6 +12,7 @@
 <body>
 <header>
     <h1>Welcome to our Movie Ticket Shop App</h1>
+    <h2 th:if="${userViews!=null}"><span th:text="${userViews}"></span> </h2>
 </header>
 <main>
     <form th:method="GET" th:action="@{/movies/filter}">
