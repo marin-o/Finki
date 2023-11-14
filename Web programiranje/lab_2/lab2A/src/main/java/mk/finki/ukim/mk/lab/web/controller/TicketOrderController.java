@@ -39,6 +39,6 @@ public class TicketOrderController {
     public String buyTicket(@RequestParam String movieTitle,
                             @RequestParam String numTickets,
                             @RequestParam String username){
-        return "redirect:/movies/ticketOrder+?movieTitle="+movieTitle+"&tickets="+numTickets+"&username="+username;
+        return "redirect:/movies/ticketOrder?movieTitle="+movieTitle+"&numTickets="+numTickets+"&username="+username;
     }
 }
