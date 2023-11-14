@@ -20,7 +20,7 @@
     <input type="submit" value="Submit">
 </form>
 <ul th:if="${currentUserTickets}" th:each="ticket : ${currentUserTickets}">
-    <a th:href="@{'/movies/edit-form/{id}' (id=${ticket.getId()})}" ><li th:text="'Movie title: '+${ticket.movieTitle}+', Number of tickets: '+${ticket.numberOfTickets}">
+    <a th:href="@{'/movies/users/edit-form/{id}' (id=${ticket.getId()})}" ><li th:text="'Movie title: '+${ticket.movieTitle}+', Number of tickets: '+${ticket.numberOfTickets}">
 
     </li></a>
 </ul>
