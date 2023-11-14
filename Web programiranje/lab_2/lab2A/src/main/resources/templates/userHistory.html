@@ -8,7 +8,7 @@
 <h2 th:if="${selectedUser}">
     <span th:text="'Hi '+${selectedUser.getUsername()}"></span>
 </h2>
-<form th:method="POST" th:action="@{/servlet/users}">
+<form th:method="POST" th:action="@{/movies/users}">
     <label>
         Select user:
         <select name="username">
@@ -20,7 +20,9 @@
     <input type="submit" value="Submit">
 </form>
 <ul th:if="${currentUserTickets}" th:each="ticket : ${currentUserTickets}">
-    <li th:text="'Movie title: '+${ticket.movieTitle}+', Number of tickets: '+${ticket.numberOfTickets}"></li>
+    <a th:href="@{'/movies/users/{id}' (id=${ticket.getId()})}" ><li th:text="'Movie title: '+${ticket.movieTitle}+', Number of tickets: '+${ticket.numberOfTickets}">
+
+    </li></a>
 </ul>
 <form th:method="GET" th:action="@{/movies}">
     <input type="Submit" value="Go back to movies">

@@ -31,5 +31,18 @@ public class UserRepository {
             user = addUser(username);
         }
         user.getOrders().add(ticket);
+        DataHolder.orders.add(ticket);
+    }
+
+    public Optional<User> findById(Long id) {
+        return DataHolder.users.stream().filter(u->u.getId().equals(id)).findFirst();
+    }
+    public Optional<TicketOrder> findOrder(Long id){
+        return DataHolder.orders.stream().filter(o->o.getId().equals(id)).findFirst();
+    }
+
+    public void save(Long id, Long numTickets, String movieTitle) {
+        findOrder(id).get().setNumberOfTickets(numTickets);
+        findOrder(id).get().setMovieTitle(movieTitle);
     }
 }
