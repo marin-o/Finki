@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.service.TicketOrderService;
 import mk.finki.ukim.mk.lab.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 @RequestMapping("/movies/ticketOrder")
 @AllArgsConstructor
 public class TicketOrderController {
