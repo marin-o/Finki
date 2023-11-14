@@ -3,6 +3,7 @@ package mk.finki.ukim.mk.lab.bootstrap;
 import jakarta.annotation.PostConstruct;
 import mk.finki.ukim.mk.lab.model.Movie;
 import mk.finki.ukim.mk.lab.model.Production;
+import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.model.User;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ public class DataHolder {
     public static List<Movie> movies = new ArrayList<>();
     public static List<User> users = new ArrayList<>();
     public static List<Production> productions = new ArrayList<>();
+    public static List<TicketOrder> orders = new ArrayList<>();
 
     @PostConstruct
     public void init(){

@@ -8,6 +8,7 @@ import mk.finki.ukim.mk.lab.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +29,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addTicketToUser(String username, TicketOrder ticket) {
         userRepository.addTicketToUser(username, ticket);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 
 
