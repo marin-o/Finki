@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.lab.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import mk.finki.ukim.mk.lab.model.Movie;
 import mk.finki.ukim.mk.lab.service.MovieService;
@@ -19,18 +20,22 @@ public class MovieController {
     private final ProductionService productionService;
 
     @GetMapping()
-    public String getMoviesPage( @RequestParam(required=false) String error, Model model ){
+    public String getMoviesPage( @RequestParam(required=false) String error, Model model, HttpServletRequest req ){
          model.addAttribute("movies",movieService.findAll());
          if(error != null && !error.isEmpty()){
              model.addAttribute("notFoundError","Selected movie could not be found, try another movie");
          }
-         return "listMovies";
+        Integer userViews = (Integer) req.getServletContext().getAttribute("userViews");
+        req.getServletContext().setAttribute("userViews",++userViews);
+        model.addAttribute("userViews", req.getServletContext().getAttribute("userViews"));
+
+        return "listMovies";
     }
 
     @GetMapping("/filter")
     public String getMoviesPageFiltered( @RequestParam(required=false) String movieText,
                                  @RequestParam(required=false) String minRating,
-                                 Model model ){
+                                 Model model, HttpServletRequest req ){
         if(movieText!=null && !movieText.isEmpty()) {
             if(minRating != null && !minRating.isEmpty())
                 model.addAttribute("movies", movieService.searchMovies(movieText, Double.parseDouble(minRating)));
@@ -41,6 +46,9 @@ public class MovieController {
         }
         else
             model.addAttribute("movies",movieService.findAll());
+        Integer userViews = (Integer) req.getServletContext().getAttribute("userViews");
+        req.getServletContext().setAttribute("userViews",++userViews);
+        model.addAttribute("userViews", req.getServletContext().getAttribute("userViews"));
         return "listMovies";
     }
 
@@ -53,6 +61,7 @@ public class MovieController {
             model.addAttribute("movie",movie);
             return "editMovie";
         }
+
         return "redirect:/movies?error=MovieNotFound";
     }
     @GetMapping("/add-form")
