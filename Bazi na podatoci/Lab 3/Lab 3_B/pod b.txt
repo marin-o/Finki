@@ -1,0 +1,4 @@
+Books_isbn_title = pi Book_ISBN, Book_Title (sigma Author='Neumann' or Author='Blum' BOOK)
+Informatik = pi CourseId (sigma Dept='Informatik' COURSE)
+Recommendations = pi Book_ISBN (Informatik join COURSE.CourseId=BOOK_RECOMMENDATION.CourseId BOOK_RECOMMENDATION)
+pi Book_Title (Books_isbn_title join BOOK.Book_ISBN=BOOK_RECOMMENDATION.Book_ISBN Recommendations)

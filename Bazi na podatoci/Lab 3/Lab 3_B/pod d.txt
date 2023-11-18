@@ -1,0 +1,5 @@
+isbn = pi Book_ISBN (sigma Book_Title='Workshop Javascript' BOOK)
+Medien_courses = pi CourseId, Cname (sigma Dept='Medien' COURSE)
+course_ids = pi CourseId,Cname (COURSE natural join BOOK_RECOMMENDATION natural join isbn)
+book_recommended_in_these_courses = pi CourseId, Cname (course_ids natural join COURSE)
+Medien_courses union book_recommended_in_these_courses

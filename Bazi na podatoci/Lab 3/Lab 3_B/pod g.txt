@@ -1,0 +1,2 @@
+WiSe2020 = pi CourseId, Grade (sigma Quarter='WiSe 2020' ENROLL)
+γ CourseId; avg(Grade)->GradeAverage WiSe2020
