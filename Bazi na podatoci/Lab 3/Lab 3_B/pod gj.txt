@@ -1,0 +1,8 @@
+Students = pi SSN, Name STUDENT
+Average_grades_student = gamma SSN; avg(Grade)->Grade_average ENROLL
+min_avg = γ min(Grade_average)->Min_avg Average_grades_student
+max_avg = γ max(Grade_average)->Max_avg Average_grades_student
+worst_student = pi SSN (sigma Grade_average=Min_avg (Average_grades_student natural join min_avg)) join Students
+best_student = pi SSN (sigma Grade_average=Max_avg (Average_grades_student natural join max_avg)) join Students
+best_and_worst_students = (best_student natural join max_avg) union (worst_student natural join min_avg)
+best_and_worst_students

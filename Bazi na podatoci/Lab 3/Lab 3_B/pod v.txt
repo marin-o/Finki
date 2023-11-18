@@ -1,0 +1,5 @@
+Medieninformatik = pi SSN, Name (sigma Major='Medieninformatik' STUDENT)
+Informatik_courses = pi CourseId (sigma Dept='Informatik' COURSE)
+WiSe2020 = sigma Quarter='WiSe 2020' and Grade>60 and Grade<80 ENROLL
+Informatik_grades = Informatik_courses join WiSe2020 natural join Medieninformatik
+pi Name Informatik_grades

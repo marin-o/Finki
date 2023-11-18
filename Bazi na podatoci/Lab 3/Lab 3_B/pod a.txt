@@ -1,0 +1,3 @@
+Student_ssn_name = pi SSN, Name STUDENT
+Wise_enrollments = pi SSN (sigma Quarter='WiSe 2020' ENROLL)
+pi Name (Student_ssn_name natural join Wise_enrollments)
