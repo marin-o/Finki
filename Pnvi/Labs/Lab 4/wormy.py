@@ -132,7 +132,7 @@ def runGame():
             # don't remove worm's tail segment
             apple = getRandomLocation()  # set a new apple somewhere
         elif (time.time() - starting_time) > 20 and enemyCoords[HEAD] == wormCoords[HEAD]:
-            pass
+            pass # zgolemuvanje na crvot kako da izel jabolko pri kolizija so enemy crvot
         else:
             del wormCoords[-1]  # remove worm's tail segment
 
