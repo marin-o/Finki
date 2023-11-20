@@ -40,7 +40,7 @@ RIGHT = 'right'
 
 HEAD = 0  # syntactic sugar: index of the worm's head
 
-bonus = 0  # baranje 2: brojac za bonus poeni od bonus jabolka
+score, bonus = 0, 0  # baranje 2: brojac za bonus poeni od bonus jabolka i za poeni
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT
@@ -70,7 +70,7 @@ def drawBonusApple(coord, color1, color2): # baranje 2
 def runGame():
     # Set a random start point.
     starting_time = time.time()
-    global bonus
+    global bonus, score
     startx = random.randint(5, CELLWIDTH - 6)
     starty = random.randint(5, CELLHEIGHT - 6)
     wormCoords = [{'x': startx, 'y': starty},
@@ -185,7 +185,8 @@ def runGame():
         if (time.time() - starting_time) < 7: #ednas samo vo prvite 7 sekundi od igrata
             drawBonusApple(brown_apple, BROWN, DARKBROWN)
         drawApple(apple)
-        drawScore(len(wormCoords) - 3 + bonus) # baranje 2: nova presmetka za poeni
+        score = len(wormCoords)-3+bonus # baranje 2: presmetka na score
+        drawScore(score) # baranje 2: nova presmetka za poeni
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
@@ -259,6 +260,14 @@ def showGameOverScreen():
 
     DISPLAYSURF.blit(gameSurf, gameRect)
     DISPLAYSURF.blit(overSurf, overRect)
+
+    # baranje 2:
+    scoreFont = pygame.font.Font('freesansbold.ttf', 16)
+    scoreSurf = scoreFont.render('Score: ' + str(score), True, WHITE)
+    scoreRect = scoreSurf.get_rect()
+    scoreRect.midtop = (WINDOWWIDTH / 2, 450)
+    DISPLAYSURF.blit(scoreSurf, scoreRect)
+
     drawPressKeyMsg()
     pygame.display.update()
     pygame.time.wait(500)
