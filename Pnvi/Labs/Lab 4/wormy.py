@@ -42,6 +42,7 @@ HEAD = 0  # syntactic sugar: index of the worm's head
 
 score, bonus = 0, 0  # baranje 2: brojac za bonus poeni od bonus jabolka i za poeni
 
+
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT
 
@@ -57,7 +58,7 @@ def main():
         showGameOverScreen()
 
 
-def drawBonusApple(coord, color1, color2): # baranje 2
+def drawBonusApple(coord, color1, color2):  # baranje 2
     x = coord['x'] * CELLSIZE
     y = coord['y'] * CELLSIZE
     for i in range(3):
@@ -88,7 +89,7 @@ def runGame():
     enemyCoords = [{'x': startx_enemy, 'y': starty_enemy},
                    {'x': startx_enemy - 1, 'y': starty_enemy},
                    {'x': startx_enemy - 2, 'y': starty_enemy}]
-    enemy_direction = DOWN
+    enemy_direction = random.choice([UP, DOWN, LEFT, RIGHT])
 
     orange_apple = getRandomLocation()  # baranje 2: random lokacija za bonus elementite(gi krstiv jabolka)
     brown_apple = getRandomLocation()
@@ -186,13 +187,13 @@ def runGame():
         if (time.time() - starting_time) > 20:
             drawWorm(enemyCoords, PINK, DARKPINK)
         # baranje 2: slednite dva ifovi gi crtaat soodvetnite jabolka
-        if ((time.time() - starting_time) % 10) > 5: # sekoi vtori 5 ednici od vremeto (primer od 6ta do 9ta sekunda) kje se crta jabolkoto
+        if ((time.time() - starting_time) % 10) > 5:  # sekoi vtori 5 ednici od vremeto (primer od 6ta do 9ta sekunda) kje se crta jabolkoto
             drawBonusApple(orange_apple, ORANGE, DARKORANGE)
-        if (time.time() - starting_time) < 7: #ednas samo vo prvite 7 sekundi od igrata
+        if (time.time() - starting_time) < 7:  # ednas samo vo prvite 7 sekundi od igrata
             drawBonusApple(brown_apple, BROWN, DARKBROWN)
         drawApple(apple)
-        score = len(wormCoords)-3+bonus # baranje 2: presmetka na score
-        drawScore(score) # baranje 2: nova presmetka za poeni
+        score = len(wormCoords) - 3 + bonus  # baranje 2: presmetka na score
+        drawScore(score)  # baranje 2: nova presmetka za poeni
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
