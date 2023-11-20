@@ -4,6 +4,8 @@
 # Released under a "Simplified BSD" license
 
 import random, pygame, sys
+import time
+
 from pygame.locals import *
 
 FPS = 15
@@ -16,12 +18,14 @@ CELLWIDTH = int(WINDOWWIDTH / CELLSIZE)
 CELLHEIGHT = int(WINDOWHEIGHT / CELLSIZE)
 
 #             R    G    B
-WHITE     = (255, 255, 255)
-BLACK     = (  0,   0,   0)
-RED       = (255,   0,   0)
-GREEN     = (  0, 255,   0)
-DARKGREEN = (  0, 155,   0)
-DARKGRAY  = ( 40,  40,  40)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+DARKGREEN = (0, 155, 0)
+PINK = (255, 182, 193)  # baranje 1: enemy crv boi
+DARKPINK = (139, 0, 139)
+DARKGRAY = (40, 40, 40)
 BGCOLOR = BLACK
 
 UP = 'up'
@@ -29,7 +33,8 @@ DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
-HEAD = 0 # syntactic sugar: index of the worm's head
+HEAD = 0  # syntactic sugar: index of the worm's head
+
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT
@@ -48,18 +53,29 @@ def main():
 
 def runGame():
     # Set a random start point.
+    starting_time = time.time()
+
     startx = random.randint(5, CELLWIDTH - 6)
     starty = random.randint(5, CELLHEIGHT - 6)
-    wormCoords = [{'x': startx,     'y': starty},
+    wormCoords = [{'x': startx, 'y': starty},
                   {'x': startx - 1, 'y': starty},
                   {'x': startx - 2, 'y': starty}]
     direction = RIGHT
 
+    # baranje 1: Inicijalizacija na startnite pozicii od enemy crv
+    startx_enemy = random.randint(5, CELLWIDTH - 6)
+    starty_enemy = random.randint(5, CELLHEIGHT - 6)
+
+    enemyCoords = [{'x': startx_enemy, 'y': starty_enemy},
+                   {'x': startx_enemy - 1, 'y': starty_enemy},
+                   {'x': startx_enemy - 2, 'y': starty_enemy}]
+    enemy_direction = DOWN
+
     # Start the apple in a random place.
     apple = getRandomLocation()
 
-    while True: # main game loop
-        for event in pygame.event.get(): # event handling loop
+    while True:  # main game loop
+        for event in pygame.event.get():  # event handling loop
             if event.type == QUIT:
                 terminate()
             elif event.type == KEYDOWN:
@@ -74,19 +90,51 @@ def runGame():
                 elif event.key == K_ESCAPE:
                     terminate()
 
+        # baranje 1: Dvizenje na enemy crv
+        if (time.time() - starting_time) > 20:
+            if enemy_direction == LEFT:
+                enemy_direction = random.choice([UP, DOWN, LEFT])
+            elif enemy_direction == RIGHT:
+                enemy_direction = random.choice([UP, DOWN, RIGHT])
+            elif enemy_direction == UP:
+                enemy_direction = random.choice([LEFT, RIGHT, UP])
+            elif enemy_direction == DOWN:
+                enemy_direction = random.choice([RIGHT, DOWN, LEFT])
+
+            if enemy_direction == UP:
+                enemy_head = {'x': enemyCoords[HEAD]['x'], 'y': enemyCoords[HEAD]['y'] - 1}
+            elif enemy_direction == DOWN:
+                enemy_head = {'x': enemyCoords[HEAD]['x'], 'y': enemyCoords[HEAD]['y'] + 1}
+            elif enemy_direction == LEFT:
+                enemy_head = {'x': enemyCoords[HEAD]['x'] - 1, 'y': enemyCoords[HEAD]['y']}
+            elif enemy_direction == RIGHT:
+                enemy_head = {'x': enemyCoords[HEAD]['x'] + 1, 'y': enemyCoords[HEAD]['y']}
+            enemyCoords.insert(0, enemy_head)
+
         # check if the worm has hit itself or the edge
-        if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == CELLWIDTH or wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['y'] == CELLHEIGHT:
-            return # game over
+        if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == CELLWIDTH or wormCoords[HEAD]['y'] == -1 or \
+                wormCoords[HEAD]['y'] == CELLHEIGHT:
+            return  # game over
         for wormBody in wormCoords[1:]:
             if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody['y'] == wormCoords[HEAD]['y']:
-                return # game over
+                return  # game over
+
+        # baranje 1: zgolemuvanje enemy crv
+        if (time.time() - starting_time) > 20:
+            if enemyCoords[HEAD] == wormCoords[HEAD]:
+                pass  # ne go brishime posledniot segment kako pri normalno dvizenje
+                # (vsusnost isto kako kaj originalniot crv koga jade jabolko)
+            else:
+                del enemyCoords[-1]
 
         # check if worm has eaten an apply
         if wormCoords[HEAD]['x'] == apple['x'] and wormCoords[HEAD]['y'] == apple['y']:
             # don't remove worm's tail segment
-            apple = getRandomLocation() # set a new apple somewhere
+            apple = getRandomLocation()  # set a new apple somewhere
+        elif (time.time() - starting_time) > 20 and enemyCoords[HEAD] == wormCoords[HEAD]:
+            pass
         else:
-            del wormCoords[-1] # remove worm's tail segment
+            del wormCoords[-1]  # remove worm's tail segment
 
         # move the worm by adding a segment in the direction it is moving
         if direction == UP:
@@ -100,11 +148,15 @@ def runGame():
         wormCoords.insert(0, newHead)
         DISPLAYSURF.fill(BGCOLOR)
         drawGrid()
-        drawWorm(wormCoords)
+        drawWorm(wormCoords,GREEN,DARKGREEN,)
+        # baranje 1: go crtame enemy crv
+        if (time.time() - starting_time) > 20:
+            drawWorm(enemyCoords, PINK, DARKPINK)
         drawApple(apple)
         drawScore(len(wormCoords) - 3)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
+
 
 def drawPressKeyMsg():
     pressKeySurf = BASICFONT.render('Press a key to play.', True, DARKGRAY)
@@ -147,12 +199,12 @@ def showStartScreen():
         drawPressKeyMsg()
 
         if checkForKeyPress():
-            pygame.event.get() # clear event queue
+            pygame.event.get()  # clear event queue
             return
         pygame.display.update()
         FPSCLOCK.tick(FPS)
-        degrees1 += 3 # rotate by 3 degrees each frame
-        degrees2 += 7 # rotate by 7 degrees each frame
+        degrees1 += 3  # rotate by 3 degrees each frame
+        degrees2 += 7  # rotate by 7 degrees each frame
 
 
 def terminate():
@@ -178,12 +230,13 @@ def showGameOverScreen():
     drawPressKeyMsg()
     pygame.display.update()
     pygame.time.wait(500)
-    checkForKeyPress() # clear out any key presses in the event queue
+    checkForKeyPress()  # clear out any key presses in the event queue
 
     while True:
         if checkForKeyPress():
-            pygame.event.get() # clear event queue
+            pygame.event.get()  # clear event queue
             return
+
 
 def drawScore(score):
     scoreSurf = BASICFONT.render('Score: %s' % (score), True, WHITE)
@@ -192,14 +245,14 @@ def drawScore(score):
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 
-def drawWorm(wormCoords):
+def drawWorm(wormCoords,color,darkcolor):
     for coord in wormCoords:
         x = coord['x'] * CELLSIZE
         y = coord['y'] * CELLSIZE
         wormSegmentRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
-        pygame.draw.rect(DISPLAYSURF, DARKGREEN, wormSegmentRect)
+        pygame.draw.rect(DISPLAYSURF, darkcolor, wormSegmentRect)
         wormInnerSegmentRect = pygame.Rect(x + 4, y + 4, CELLSIZE - 8, CELLSIZE - 8)
-        pygame.draw.rect(DISPLAYSURF, GREEN, wormInnerSegmentRect)
+        pygame.draw.rect(DISPLAYSURF, color, wormInnerSegmentRect)
 
 
 def drawApple(coord):
@@ -210,9 +263,9 @@ def drawApple(coord):
 
 
 def drawGrid():
-    for x in range(0, WINDOWWIDTH, CELLSIZE): # draw vertical lines
+    for x in range(0, WINDOWWIDTH, CELLSIZE):  # draw vertical lines
         pygame.draw.line(DISPLAYSURF, DARKGRAY, (x, 0), (x, WINDOWHEIGHT))
-    for y in range(0, WINDOWHEIGHT, CELLSIZE): # draw horizontal lines
+    for y in range(0, WINDOWHEIGHT, CELLSIZE):  # draw horizontal lines
         pygame.draw.line(DISPLAYSURF, DARKGRAY, (0, y), (WINDOWWIDTH, y))
 
 
