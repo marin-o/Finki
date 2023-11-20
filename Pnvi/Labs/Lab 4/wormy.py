@@ -87,8 +87,11 @@ def runGame():
                    {'x': startx_enemy - 2, 'y': starty_enemy}]
     enemy_direction = DOWN
 
-    orange_apple = getRandomLocation() # baranje 2: random lokacija za bonus elementite(gi krstiv jabolka)
+    orange_apple = getRandomLocation()  # baranje 2: random lokacija za bonus elementite(gi krstiv jabolka)
     brown_apple = getRandomLocation()
+    while orange_apple == wormCoords[HEAD] or brown_apple == wormCoords[HEAD]:
+        orange_apple = getRandomLocation()
+        brown_apple = getRandomLocation()
 
     # Start the apple in a random place.
     apple = getRandomLocation()
@@ -268,6 +271,17 @@ def showGameOverScreen():
     scoreRect.midtop = (WINDOWWIDTH / 2, 450)
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
+    # baranje 3: ednostavna kreacija na kopcinjata
+    buttonFont = pygame.font.Font('freesansbold.ttf', 30)
+    startSurf = buttonFont.render('Start from the beggining', True, PINK, BGCOLOR)
+    quitSurf = buttonFont.render('Quit', True, DARKPINK, BGCOLOR)
+    startRect = startSurf.get_rect()
+    quitRect = quitSurf.get_rect()
+    startRect.midtop = (WINDOWWIDTH / 2, 350)
+    quitRect.midtop = (WINDOWWIDTH / 2, 400)
+    DISPLAYSURF.blit(startSurf, startRect)
+    DISPLAYSURF.blit(quitSurf, quitRect)
+
     drawPressKeyMsg()
     pygame.display.update()
     pygame.time.wait(500)
@@ -277,6 +291,13 @@ def showGameOverScreen():
         if checkForKeyPress():
             pygame.event.get()  # clear event queue
             return
+        # baranje 3: proverka dali se pritisnati kopcinjata
+        for event in pygame.event.get():
+            if event.type == MOUSEBUTTONDOWN:
+                if startRect.collidepoint(pygame.mouse.get_pos()):
+                    return
+                if quitRect.collidepoint(pygame.mouse.get_pos()):
+                    terminate()
 
 
 def drawScore(score):
