@@ -24,6 +24,11 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 DARKGREEN = (0, 155, 0)
 PINK = (255, 182, 193)  # baranje 1: enemy crv boi
+ORANGE = (255, 165, 0)  # baranje 2: boi za baranje 2
+DARKORANGE = (204, 102, 0)
+BROWN = (139, 69, 19)
+DARKBROWN = (101, 67, 33)
+
 DARKPINK = (139, 0, 139)
 DARKGRAY = (40, 40, 40)
 BGCOLOR = BLACK
@@ -35,6 +40,7 @@ RIGHT = 'right'
 
 HEAD = 0  # syntactic sugar: index of the worm's head
 
+bonus = 0  # baranje 2: brojac za bonus poeni od bonus jabolka
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT
@@ -51,10 +57,20 @@ def main():
         showGameOverScreen()
 
 
+def drawBonusApple(coord, color1, color2): # baranje 2
+    x = coord['x'] * CELLSIZE
+    y = coord['y'] * CELLSIZE
+    for i in range(3):
+        color1, color2 = color2, color1
+        rect = pygame.Rect(x, y, CELLSIZE, CELLSIZE)
+        pygame.draw.rect(DISPLAYSURF, color1, rect)
+        pygame.display.update()
+
+
 def runGame():
     # Set a random start point.
     starting_time = time.time()
-
+    global bonus
     startx = random.randint(5, CELLWIDTH - 6)
     starty = random.randint(5, CELLHEIGHT - 6)
     wormCoords = [{'x': startx, 'y': starty},
@@ -70,6 +86,9 @@ def runGame():
                    {'x': startx_enemy - 1, 'y': starty_enemy},
                    {'x': startx_enemy - 2, 'y': starty_enemy}]
     enemy_direction = DOWN
+
+    orange_apple = getRandomLocation() # baranje 2: random lokacija za bonus elementite(gi krstiv jabolka)
+    brown_apple = getRandomLocation()
 
     # Start the apple in a random place.
     apple = getRandomLocation()
@@ -132,9 +151,17 @@ def runGame():
             # don't remove worm's tail segment
             apple = getRandomLocation()  # set a new apple somewhere
         elif (time.time() - starting_time) > 20 and enemyCoords[HEAD] == wormCoords[HEAD]:
-            pass # zgolemuvanje na crvot kako da izel jabolko pri kolizija so enemy crvot
+            pass  # zgolemuvanje na crvot kako da izel jabolko pri kolizija so enemy crvot
         else:
             del wormCoords[-1]  # remove worm's tail segment
+
+        # baranje 2: proverka dali crvot izel bonus jabolko
+        if wormCoords[HEAD] == orange_apple and ((time.time() - starting_time) % 10) > 5:
+            orange_apple = getRandomLocation()
+            bonus += 3
+        if wormCoords[HEAD] == brown_apple:
+            brown_apple = {'x': -1, 'y': -1}
+            bonus += 3
 
         # move the worm by adding a segment in the direction it is moving
         if direction == UP:
@@ -148,12 +175,17 @@ def runGame():
         wormCoords.insert(0, newHead)
         DISPLAYSURF.fill(BGCOLOR)
         drawGrid()
-        drawWorm(wormCoords,GREEN,DARKGREEN,)
+        drawWorm(wormCoords, GREEN, DARKGREEN, )
         # baranje 1: go crtame enemy crv
         if (time.time() - starting_time) > 20:
             drawWorm(enemyCoords, PINK, DARKPINK)
+        # baranje 2: slednite dva ifovi gi crtaat soodvetnite jabolka
+        if ((time.time() - starting_time) % 10) > 5: # sekoi vtori 5 ednici od vremeto (primer od 6ta do 9ta sekunda) kje se crta jabolkoto
+            drawBonusApple(orange_apple, ORANGE, DARKORANGE)
+        if (time.time() - starting_time) < 7: #ednas samo vo prvite 7 sekundi od igrata
+            drawBonusApple(brown_apple, BROWN, DARKBROWN)
         drawApple(apple)
-        drawScore(len(wormCoords) - 3)
+        drawScore(len(wormCoords) - 3 + bonus) # baranje 2: nova presmetka za poeni
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
@@ -245,7 +277,7 @@ def drawScore(score):
     DISPLAYSURF.blit(scoreSurf, scoreRect)
 
 
-def drawWorm(wormCoords,color,darkcolor):
+def drawWorm(wormCoords, color, darkcolor):
     for coord in wormCoords:
         x = coord['x'] * CELLSIZE
         y = coord['y'] * CELLSIZE
