@@ -70,7 +70,10 @@ def drawBonusApple(coord, color1, color2): # baranje 2
 def runGame():
     # Set a random start point.
     starting_time = time.time()
+    # baranje 2: slednite 3 linii se za inicijalizacija
     global bonus, score
+    bonus = 0
+    score = 0
     startx = random.randint(5, CELLWIDTH - 6)
     starty = random.randint(5, CELLHEIGHT - 6)
     wormCoords = [{'x': startx, 'y': starty},
