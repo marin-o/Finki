@@ -377,12 +377,21 @@ def checkForQuit():
         pygame.event.post(event)  # put the other KEYUP event objects back
 
 
+# next three lines are added for fourth question
+current_level = 1
+next_level_requirement = 10
+level_increment = 2
+
+
 def calculateLevelAndFallFreq(score):
-    # Based on the score, return the level the player is on and
-    # how many seconds pass until a falling piece falls one space.
-    level = int(score / 10) + 1
-    fallFreq = 0.5 - (level * 0.01)
-    return level, fallFreq
+    global current_level, next_level_requirement, level_increment  # added for fourth question
+
+    if score >= next_level_requirement: # added for fourth question
+        current_level += 1 # added for fourth question
+        next_level_requirement += level_increment # added for fourth question
+
+    fallFreq = 0.5 - (current_level * 0.01)  # modified for third and fourth question
+    return current_level, fallFreq # modified for fourth question
 
 
 def getNewPiece():
