@@ -21,25 +21,25 @@ XMARGIN = int((WINDOWWIDTH - BOARDWIDTH * BOXSIZE) / 2)
 TOPMARGIN = WINDOWHEIGHT - (BOARDHEIGHT * BOXSIZE) - 5
 
 #               R    G    B
-WHITE       = (255, 255, 255)
-GRAY        = (185, 185, 185)
-BLACK       = (  0,   0,   0)
-RED         = (155,   0,   0)
-LIGHTRED    = (175,  20,  20)
-GREEN       = (  0, 155,   0)
-LIGHTGREEN  = ( 20, 175,  20)
-BLUE        = (  0,   0, 155)
-LIGHTBLUE   = ( 20,  20, 175)
-YELLOW      = (155, 155,   0)
-LIGHTYELLOW = (175, 175,  20)
+WHITE = (255, 255, 255)
+GRAY = (185, 185, 185)
+BLACK = (0, 0, 0)
+RED = (155, 0, 0)
+LIGHTRED = (175, 20, 20)
+GREEN = (0, 155, 0)
+LIGHTGREEN = (20, 175, 20)
+BLUE = (0, 0, 155)
+LIGHTBLUE = (20, 20, 175)
+YELLOW = (155, 155, 0)
+LIGHTYELLOW = (175, 175, 20)
 
 BORDERCOLOR = BLUE
 BGCOLOR = BLACK
 TEXTCOLOR = WHITE
 TEXTSHADOWCOLOR = GRAY
-COLORS      = (     BLUE,      GREEN,      RED,      YELLOW)
+COLORS = (BLUE, GREEN, RED, YELLOW)
 LIGHTCOLORS = (LIGHTBLUE, LIGHTGREEN, LIGHTRED, LIGHTYELLOW)
-assert len(COLORS) == len(LIGHTCOLORS) # each color must have light color
+assert len(COLORS) == len(LIGHTCOLORS)  # each color must have light color
 
 TEMPLATEWIDTH = 5
 TEMPLATEHEIGHT = 5
@@ -146,13 +146,36 @@ T_SHAPE_TEMPLATE = [['.....',
                      '..O..',
                      '.....']]
 
-PIECES = {'S': S_SHAPE_TEMPLATE,
-          'Z': Z_SHAPE_TEMPLATE,
-          'J': J_SHAPE_TEMPLATE,
-          'L': L_SHAPE_TEMPLATE,
-          'I': I_SHAPE_TEMPLATE,
-          'O': O_SHAPE_TEMPLATE,
-          'T': T_SHAPE_TEMPLATE}
+F_SHAPE_TEMPLATE = [['.000.',
+                     '.0...',
+                     '.O00.',
+                     '.0...',
+                     '.0...'],
+                    ['.....',
+                     '0.0..',
+                     '0.0..',
+                     '00000',
+                     '.....'],
+                    ['...0.',
+                     '...0.',
+                     '.000.',
+                     '...0.',
+                     '.000.'],
+                    ['.....',
+                     '00000',
+                     '..0.0',
+                     '..0.0',
+                     '.....']]
+PIECES = {
+    'S': S_SHAPE_TEMPLATE,
+    'Z': Z_SHAPE_TEMPLATE,
+    'J': J_SHAPE_TEMPLATE,
+    'L': L_SHAPE_TEMPLATE,
+    'I': I_SHAPE_TEMPLATE,
+    'O': O_SHAPE_TEMPLATE,
+    'T': T_SHAPE_TEMPLATE,
+    'F': F_SHAPE_TEMPLATE
+}
 
 
 def main():
@@ -165,7 +188,7 @@ def main():
     pygame.display.set_caption('Tetromino')
 
     showTextScreen('Tetromino')
-    while True: # game loop
+    while True:  # game loop
         if random.randint(0, 1) == 0:
             pygame.mixer.music.load('tetrisb.mid')
         else:
@@ -182,7 +205,7 @@ def runGame():
     lastMoveDownTime = time.time()
     lastMoveSidewaysTime = time.time()
     lastFallTime = time.time()
-    movingDown = False # note: there is no movingUp variable
+    movingDown = False  # note: there is no movingUp variable
     movingLeft = False
     movingRight = False
     score = 0
@@ -191,24 +214,24 @@ def runGame():
     fallingPiece = getNewPiece()
     nextPiece = getNewPiece()
 
-    while True: # game loop
+    while True:  # game loop
         if fallingPiece == None:
             # No falling piece in play, so start a new piece at the top
             fallingPiece = nextPiece
             nextPiece = getNewPiece()
-            lastFallTime = time.time() # reset lastFallTime
+            lastFallTime = time.time()  # reset lastFallTime
 
             if not isValidPosition(board, fallingPiece):
-                return # can't fit a new piece on the board, so game over
+                return  # can't fit a new piece on the board, so game over
 
         checkForQuit()
-        for event in pygame.event.get(): # event handling loop
+        for event in pygame.event.get():  # event handling loop
             if event.type == KEYUP:
                 if (event.key == K_p):
                     # Pausing the game
                     DISPLAYSURF.fill(BGCOLOR)
                     pygame.mixer.music.stop()
-                    showTextScreen('Paused') # pause until a key press
+                    showTextScreen('Paused')  # pause until a key press
                     pygame.mixer.music.play(-1, 0.0)
                     lastFallTime = time.time()
                     lastMoveDownTime = time.time()
@@ -239,7 +262,7 @@ def runGame():
                     fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])
                     if not isValidPosition(board, fallingPiece):
                         fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
-                elif (event.key == K_q): # rotate the other direction
+                elif (event.key == K_q):  # rotate the other direction
                     fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
                     if not isValidPosition(board, fallingPiece):
                         fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])
@@ -269,7 +292,8 @@ def runGame():
                 fallingPiece['x'] += 1
             lastMoveSidewaysTime = time.time()
 
-        if movingDown and time.time() - lastMoveDownTime > MOVEDOWNFREQ and isValidPosition(board, fallingPiece, adjY=1):
+        if movingDown and time.time() - lastMoveDownTime > MOVEDOWNFREQ and isValidPosition(board, fallingPiece,
+                                                                                            adjY=1):
             fallingPiece['y'] += 1
             lastMoveDownTime = time.time()
 
@@ -345,12 +369,12 @@ def showTextScreen(text):
 
 
 def checkForQuit():
-    for event in pygame.event.get(QUIT): # get all the QUIT events
-        terminate() # terminate if any QUIT events are present
-    for event in pygame.event.get(KEYUP): # get all the KEYUP events
+    for event in pygame.event.get(QUIT):  # get all the QUIT events
+        terminate()  # terminate if any QUIT events are present
+    for event in pygame.event.get(KEYUP):  # get all the KEYUP events
         if event.key == K_ESCAPE:
-            terminate() # terminate if the KEYUP event was for the Esc key
-        pygame.event.post(event) # put the other KEYUP event objects back
+            terminate()  # terminate if the KEYUP event was for the Esc key
+        pygame.event.post(event)  # put the other KEYUP event objects back
 
 
 def calculateLevelAndFallFreq(score):
@@ -360,14 +384,15 @@ def calculateLevelAndFallFreq(score):
     fallFreq = 0.27 - (level * 0.02)
     return level, fallFreq
 
+
 def getNewPiece():
     # return a random new piece in a random rotation and color
     shape = random.choice(list(PIECES.keys()))
     newPiece = {'shape': shape,
                 'rotation': random.randint(0, len(PIECES[shape]) - 1),
                 'x': int(BOARDWIDTH / 2) - int(TEMPLATEWIDTH / 2),
-                'y': -2, # start it above the board (i.e. less than 0)
-                'color': random.randint(0, len(COLORS)-1)}
+                'y': -2,  # start it above the board (i.e. less than 0)
+                'color': random.randint(0, len(COLORS) - 1)}
     return newPiece
 
 
@@ -404,6 +429,7 @@ def isValidPosition(board, piece, adjX=0, adjY=0):
                 return False
     return True
 
+
 def isCompleteLine(board, y):
     # Return True if the line filled with boxes with no gaps.
     for x in range(BOARDWIDTH):
@@ -415,13 +441,13 @@ def isCompleteLine(board, y):
 def removeCompleteLines(board):
     # Remove any completed lines on the board, move everything above them down, and return the number of complete lines.
     numLinesRemoved = 0
-    y = BOARDHEIGHT - 1 # start y at the bottom of the board
+    y = BOARDHEIGHT - 1  # start y at the bottom of the board
     while y >= 0:
         if isCompleteLine(board, y):
             # Remove the line and pull boxes down by one line.
             for pullDownY in range(y, 0, -1):
                 for x in range(BOARDWIDTH):
-                    board[x][pullDownY] = board[x][pullDownY-1]
+                    board[x][pullDownY] = board[x][pullDownY - 1]
             # Set very top line to blank.
             for x in range(BOARDWIDTH):
                 board[x][0] = BLANK
@@ -430,7 +456,7 @@ def removeCompleteLines(board):
             # This is so that if the line that was pulled down is also
             # complete, it will be removed.
         else:
-            y -= 1 # move on to check next row up
+            y -= 1  # move on to check next row up
     return numLinesRemoved
 
 
@@ -455,7 +481,8 @@ def drawBox(boxx, boxy, color, pixelx=None, pixely=None):
 
 def drawBoard(board):
     # draw the border around the board
-    pygame.draw.rect(DISPLAYSURF, BORDERCOLOR, (XMARGIN - 3, TOPMARGIN - 7, (BOARDWIDTH * BOXSIZE) + 8, (BOARDHEIGHT * BOXSIZE) + 8), 5)
+    pygame.draw.rect(DISPLAYSURF, BORDERCOLOR,
+                     (XMARGIN - 3, TOPMARGIN - 7, (BOARDWIDTH * BOXSIZE) + 8, (BOARDHEIGHT * BOXSIZE) + 8), 5)
 
     # fill the background of the board
     pygame.draw.rect(DISPLAYSURF, BGCOLOR, (XMARGIN, TOPMARGIN, BOXSIZE * BOARDWIDTH, BOXSIZE * BOARDHEIGHT))
@@ -499,7 +526,7 @@ def drawNextPiece(piece):
     nextRect.topleft = (WINDOWWIDTH - 120, 80)
     DISPLAYSURF.blit(nextSurf, nextRect)
     # draw the "next" piece
-    drawPiece(piece, pixelx=WINDOWWIDTH-120, pixely=100)
+    drawPiece(piece, pixelx=WINDOWWIDTH - 120, pixely=100)
 
 
 if __name__ == '__main__':
