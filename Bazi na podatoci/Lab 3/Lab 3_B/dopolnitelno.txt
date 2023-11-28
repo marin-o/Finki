@@ -1,2 +1,14 @@
-najdi gi site studenti koi studiraat Medieninformatik i slushale kurs od oblasta dizajn ili medien
-site studenti koi slushale kurs od oblasta informatik ili medien no ne i od dvete
+1.najdi gi site studenti koi studiraat Medieninformatik i slushale kurs od 
+oblasta Design ili Medien
+2.site studenti koi slushale kurs od oblasta informatik ili medien no ne i od dvete
+
+medieninformatik_students = σ Major='Medieninformatik' STUDENT
+courses = π CourseId (σ Dept='Design' or Dept='Medien' COURSE)
+enrollments=ENROLL ⨝ courses
+π Name(medieninformatik_students ⨝ enrollments)
+
+medien = π CourseId (σ Dept='Medien' COURSE)
+informatik = π CourseId (σ Dept='Informatik' COURSE)
+students_medien = π SSN (medien ⨝ ENROLL)
+students_informatik = π SSN (informatik ⨝ ENROLL)
+π Name (((students_medien ∪ students_informatik)-(students_medien∩students_informatik)) ⨝ STUDENT)
