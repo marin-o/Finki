@@ -11,4 +11,6 @@ medien = π CourseId (σ Dept='Medien' COURSE)
 informatik = π CourseId (σ Dept='Informatik' COURSE)
 students_medien = π SSN (medien ⨝ ENROLL)
 students_informatik = π SSN (informatik ⨝ ENROLL)
-π Name (((students_medien ∪ students_informatik)-(students_medien∩students_informatik)) ⨝ STUDENT)
+uni=students_medien ∪ students_informatik
+inter=students_medien∩students_informatik
+π Name (((uni)-(inter)) ⨝ STUDENT)
