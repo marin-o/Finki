@@ -9,7 +9,6 @@ import mk.finki.ukim.mk.lab.service.MovieService;
 import mk.finki.ukim.mk.lab.service.TicketOrderService;
 import mk.finki.ukim.mk.lab.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +36,7 @@ public class UserController {
         return "userHistory";
     }
 
-    @GetMapping("/edit-order/{id}")
+    @GetMapping("/edit-form/{id}")
     public String editOrder(@PathVariable Long id, Model model){
         Optional<TicketOrder> o = ticketOrderService.findById(id);
         if(o.isPresent()){
@@ -59,6 +58,6 @@ public class UserController {
     @PostMapping("/edited")
     public String editedMovie(@RequestParam Long id,@RequestParam String movTitle, @RequestParam Long numTickets){
         ticketOrderService.save(id,numTickets,movTitle);
-        return "redirect:/userHistory";
+        return "redirect:/movies/users";
     }
 }
