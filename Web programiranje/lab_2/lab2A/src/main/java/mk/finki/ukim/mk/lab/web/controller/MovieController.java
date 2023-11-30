@@ -20,14 +20,14 @@ public class MovieController {
     private final ProductionService productionService;
 
     @GetMapping()
-    public String getMoviesPage( @RequestParam(required=false) String error, Model model, HttpServletRequest req ){
-         model.addAttribute("movies",movieService.findAll());
-         if(error != null && !error.isEmpty()){
-             model.addAttribute("notFoundError","Selected movie could not be found, try another movie");
-         }
-        Integer userViews = (Integer) req.getServletContext().getAttribute("userViews");
-        req.getServletContext().setAttribute("userViews",++userViews);
-        model.addAttribute("userViews", req.getServletContext().getAttribute("userViews"));
+    public String getMoviesPage( @RequestParam(required=false) String error, Model model ){
+        model.addAttribute("movies",movieService.findAll());
+        if(error != null && !error.isEmpty()) {
+            model.addAttribute("notFoundError", "Selected movie could not be found, try another movie");
+        }
+        //Integer userViews = (Integer) req.getServletContext().getAttribute("userViews");
+        //req.getServletContext().setAttribute("userViews",++userViews);
+        //model.addAttribute("userViews", req.getServletContext().getAttribute("userViews"));
 
         return "listMovies";
     }
