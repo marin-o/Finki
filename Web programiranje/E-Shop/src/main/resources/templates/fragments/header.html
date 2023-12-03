@@ -1,7 +1,7 @@
 <header xmlns:th="http://www.thymeleaf.org">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/static">WEB PROGRAMMING SHOP</a>
+            <a class="navbar-brand" href="/">WEB PROGRAMMING SHOP</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,14 +43,14 @@
                             <i class="fa fa-shopping-cart"></i> Cart
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${session.user != null}">
                         <a class="btn btn-light btn-sm ml-3" href="/logout">
-                            <i class="fa fa-shopping-cart"></i> Logout
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${session.user == null}">
                         <a class="btn btn-light btn-sm ml-3" href="/login">
-                            <i class="fa fa-shopping-cart"></i> Login
+                            <i class="fa-solid fa-right-to-bracket"></i> Login
                         </a>
                     </li>
                 </ul>

@@ -5,6 +5,7 @@ import com.bosa.eshop.model.ShoppingCart;
 import com.bosa.eshop.model.User;
 import com.bosa.eshop.model.enumeration.ShoppingCartStatus;
 import com.bosa.eshop.model.exception.ProductAlreadyInShoppingCartException;
+import com.bosa.eshop.model.exception.ProductNotFoundException;
 import com.bosa.eshop.model.exception.ShoppingCartNotFoundException;
 import com.bosa.eshop.model.exception.UserNotFoundException;
 import com.bosa.eshop.repository.InMemoryProductRepository;
@@ -16,42 +17,61 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    private final InMemoryShoppingCartRepository cartRepository;
+
+    private final InMemoryShoppingCartRepository shoppingCartRepository;
     private final InMemoryUserRepository userRepository;
-    private final InMemoryProductRepository productRepository;
+    private final ProductService productService;
+
+    public ShoppingCartServiceImpl(InMemoryShoppingCartRepository shoppingCartRepository,
+                                   InMemoryUserRepository userRepository,
+                                   ProductService productService) {
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.userRepository = userRepository;
+        this.productService = productService;
+    }
+
     @Override
     public List<Product> listAllProductsInShoppingCart(Long cartId) {
-        if(this.cartRepository.findById(cartId).isEmpty()){
+        Optional<ShoppingCart> shoppingCartOptional = this.shoppingCartRepository.findById(cartId);
+
+        if (shoppingCartOptional.isEmpty()) {
             throw new ShoppingCartNotFoundException(cartId);
         }
-        return this.cartRepository.findById(cartId).get().getProducts();
+
+        return shoppingCartOptional.get().getProducts();
     }
 
     @Override
     public ShoppingCart getActiveShoppingCart(String username) {
-        return this.cartRepository.findByUsernameAndStatus(username, ShoppingCartStatus.CREATED)
-                .orElseGet( () -> {
-                    User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
-                    ShoppingCart cart = new ShoppingCart(user);
-                    return this.cartRepository.save(cart);
+        return this.shoppingCartRepository
+                .findByUsernameAndStatus(username, ShoppingCartStatus.CREATED)
+                .orElseGet(() -> {
+                    User user = this.userRepository.findByUsername(username)
+                            .orElseThrow(() -> new UserNotFoundException(username));
+                    ShoppingCart shoppingCart = new ShoppingCart(user);
+                    return this.shoppingCartRepository.save(shoppingCart);
                 });
     }
 
     @Override
     public ShoppingCart addProductToShoppingCart(String username, Long productId) {
-        ShoppingCart cart = this.getActiveShoppingCart(username);
-        Product product = productRepository.findById(productId).orElseThrow(() -> new UserNotFoundException(username));
+        Product product = this.productService.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+        List<Product> productsInShoppingCart = shoppingCart.getProducts().stream()
+                .filter(i -> i.getId().equals(productId))
+                .collect(Collectors.toList());
 
-        if(cart.getProducts().stream().filter(i->i.getId().equals(productId)).collect(Collectors.toList()).size() > 0){
+        if (productsInShoppingCart.size() > 0) {
             throw new ProductAlreadyInShoppingCartException(username, productId);
         }
 
-        cart.getProducts().add(product);
-        return cartRepository.save(cart);
+        shoppingCart.getProducts().add(product);
+        return this.shoppingCartRepository.save(shoppingCart);
     }
 }
