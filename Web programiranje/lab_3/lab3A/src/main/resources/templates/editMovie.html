@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/movies/add" method="POST">
+    <input id="id" type="hidden" name="id"
+           th:value="(${ticket} != null ? ${ticket.getId()} : '')">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text"
+               class="form-control"
+               id="title"
+               name="title"
+               th:value="(${movie} != null ? ${movie.getTitle()} : '')"
+               required
+               placeholder="Enter movie title">
+    </div>
+    <div class="form-group">
+        <label for="summary">Summary</label>
+        <input type="text"
+               class="form-control"
+               id="summary"
+               name="summary"
+               th:value="(${movie} != null ? ${movie.getSummary()} : '')"
+               placeholder="Summary">
+    </div>
+    <div class="form-group">
+        <label for="Rating">Rating</label>
+        <input type="text"
+               class="form-control"
+               id="Rating"
+               name="rating"
+               th:value="(${movie} != null ? ${movie.getRating()} : '')"
+               placeholder="Rating">
+    </div>
+    <div class="form-group">
+        <label for="production">Production</label>
+        <select id="production" name="production" class="form-control">
+            <option th:if="${movie} != null"
+                    th:selected="${movie.getProduction() != null &&
+                                movie.getProduction().getId() == prod.getId()}"
+                    th:each="prod : ${productions}"
+                    th:value="${prod.getId()}"
+                    th:text="${prod.getName()}">
+            </option>
+            <option th:if="${movie} == null"
+                    th:each="prod : ${productions}"
+                    th:value="${prod.getId()}"
+                    th:text="${prod.getName()}">
+            </option>
+        </select>
+    </div>
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    <a type="button" class="btn btn-primary" href="/movies">Back</a>
+</form>
+</body>
+</html>
