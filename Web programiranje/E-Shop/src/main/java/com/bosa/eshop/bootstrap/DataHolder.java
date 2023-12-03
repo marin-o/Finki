@@ -1,9 +1,6 @@
 package com.bosa.eshop.bootstrap;
 
-import com.bosa.eshop.model.Category;
-import com.bosa.eshop.model.Manufacturer;
-import com.bosa.eshop.model.Product;
-import com.bosa.eshop.model.User;
+import com.bosa.eshop.model.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +13,7 @@ public class DataHolder {
     public static List<User> users = new ArrayList<>();
     public static List<Manufacturer> manufacturers = new ArrayList<>();
     public static List<Product> products = new ArrayList<>();
+    public static List<ShoppingCart> shoppingCarts = new ArrayList<>();
     @PostConstruct
     public void init(){
         categories.add(new Category("Softver","so"));

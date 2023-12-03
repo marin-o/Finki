@@ -31,7 +31,7 @@ public class InMemoryManufacturerRepository {
         return Optional.of(m);
     }
 
-    public void deleteById(Long id){
-        DataHolder.products.removeIf(i->i.getId().equals(id));
+    public boolean deleteById(Long id){
+        return DataHolder.products.removeIf(i->i.getId().equals(id));
     }
 }

@@ -43,6 +43,12 @@
                                         <i class="fa fa-trash">Edit</i>
                                     </a>
                                 </th:block>
+                                <form th:action="@{'/shopping-cart/add-product/{id}' (id=${product.getId()})}"
+                                      th:method="POST">
+                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-trash">Add product
+                                        to cart</i></button>
+                                </form>
+
                             </td>
                         </tr>
                         </tbody>
