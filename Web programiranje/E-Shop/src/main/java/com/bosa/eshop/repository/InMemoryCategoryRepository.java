@@ -31,7 +31,7 @@ public class InMemoryCategoryRepository {
                 .collect(Collectors.toList());
     }
 
-    public void Delete(String name){
+    public void delete(String name){
         if(name == null)
             return;
         DataHolder.categories.removeIf(r->r.getName().equals(name));

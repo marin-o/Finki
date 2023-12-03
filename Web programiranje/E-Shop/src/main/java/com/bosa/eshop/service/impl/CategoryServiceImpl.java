@@ -6,53 +6,53 @@ import com.bosa.eshop.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final InMemoryCategoryRepository catRepository;
+    private final InMemoryCategoryRepository categoryRepository;
 
-    public CategoryServiceImpl( InMemoryCategoryRepository catRepository){
-        this.catRepository = catRepository;
-    }
-    @Override
-    public Category create( String name, String description ) {
-        if (name == null
-        || name.isEmpty() || description==null || description.isEmpty())
-            throw new IllegalArgumentException();
-        Category c = new Category(name,description);
-        catRepository.save(c);
-        return c;
+    public CategoryServiceImpl(InMemoryCategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
-    @Override
-    public Category update( String name, String description ) {
-        if (name == null
-                || name.isEmpty() || description==null || description.isEmpty())
-            throw new IllegalArgumentException();
-        Category c = new Category(name,description);
-        catRepository.save(c);
-        return c;
-    }
-
-    @Override
-    public void delete( String name ) {
-        if (name == null
-                || name.isEmpty())
-            throw new IllegalArgumentException();
-        catRepository.Delete(name);
+    private boolean categoryInvalid(String name) {
+        return name == null || name.isEmpty();
     }
 
     @Override
     public List<Category> findAll() {
-        return catRepository.findAll();
+        return this.categoryRepository.findAll();
     }
 
     @Override
-    public List<Category> searchCategories( String searchText ) {
-        if (searchText == null
-                || searchText.isEmpty())
+    public Optional<Category> findById(Long id) {
+        return this.categoryRepository.findById(id);
+    }
+
+    @Override
+    public Category create(String name, String description) {
+        if (categoryInvalid(name)) {
             throw new IllegalArgumentException();
-        return catRepository.search(searchText);
+        }
+
+        Category category = new Category(name, description);
+        return this.categoryRepository.save(category);
+    }
+
+    @Override
+    public Category update(String name, String description) {
+        return create(name, description);
+    }
+
+    @Override
+    public void delete(String name) {
+        categoryRepository.delete(name);
+    }
+
+    @Override
+    public List<Category> searchCategories(String text) {
+        return categoryRepository.search(text);
     }
 }
