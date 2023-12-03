@@ -34,7 +34,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public void deleteById( Long id ) {
-        manufacturerRepository.deleteById(id);
+    public boolean deleteById(Long id ) {
+        return manufacturerRepository.deleteById(id);
     }
 }
