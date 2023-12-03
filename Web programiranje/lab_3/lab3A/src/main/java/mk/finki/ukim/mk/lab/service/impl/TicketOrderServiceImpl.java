@@ -16,7 +16,7 @@ public class TicketOrderServiceImpl implements TicketOrderService {
     public TicketOrder placeOrder( String movieTitle, String clientName, String address, int numberOfTickets ) {
         if (movieTitle.isEmpty() || clientName.isEmpty() || address.isEmpty())
             return null;
-        return new TicketOrder(movieTitle,clientName,address, (long) numberOfTickets);
+        return new TicketOrder(movieTitle, (long) numberOfTickets);
     }
 
     @Override
