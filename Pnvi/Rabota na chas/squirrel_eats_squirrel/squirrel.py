@@ -16,13 +16,14 @@ GRASSCOLOR = (24, 255, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
-CAMERASLACK = 90  # how far from the center the squirrel moves before moving the camera
+CAMERASLACKX = 90  # how far from the center the squirrel moves before moving the camera
+CAMERASLACKY = 60  # treto baranje
 MOVERATE = 30  # how fast the player moves
 BOUNCERATE = 15 # prvo baranje
 BOUNCEHEIGHT = 30  # prvo baranje
 STARTSIZE = 25  # how big the player starts off
 WINSIZE = 300  # how big the player needs to be to win
-INVULNTIME = 2  # how long the player is invulnerable after being hit in seconds
+INVULNTIME = 5  # vtoro baranje
 GAMEOVERTIME = 4  # how long the "game over" text stays on the screen in seconds
 MAXHEALTH = 3  # how much health the player starts with
 
@@ -169,14 +170,14 @@ def runGame():
         # adjust camerax and cameray if beyond the "camera slack"
         playerCenterx = playerObj['x'] + int(playerObj['size'] / 2)
         playerCentery = playerObj['y'] + int(playerObj['size'] / 2)
-        if (camerax + HALF_WINWIDTH) - playerCenterx > CAMERASLACK:
-            camerax = playerCenterx + CAMERASLACK - HALF_WINWIDTH
-        elif playerCenterx - (camerax + HALF_WINWIDTH) > CAMERASLACK:
-            camerax = playerCenterx - CAMERASLACK - HALF_WINWIDTH
-        if (cameray + HALF_WINHEIGHT) - playerCentery > CAMERASLACK:
-            cameray = playerCentery + CAMERASLACK - HALF_WINHEIGHT
-        elif playerCentery - (cameray + HALF_WINHEIGHT) > CAMERASLACK:
-            cameray = playerCentery - CAMERASLACK - HALF_WINHEIGHT
+        if (camerax + HALF_WINWIDTH) - playerCenterx > CAMERASLACKX:
+            camerax = playerCenterx + CAMERASLACKX - HALF_WINWIDTH
+        elif playerCenterx - (camerax + HALF_WINWIDTH) > CAMERASLACKX:
+            camerax = playerCenterx - CAMERASLACKX - HALF_WINWIDTH
+        if (cameray + HALF_WINHEIGHT) - playerCentery > CAMERASLACKY:
+            cameray = playerCentery + CAMERASLACKY - HALF_WINHEIGHT
+        elif playerCentery - (cameray + HALF_WINHEIGHT) > CAMERASLACKY:
+            cameray = playerCentery - CAMERASLACKY - HALF_WINHEIGHT
 
         # draw the green background
         DISPLAYSURF.fill(GRASSCOLOR)
@@ -199,7 +200,7 @@ def runGame():
             DISPLAYSURF.blit(sObj['surface'], sObj['rect'])
 
         # draw the player squirrel
-        flashIsOn = round(time.time(), 1) * 10 % 2 == 1
+        flashIsOn = round(time.time(), 1) * 2 % 2 == 1  # vtoro baranje
         if not gameOverMode and not (invulnerableMode and flashIsOn):
             playerObj['rect'] = pygame.Rect((playerObj['x'] - camerax,
                                              playerObj['y'] - cameray - getBounceAmount(playerObj['bounce'], BOUNCERATE,
