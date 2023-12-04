@@ -23,14 +23,16 @@ public class User {
     private LocalDate dateOfBirth;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ShoppingCart> carts;
-    @OneToMany
-    private List<TicketOrder> orders = new ArrayList<>();
 
     public User(String username) {
         this.username = username;
     }
-
     public User(String username, String name, String surname, String password, LocalDate dateOfBirth) {
         this.username = username;
+        this.name=name;
+        this.surname=surname;
+        this.password=password;
+        this.dateOfBirth=dateOfBirth;
+        this.carts = new ArrayList<>();
     }
 }

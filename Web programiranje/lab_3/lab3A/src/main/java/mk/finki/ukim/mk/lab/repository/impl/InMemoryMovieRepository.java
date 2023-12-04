@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.lab.repository;
+package mk.finki.ukim.mk.lab.repository.impl;
 
 import mk.finki.ukim.mk.lab.bootstrap.DataHolder;
 import mk.finki.ukim.mk.lab.model.Movie;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class MovieRepository {
+public class InMemoryMovieRepository {
 
     public List<Movie> findAll(){
         return DataHolder.movies;

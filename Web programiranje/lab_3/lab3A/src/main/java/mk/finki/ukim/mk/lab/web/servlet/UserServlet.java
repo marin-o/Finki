@@ -1,6 +1,5 @@
 package mk.finki.ukim.mk.lab.web.servlet;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +22,7 @@ public class UserServlet extends HttpServlet {
     private final SpringTemplateEngine templateEngine;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         IWebExchange webExchange = JakartaServletWebApplication
                 .buildApplication(getServletContext())
                 .buildExchange(req,resp);
@@ -33,14 +32,14 @@ public class UserServlet extends HttpServlet {
         String username = req.getParameter("username");
         if(username != null && !username.isEmpty()) {
             User u = userService.findUser(username);
-            context.setVariable("currentUserTickets", u.getOrders());
+            //context.setVariable("currentUserTickets", u.getOrders());
             context.setVariable("selectedUser", u);
         }
         templateEngine.process("userHistory.html",context,resp.getWriter());
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         if(username != null)
             resp.sendRedirect("/servlet/users?&username="+username);

@@ -11,4 +11,6 @@ public interface UserService {
     User findUser( String username );
     void addTicketToUser( String username, TicketOrder ticket );
     Optional<User> findById(Long id);
+
+    void save(User user);
 }

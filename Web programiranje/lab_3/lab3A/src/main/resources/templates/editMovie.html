@@ -7,7 +7,7 @@
 <body>
 <form action="/movies/add" method="POST">
     <input id="id" type="hidden" name="id"
-           th:value="(${ticket} != null ? ${ticket.getId()} : '')">
+           th:value="(${movie} != null ? ${movie.getId()} : '')">
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text"
