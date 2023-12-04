@@ -1,7 +1,8 @@
 package com.bosa.eshop.service.impl;
 
 import com.bosa.eshop.model.Manufacturer;
-import com.bosa.eshop.repository.InMemoryManufacturerRepository;
+import com.bosa.eshop.repository.impl.InMemoryManufacturerRepository;
+import com.bosa.eshop.repository.jpa.ManufacturerRepository;
 import com.bosa.eshop.service.ManufacturerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ManufacturerServiceImpl implements ManufacturerService {
-    private final InMemoryManufacturerRepository manufacturerRepository;
+    private final ManufacturerRepository manufacturerRepository;
     @Override
     public List<Manufacturer> findAll() {
         return manufacturerRepository.findAll();
@@ -30,11 +31,11 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public Optional<Manufacturer> save( String name, String address ) {
-        return manufacturerRepository.save(name, address);
+        return Optional.of(manufacturerRepository.save(new Manufacturer(name, address)));
     }
 
     @Override
-    public boolean deleteById(Long id ) {
-        return manufacturerRepository.deleteById(id);
+    public void deleteById(Long id ) {
+        manufacturerRepository.deleteById(id);
     }
 }

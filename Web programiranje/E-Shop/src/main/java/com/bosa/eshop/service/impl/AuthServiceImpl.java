@@ -4,16 +4,17 @@ import com.bosa.eshop.model.User;
 import com.bosa.eshop.model.exception.InvalidArgumentsException;
 import com.bosa.eshop.model.exception.InvalidUserCredentialsException;
 import com.bosa.eshop.model.exception.PasswordsDoNotMatchException;
-import com.bosa.eshop.repository.InMemoryUserRepository;
+import com.bosa.eshop.model.exception.UsernameAlreadyExistsException;
+import com.bosa.eshop.repository.jpa.UserRepository;
 import com.bosa.eshop.service.AuthService;
 import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final InMemoryUserRepository inMemoryUserRepository;
+    private final UserRepository userRepository;
 
-    public AuthServiceImpl(InMemoryUserRepository inMemoryUserRepository) {
-        this.inMemoryUserRepository = inMemoryUserRepository;
+    public AuthServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     private boolean credentialsInvalid(String username, String password) {
@@ -26,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
             throw new InvalidArgumentsException();
         }
 
-        return inMemoryUserRepository.findByUsernameAndPassword(username, password)
+        return userRepository.findByUsernameAndPassword(username, password)
                 .orElseThrow(InvalidUserCredentialsException::new);
     }
 
@@ -40,7 +41,10 @@ public class AuthServiceImpl implements AuthService {
             throw new PasswordsDoNotMatchException();
         }
 
+        if(this.userRepository.findByUsername(username).isPresent())
+            throw new UsernameAlreadyExistsException(username);
+
         User user = new User(username, password, name, surname);
-        return inMemoryUserRepository.saveOrUpdate(user);
+        return userRepository.save(user);
     }
 }

@@ -1,4 +1,4 @@
-package com.bosa.eshop.repository;
+package com.bosa.eshop.repository.impl;
 
 import com.bosa.eshop.bootstrap.DataHolder;
 import com.bosa.eshop.model.User;

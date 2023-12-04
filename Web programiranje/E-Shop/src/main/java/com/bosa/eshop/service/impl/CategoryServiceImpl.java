@@ -1,7 +1,8 @@
 package com.bosa.eshop.service.impl;
 
 import com.bosa.eshop.model.Category;
-import com.bosa.eshop.repository.InMemoryCategoryRepository;
+import com.bosa.eshop.repository.impl.InMemoryCategoryRepository;
+import com.bosa.eshop.repository.jpa.CategoryRepository;
 import com.bosa.eshop.service.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,9 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final InMemoryCategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public CategoryServiceImpl(InMemoryCategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
@@ -48,11 +49,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(String name) {
-        categoryRepository.delete(name);
+        categoryRepository.deleteByName(name);
     }
 
     @Override
     public List<Category> searchCategories(String text) {
-        return categoryRepository.search(text);
+        return categoryRepository.findAllByNameLike(text);
     }
 }
