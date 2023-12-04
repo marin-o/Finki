@@ -3,6 +3,7 @@ package mk.finki.ukim.mk.lab.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,8 +18,9 @@ public class ShoppingCart {
     private Long id;
     @ManyToOne
     private User user;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCreated;
-    @OneToMany
+    @ManyToMany
     private List<TicketOrder> ticketOrders;
 
     public ShoppingCart(User user) {

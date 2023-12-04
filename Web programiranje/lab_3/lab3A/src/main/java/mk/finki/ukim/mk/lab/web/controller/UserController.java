@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,40 +25,57 @@ public class UserController {
     private final MovieService movieService;
 
     @GetMapping
-    public String getUsersPage(HttpServletRequest req, Model model){
+    public String getUsersPage(HttpServletRequest req, Model model) {
         List<User> users = userService.listAll();
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         String username = req.getParameter("username");
-        if(username != null && !username.isEmpty()) {
+        if (username != null && !username.isEmpty()) {
             User u = userService.findUser(username);
-            model.addAttribute("currentUserTickets", u.getOrders());
             model.addAttribute("selectedUser", u);
         }
         return "userHistory";
     }
 
     @GetMapping("/edit-form/{id}")
-    public String editOrder(@PathVariable Long id, Model model){
+    public String editOrder(@PathVariable Long id, Model model) {
         Optional<TicketOrder> o = ticketOrderService.findById(id);
-        if(o.isPresent()){
+        if (o.isPresent()) {
             TicketOrder order = o.get();
             model.addAttribute("order", order);
             List<Movie> movies = movieService.findAll();
-            model.addAttribute("movies",movies);
+            model.addAttribute("movies", movies);
             return "editOrder";
         }
         return "userHistory";
     }
 
     @PostMapping
-    public String postSomething(@RequestParam(required = false) String username){
-        if(username != null)
-            return "redirect:/movies/users?&username="+username;
+    public String postSomething(@RequestParam(required = false) String username) {
+        if (username != null)
+            return "redirect:/movies/users?&username=" + username;
         else return "redirect:/movies/users";
     }
+
     @PostMapping("/edited")
-    public String editedMovie(@RequestParam Long id,@RequestParam String movTitle, @RequestParam Long numTickets){
-        ticketOrderService.save(id,numTickets,movTitle);
+    public String editedMovie(@RequestParam Long id, @RequestParam String movTitle, @RequestParam Long numTickets) {
+        ticketOrderService.save(id, numTickets, movTitle);
         return "redirect:/movies/users";
     }
+
+    @GetMapping("/registration-form")
+    public String registrationForm() {
+        return "registration";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String name,
+                               @RequestParam String surname,
+                               @RequestParam String password) {
+        // You may want to add validation and error handling here before saving the user.
+        User user = new User(username, name, surname, password, LocalDate.now());
+        userService.save(user);
+        return "redirect:/movies";
+    }
 }
+

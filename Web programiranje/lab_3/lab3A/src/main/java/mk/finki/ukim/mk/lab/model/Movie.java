@@ -15,7 +15,7 @@ public class Movie {
     private String title;
     private String summary;
     private double rating;
-    @OneToOne
+    @ManyToOne
     private Production production;
 
     public Movie( String title, String summary, double rating, Production production ) {

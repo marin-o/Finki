@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.lab.repository;
+package mk.finki.ukim.mk.lab.repository.impl;
 
 import mk.finki.ukim.mk.lab.bootstrap.DataHolder;
 import mk.finki.ukim.mk.lab.model.TicketOrder;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserRepository {
+public class InMemoryUserRepository {
 
     public List<User> listAll() {
         return DataHolder.users;
@@ -30,7 +30,7 @@ public class UserRepository {
         if(user == null) {
             user = addUser(username);
         }
-        user.getOrders().add(ticket);
+       // user.getOrders().add(ticket);
         DataHolder.orders.add(ticket);
     }
 

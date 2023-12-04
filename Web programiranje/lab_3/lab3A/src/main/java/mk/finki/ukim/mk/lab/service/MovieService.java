@@ -14,5 +14,5 @@ public interface MovieService {
 
     void deleteById( Long id );
 
-    Optional<Movie> save( String title, String summary, Double rating, Long production );
+    Optional<Movie> save(Long id, String title, String summary, Double rating, Long production );
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="utf-8">
     <title>Movie Ticket Order page - Welcome and choose a Movie</title>
-    <style type="text/css">
+    <style>
         body {
             width: 800px;
             margin: auto;
@@ -13,6 +13,7 @@
 <header>
     <h1>Welcome to our Movie Ticket Shop App</h1>
     <h2 th:if="${userViews!=null}"><span th:text="${userViews}"></span> </h2>
+    <h2><a th:href="@{/movies/users/registration-form}">Please register or app won't work</a></h2>
 </header>
 <main>
     <form th:method="GET" th:action="@{/movies/filter}">
@@ -34,7 +35,7 @@
             <span th:text="${notFoundError}" style="color: darkred"></span>
         </h2>
         <label th:each="movie : ${movies}" style="list-style-type: none">
-            <input type="radio" name="movieTitle" th:value="${movie.getTitle()}">
+            <input type="radio" name="movieTitle" th:value="${movie.getTitle()}" required="required">
             <span  th:text="'Title: '+${movie.getTitle()}+', Summary: '+${movie.getSummary()}+', Rating: '+${movie.getRating()}+', Production: '+${movie.getProduction().getName()}"></span><br/>
             <th:block>
                <a th:href="@{'/movies/edit-form/{id}' (id=${movie.getId()})}"><i>Edit</i></a>
@@ -45,11 +46,11 @@
         </label>
         <h2>Choose number of tickets:</h2>
             <label>
-                <input type="number" name="numTickets" min="1" max="10">
+                <input type="number" name="numTickets" min="1" max="10" required="required">
             </label><br/>
         <h2>Enter username</h2>
         <label>
-            <input type="text" name="username" minlength="1">
+            <input type="text" name="username" minlength="1" required="required">
         </label>
         <br/>
         <br/>

@@ -76,11 +76,12 @@ public class MovieController {
         return "redirect:/movies";
     }
     @PostMapping("/add")
-    public String addMovie( @RequestParam String title,
-                               @RequestParam String summary,
-                               @RequestParam Double rating,
-                               @RequestParam Long production){
-        movieService.save(title, summary, rating, production);
+    public String addMovie( @RequestParam(required = false) Long id,
+                            @RequestParam String title,
+                            @RequestParam String summary,
+                            @RequestParam Double rating,
+                            @RequestParam Long production){
+        movieService.save(id, title, summary, rating, production);
         return "redirect:/movies";
     }
 

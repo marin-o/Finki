@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Ordered Ticket - Confirmation</title>
-    <style type="text/css">
+    <style>
         body {
             width: 800px;
             margin: auto;
@@ -30,11 +30,7 @@
         </tr>
         <tr>
             <td><b>Client Name </b></td>
-            <td><th:block th:text="${ticket.clientName}"/></td>
-        </tr>
-        <tr>
-            <td><b>Client IP Address</b></td>
-            <td><th:block th:text="${ticket.clientAddress}"/></td>
+            <td><th:block th:text="${ticket.username}"/></td>
         </tr>
         <tr>
             <td><b>Ticket for Movie</b></td>
