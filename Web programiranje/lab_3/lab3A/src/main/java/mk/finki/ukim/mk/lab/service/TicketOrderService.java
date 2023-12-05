@@ -11,4 +11,5 @@ public interface TicketOrderService{
     void save(Long id, Long numTickets, String movieTitle);
 
     void saveOrder(String movieTitle, String numTickets, String username);
+
 }
