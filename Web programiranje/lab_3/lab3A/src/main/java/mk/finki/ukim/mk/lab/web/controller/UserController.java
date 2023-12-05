@@ -69,6 +69,7 @@ public class UserController {
     public String editedMovie(@RequestParam Long id, @RequestParam String movTitle, @RequestParam Long numTickets) {
         Optional<TicketOrder> editedOrder = ticketOrderService.findById(id);
         String username = editedOrder.get().getUsername();
+        ticketOrderService.deletebyId(id);
         ticketOrderService.saveOrder(movTitle, String.valueOf(numTickets),username);
         return "redirect:/movies/users";
     }
