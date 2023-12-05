@@ -14,10 +14,13 @@ public class TicketOrder {
     String username;
     private String movieTitle;
     private Long numberOfTickets;
+    @ManyToOne
+    private ShoppingCart cart;
 
-    public TicketOrder(String username, String movieTitle, Long numberOfTickets ) {
+    public TicketOrder(String username, String movieTitle, Long numberOfTickets, ShoppingCart cart) {
         this.username = username;
         this.movieTitle=movieTitle;
         this.numberOfTickets=numberOfTickets;
+        this.cart = cart;
     }
 }

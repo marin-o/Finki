@@ -20,7 +20,7 @@ public class ShoppingCart {
     private User user;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateCreated;
-    @ManyToMany
+    @OneToMany(mappedBy = "cart")
     private List<TicketOrder> ticketOrders;
 
     public ShoppingCart(User user) {

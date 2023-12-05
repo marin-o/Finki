@@ -25,7 +25,7 @@ public class TicketOrderServiceImpl implements TicketOrderService {
     public TicketOrder placeOrder( String movieTitle, String username, String address, int numberOfTickets ) {
         if (movieTitle.isEmpty() || username.isEmpty() || address.isEmpty())
             return null;
-        return new TicketOrder(username, movieTitle, (long) numberOfTickets);
+        return new TicketOrder(username, movieTitle, (long) numberOfTickets, null);
     }
 
     @Override
@@ -52,19 +52,23 @@ public class TicketOrderServiceImpl implements TicketOrderService {
 
         ShoppingCart cart = shoppingCartRepository.findByUser(user);
         if (cart == null) {
-            // Handle the case where the shopping cart is not found
-            // You might want to create a new shopping cart here
             cart = new ShoppingCart(user);
             cart.setUser(user);
         }
 
-        TicketOrder order = new TicketOrder(username, movieTitle, Long.parseLong(numTickets));
+        TicketOrder order = new TicketOrder(username, movieTitle, Long.parseLong(numTickets), cart);
         ticketOrderRepository.save(order);
         cart.getTicketOrders().add(order);
 
         // Save changes to the database
         userRepository.save(user);
         shoppingCartRepository.save(cart);
+    }
+
+    @Override
+    @Transactional
+    public void deletebyId(Long id) {
+        ticketOrderRepository.deleteById(id);
     }
 
 

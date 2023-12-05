@@ -2,6 +2,7 @@ package mk.finki.ukim.mk.lab.service;
 
 
 import mk.finki.ukim.mk.lab.model.TicketOrder;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Optional;
 
@@ -12,4 +13,5 @@ public interface TicketOrderService{
 
     void saveOrder(String movieTitle, String numTickets, String username);
 
+    void deletebyId(Long id);
 }
