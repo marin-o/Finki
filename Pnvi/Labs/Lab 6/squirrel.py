@@ -23,6 +23,7 @@ BOUNCERATE = 6       # how fast the player bounces (large is slower)
 BOUNCEHEIGHT = 30    # how high the player bounces
 STARTSIZE = 25       # how big the player starts off
 WINSIZE = 300        # how big the player needs to be to win
+LOSTSIZE = 15        # cetvrto baranje
 INVULNTIME = 2       # how long the player is invulnerable after being hit in seconds
 GAMEOVERTIME = 4     # how long the "game over" text stays on the screen in seconds
 MAXHEALTH = 3        # how much health the player starts with
@@ -295,9 +296,15 @@ def runGame():
                         # player is smaller and takes damage
                         invulnerableMode = True
                         invulnerableStartTime = time.time()
-                        playerObj['health'] -= 1
-                        if playerObj['health'] == 0:
-                            gameOverMode = True # turn on "game over mode"
+                        # cetvrto baranje
+                        playerObj['size'] -= int((playerObj['size'] * 0.2)) + 1
+                        if playerObj['facing'] == LEFT:
+                            playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                        if playerObj['facing'] == RIGHT:
+                            playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                        # playerObj['health'] -= 1
+                        if playerObj['size'] <= LOSTSIZE:
+                            gameOverMode = True  # turn on "game over mode"
                             gameOverStartTime = time.time()
         else:
             # game is over, show "game over" text
