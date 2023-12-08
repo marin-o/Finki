@@ -7,7 +7,7 @@ import random, sys, time, math, pygame
 from pygame.locals import *
 
 FPS = 30 # frames per second to update the screen
-WINWIDTH = 640 # width of the program's window, in pixels
+WINWIDTH = 960 # prvo baranje
 WINHEIGHT = 480 # height in pixels
 HALF_WINWIDTH = int(WINWIDTH / 2)
 HALF_WINHEIGHT = int(WINHEIGHT / 2)
@@ -16,7 +16,8 @@ GRASSCOLOR = (24, 255, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
-CAMERASLACK = 90     # how far from the center the squirrel moves before moving the camera
+CAMERASLACK_X = 90     # vtoro baranje
+CAMERASLACK_Y = 60  # vtoro baranje
 MOVERATE = 9         # how fast the player moves
 BOUNCERATE = 6       # how fast the player bounces (large is slower)
 BOUNCEHEIGHT = 30    # how high the player bounces
@@ -135,9 +136,11 @@ def runGame():
 
         # move all the squirrels
         for sObj in squirrelObjs:
-            # move the squirrel, and adjust for their bounce
-            sObj['x'] += sObj['movex']
-            sObj['y'] += sObj['movey']
+            # treto baranje
+            if sObj['bounceDirection'] == 'up':
+                sObj['y'] -= sObj['movey']
+            elif sObj['bounceDirection'] == 'down':
+                sObj['y'] += sObj['movey']
             sObj['bounce'] += 1
             if sObj['bounce'] > sObj['bouncerate']:
                 sObj['bounce'] = 0 # reset bounce amount
@@ -169,14 +172,14 @@ def runGame():
         # adjust camerax and cameray if beyond the "camera slack"
         playerCenterx = playerObj['x'] + int(playerObj['size'] / 2)
         playerCentery = playerObj['y'] + int(playerObj['size'] / 2)
-        if (camerax + HALF_WINWIDTH) - playerCenterx > CAMERASLACK:
-            camerax = playerCenterx + CAMERASLACK - HALF_WINWIDTH
-        elif playerCenterx - (camerax + HALF_WINWIDTH) > CAMERASLACK:
-            camerax = playerCenterx - CAMERASLACK - HALF_WINWIDTH
-        if (cameray + HALF_WINHEIGHT) - playerCentery > CAMERASLACK:
-            cameray = playerCentery + CAMERASLACK - HALF_WINHEIGHT
-        elif playerCentery - (cameray + HALF_WINHEIGHT) > CAMERASLACK:
-            cameray = playerCentery - CAMERASLACK - HALF_WINHEIGHT
+        if (camerax + HALF_WINWIDTH) - playerCenterx > CAMERASLACK_X:
+            camerax = playerCenterx + CAMERASLACK_X - HALF_WINWIDTH
+        elif playerCenterx - (camerax + HALF_WINWIDTH) > CAMERASLACK_X:
+            camerax = playerCenterx - CAMERASLACK_X - HALF_WINWIDTH
+        if (cameray + HALF_WINHEIGHT) - playerCentery > CAMERASLACK_Y:
+            cameray = playerCentery + CAMERASLACK_Y - HALF_WINHEIGHT
+        elif playerCentery - (cameray + HALF_WINHEIGHT) > CAMERASLACK_Y:
+            cameray = playerCentery - CAMERASLACK_Y - HALF_WINHEIGHT
 
         # draw the green background
         DISPLAYSURF.fill(GRASSCOLOR)
@@ -193,7 +196,7 @@ def runGame():
         # draw the other squirrels
         for sObj in squirrelObjs:
             sObj['rect'] = pygame.Rect( (sObj['x'] - camerax,
-                                         sObj['y'] - cameray - getBounceAmount(sObj['bounce'], sObj['bouncerate'], sObj['bounceheight']),
+                                         sObj['y'] - cameray - getBounceAmountEnemy(sObj['bounce'], sObj['bouncerate'], sObj['bounceheight'],sObj['bounceDirection']), # treto baranje
                                          sObj['width'],
                                          sObj['height']) )
             DISPLAYSURF.blit(sObj['surface'], sObj['rect'])
@@ -332,6 +335,16 @@ def getBounceAmount(currentBounce, bounceRate, bounceHeight):
     # currentBounce will always be less than bounceRate
     return int(math.sin( (math.pi / float(bounceRate)) * currentBounce ) * bounceHeight)
 
+def getBounceAmountEnemy(currentBounce, bounceRate, bounceHeight, bounceDirection): # treto baranje
+    # Returns the number of pixels to offset based on the bounce.
+    # Larger bounceRate means a slower bounce.
+    # Larger bounceHeight means a higher bounce.
+    # currentBounce will always be less than bounceRate
+    if bounceDirection == 'up':
+        return int(math.sin((math.pi / float(bounceRate)) * currentBounce) * bounceHeight)
+    elif bounceDirection == 'down':
+        return int(math.cos((math.pi / float(bounceRate)) * currentBounce) * bounceHeight)
+
 def getRandomVelocity():
     speed = random.randint(SQUIRRELMINSPEED, SQUIRRELMAXSPEED)
     if random.randint(0, 1) == 0:
@@ -369,6 +382,7 @@ def makeNewSquirrel(camerax, cameray):
     sq['bounce'] = 0
     sq['bouncerate'] = random.randint(10, 18)
     sq['bounceheight'] = random.randint(10, 50)
+    sq['bounceDirection'] = random.choice(['up', 'down']) # treto baranje
     return sq
 
 
