@@ -4,6 +4,8 @@
 # Released under a "Simplified BSD" license
 
 import random, sys, copy, os, pygame
+import time
+
 from pygame.locals import *
 
 FPS = 30 # frames per second to update the screen
@@ -144,6 +146,10 @@ def runLevel(levels, levelNum):
     cameraLeft = False
     cameraRight = False
 
+    # prvo baranje
+    startTime = time.time()
+    endTime = None
+
     while True: # main game loop
         # Reset these variables:
         playerMoveTo = None
@@ -248,6 +254,17 @@ def runLevel(levels, levelNum):
         DISPLAYSURF.blit(stepSurf, stepRect)
 
         if levelIsComplete:
+            # prvo baranje, sledniov if...else branch
+            if endTime is None:
+                endTime = time.time()
+                elapsedTime = endTime - startTime
+            else:
+                timeText = 'Time: {:.2f} seconds'.format(elapsedTime)
+                timeSurf = BASICFONT.render(timeText, 1, TEXTCOLOR)
+                timeRect = stepSurf.get_rect()
+                timeRect.bottomleft = (200, WINHEIGHT)
+                DISPLAYSURF.blit(timeSurf, timeRect)
+
             # is solved, show the "Solved!" image until the player
             # has pressed a key.
             solvedRect = IMAGESDICT['solved'].get_rect()
