@@ -35,10 +35,8 @@ DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
-
 def main():
     global FPSCLOCK, DISPLAYSURF, IMAGESDICT, TILEMAPPING, OUTSIDEDECOMAPPING, BASICFONT, PLAYERIMAGES, currentImage
-
     # Pygame initialization and basic set up of the global variables.
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -254,16 +252,18 @@ def runLevel(levels, levelNum):
         DISPLAYSURF.blit(stepSurf, stepRect)
 
         if levelIsComplete:
-            # prvo baranje, sledniov if...else branch
+            # prvo baranje i cetvrto baranje, sledniov if...else branch
             if endTime is None:
                 endTime = time.time()
                 elapsedTime = endTime - startTime
+                points = int(max(0, 1000 - (gameStateObj['stepCounter'] * 20)))
             else:
                 timeText = 'Time: {:.2f} seconds'.format(elapsedTime)
-                timeSurf = BASICFONT.render(timeText, 1, TEXTCOLOR)
-                timeRect = stepSurf.get_rect()
-                timeRect.bottomleft = (200, WINHEIGHT)
-                DISPLAYSURF.blit(timeSurf, timeRect)
+                pointsText = '  Points: {}'.format(points) # cetvrto baranje
+                timeAndPointsSurf = BASICFONT.render(timeText + pointsText, 1, TEXTCOLOR)
+                timeAndPointsRect = stepSurf.get_rect()
+                timeAndPointsRect.bottomleft = (200, WINHEIGHT)
+                DISPLAYSURF.blit(timeAndPointsSurf, timeAndPointsRect)
 
             # is solved, show the "Solved!" image until the player
             # has pressed a key.
