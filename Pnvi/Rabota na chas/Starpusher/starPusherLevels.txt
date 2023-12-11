@@ -42,7 +42,7 @@
 ; Sasquatch Set I
 
 ; 1
-
+; modified level for new level
 #######
 #  $@ #
 # $*  #
