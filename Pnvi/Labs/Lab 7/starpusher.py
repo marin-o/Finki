@@ -6,9 +6,9 @@
 import random, sys, copy, os, pygame
 from pygame.locals import *
 
-FPS = 30 # frames per second to update the screen
-WINWIDTH = 800 # width of the program's window, in pixels
-WINHEIGHT = 600 # height in pixels
+FPS = 30  # frames per second to update the screen
+WINWIDTH = 800  # width of the program's window, in pixels
+WINHEIGHT = 600  # height in pixels
 HALF_WINWIDTH = int(WINWIDTH / 2)
 HALF_WINHEIGHT = int(WINHEIGHT / 2)
 
@@ -17,14 +17,14 @@ TILEWIDTH = 50
 TILEHEIGHT = 85
 TILEFLOORHEIGHT = 40
 
-CAM_MOVE_SPEED = 5 # how many pixels per frame the camera moves
+CAM_MOVE_SPEED = 5  # how many pixels per frame the camera moves
 
 # The percentage of outdoor tiles that have additional
 # decoration on them, such as a tree or rock.
 OUTSIDE_DECORATION_PCT = 20
 
-BRIGHTBLUE = (  0, 170, 255)
-WHITE      = (255, 255, 255)
+BRIGHTBLUE = (0, 170, 255)
+WHITE = (255, 255, 255)
 BGCOLOR = BRIGHTBLUE
 TEXTCOLOR = WHITE
 
@@ -33,10 +33,13 @@ DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
 
+MAX_JUMPS = 3  # treto baranje: jump
+remainingJumps = MAX_JUMPS  # treto baranje: jump
+
 
 def main():
     global FPSCLOCK, DISPLAYSURF, IMAGESDICT, TILEMAPPING, OUTSIDEDECOMAPPING, BASICFONT, PLAYERIMAGES, currentImage
-
+    global MAX_JUMPS, remainingJumps  # treto baranje: jump
     # Pygame initialization and basic set up of the global variables.
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -91,16 +94,17 @@ def main():
                     IMAGESDICT['horngirl'],
                     IMAGESDICT['pinkgirl']]
 
-    startScreen() # show the title screen until the user presses a key
+    startScreen()  # show the title screen until the user presses a key
 
     # Read in the levels from the text file. See the readLevelsFile() for
     # details on the format of this file and how to make your own levels.
     levels = readLevelsFile('starPusherLevels.txt')
+    #random.shuffle(levels) # vtoro baranje
     currentLevelIndex = 0
 
     # The main game loop. This loop runs a single level, when the user
     # finishes that level, the next/previous level is loaded.
-    while True: # main game loop
+    while True:  # main game loop
         # Run the level to actually start playing the game:
         result = runLevel(levels, currentLevelIndex)
 
@@ -115,17 +119,17 @@ def main():
             currentLevelIndex -= 1
             if currentLevelIndex < 0:
                 # If there are no previous levels, go to the last one.
-                currentLevelIndex = len(levels)-1
+                currentLevelIndex = len(levels) - 1
         elif result == 'reset':
-            pass # Do nothing. Loop re-calls runLevel() to reset the level
+            pass  # Do nothing. Loop re-calls runLevel() to reset the level
 
 
 def runLevel(levels, levelNum):
-    global currentImage
+    global currentImage, remainingJumps # treto baranje: jump
     levelObj = levels[levelNum]
     mapObj = decorateMap(levelObj['mapObj'], levelObj['startState']['player'])
     gameStateObj = copy.deepcopy(levelObj['startState'])
-    mapNeedsRedraw = True # set to True to call drawMap()
+    mapNeedsRedraw = True  # set to True to call drawMap()
     levelSurf = BASICFONT.render('Level %s of %s' % (levelNum + 1, len(levels)), 1, TEXTCOLOR)
     levelRect = levelSurf.get_rect()
     levelRect.bottomleft = (20, WINHEIGHT - 35)
@@ -144,36 +148,46 @@ def runLevel(levels, levelNum):
     cameraLeft = False
     cameraRight = False
 
-    while True: # main game loop
+    jump = False  # treto baranje: jump
+    remainingJumps = MAX_JUMPS # treto baranje: jump
+
+    while True:  # main game loop
         # Reset these variables:
         playerMoveTo = None
         keyPressed = False
+        jumped = False
 
-        for event in pygame.event.get(): # event handling loop
+        for event in pygame.event.get():  # event handling loop
             if event.type == QUIT:
                 # Player clicked the "X" at the corner of the window.
                 terminate()
 
             elif event.type == KEYDOWN:
                 # Handle key presses
+                # prvo baranje: smenati od  K_up/down/left/right vo K_w/s/a/d/
                 keyPressed = True
-                if event.key == K_LEFT:
+                if event.key == K_a:
                     playerMoveTo = LEFT
-                elif event.key == K_RIGHT:
+                elif event.key == K_d:
                     playerMoveTo = RIGHT
-                elif event.key == K_UP:
+                elif event.key == K_w:
                     playerMoveTo = UP
-                elif event.key == K_DOWN:
+                elif event.key == K_s:
                     playerMoveTo = DOWN
+                if event.key == K_SPACE:  # treto baranje: jump
+                    jump = True
+
+
 
                 # Set the camera move mode.
-                elif event.key == K_a:
+                # prvo baranje: smenati od K_w/s/a/d/ vo K_up/down/left/right
+                elif event.key == K_LEFT:
                     cameraLeft = True
-                elif event.key == K_d:
+                elif event.key == K_RIGHT:
                     cameraRight = True
-                elif event.key == K_w:
+                elif event.key == K_UP:
                     cameraUp = True
-                elif event.key == K_s:
+                elif event.key == K_DOWN:
                     cameraDown = True
 
                 elif event.key == K_n:
@@ -182,9 +196,9 @@ def runLevel(levels, levelNum):
                     return 'back'
 
                 elif event.key == K_ESCAPE:
-                    terminate() # Esc key quits.
+                    terminate()  # Esc key quits.
                 elif event.key == K_BACKSPACE:
-                    return 'reset' # Reset the level.
+                    return 'reset'  # Reset the level.
                 elif event.key == K_p:
                     # Change the player image to the next one.
                     currentImage += 1
@@ -193,23 +207,31 @@ def runLevel(levels, levelNum):
                         currentImage = 0
                     mapNeedsRedraw = True
 
+            # prvo baranje: smenati od K_w/s/a/d/ vo K_up/down/left/right
             elif event.type == KEYUP:
                 # Unset the camera move mode.
-                if event.key == K_a:
+                if event.key == K_LEFT:
                     cameraLeft = False
-                elif event.key == K_d:
+                elif event.key == K_RIGHT:
                     cameraRight = False
-                elif event.key == K_w:
+                elif event.key == K_UP:
                     cameraUp = False
-                elif event.key == K_s:
+                elif event.key == K_DOWN:
                     cameraDown = False
 
-        if playerMoveTo != None and not levelIsComplete:
+        if playerMoveTo is not None and not levelIsComplete:
+            if jump and remainingJumps > 0 and playerMoveTo is not None: # treto baranje: jump
+                jumped = makeJump(mapObj, gameStateObj, playerMoveTo) # treto baranje: jump
+                jump = False # treto baranje: jump
+                if jumped: # treto baranje: jump
+                    remainingJumps -= 1 # treto baranje: jump
+                    mapNeedsRedraw = True # treto baranje: jump
             # If the player pushed a key to move, make the move
             # (if possible) and push any stars that are pushable.
+
             moved = makeMove(mapObj, gameStateObj, playerMoveTo)
 
-            if moved:
+            if moved or jumped: # treto baranje: jump
                 # increment the step counter.
                 gameStateObj['stepCounter'] += 1
                 mapNeedsRedraw = True
@@ -218,7 +240,7 @@ def runLevel(levels, levelNum):
                 # level is solved, we should show the "Solved!" image.
                 levelIsComplete = True
                 keyPressed = False
-
+                remainingJumps = MAX_JUMPS
         DISPLAYSURF.fill(BGCOLOR)
 
         if mapNeedsRedraw:
@@ -257,7 +279,7 @@ def runLevel(levels, levelNum):
             if keyPressed:
                 return 'solved'
 
-        pygame.display.update() # draw DISPLAYSURF to the screen.
+        pygame.display.update()  # draw DISPLAYSURF to the screen.
         FPSCLOCK.tick()
 
 
@@ -265,9 +287,9 @@ def isWall(mapObj, x, y):
     """Returns True if the (x, y) position on
     the map is a wall, otherwise return False."""
     if x < 0 or x >= len(mapObj) or y < 0 or y >= len(mapObj[x]):
-        return False # x and y aren't actually on the map.
+        return False  # x and y aren't actually on the map.
     elif mapObj[x][y] in ('#', 'x'):
-        return True # wall is blocking
+        return True  # wall is blocking
     return False
 
 
@@ -280,7 +302,7 @@ def decorateMap(mapObj, startxy):
 
     Returns the decorated map object."""
 
-    startx, starty = startxy # Syntactic sugar
+    startx, starty = startxy  # Syntactic sugar
 
     # Copy the map object so we don't modify the original passed
     mapObjCopy = copy.deepcopy(mapObj)
@@ -299,10 +321,10 @@ def decorateMap(mapObj, startxy):
         for y in range(len(mapObjCopy[0])):
 
             if mapObjCopy[x][y] == '#':
-                if (isWall(mapObjCopy, x, y-1) and isWall(mapObjCopy, x+1, y)) or \
-                   (isWall(mapObjCopy, x+1, y) and isWall(mapObjCopy, x, y+1)) or \
-                   (isWall(mapObjCopy, x, y+1) and isWall(mapObjCopy, x-1, y)) or \
-                   (isWall(mapObjCopy, x-1, y) and isWall(mapObjCopy, x, y-1)):
+                if (isWall(mapObjCopy, x, y - 1) and isWall(mapObjCopy, x + 1, y)) or \
+                        (isWall(mapObjCopy, x + 1, y) and isWall(mapObjCopy, x, y + 1)) or \
+                        (isWall(mapObjCopy, x, y + 1) and isWall(mapObjCopy, x - 1, y)) or \
+                        (isWall(mapObjCopy, x - 1, y) and isWall(mapObjCopy, x, y - 1)):
                     mapObjCopy[x][y] = 'x'
 
             elif mapObjCopy[x][y] == ' ' and random.randint(0, 99) < OUTSIDE_DECORATION_PCT:
@@ -319,10 +341,10 @@ def isBlocked(mapObj, gameStateObj, x, y):
         return True
 
     elif x < 0 or x >= len(mapObj) or y < 0 or y >= len(mapObj[x]):
-        return True # x and y aren't actually on the map.
+        return True  # x and y aren't actually on the map.
 
     elif (x, y) in gameStateObj['stars']:
-        return True # a star is blocking
+        return True  # a star is blocking
 
     return False
 
@@ -363,7 +385,7 @@ def makeMove(mapObj, gameStateObj, playerMoveTo):
     else:
         if (playerx + xOffset, playery + yOffset) in stars:
             # There is a star in the way, see if the player can push it.
-            if not isBlocked(mapObj, gameStateObj, playerx + (xOffset*2), playery + (yOffset*2)):
+            if not isBlocked(mapObj, gameStateObj, playerx + (xOffset * 2), playery + (yOffset * 2)):
                 # Move the star.
                 ind = stars.index((playerx + xOffset, playery + yOffset))
                 stars[ind] = (stars[ind][0] + xOffset, stars[ind][1] + yOffset)
@@ -380,7 +402,7 @@ def startScreen():
 
     # Position the title image.
     titleRect = IMAGESDICT['title'].get_rect()
-    topCoord = 50 # topCoord tracks where to position the top of the text
+    topCoord = 50  # topCoord tracks where to position the top of the text
     titleRect.top = topCoord
     titleRect.centerx = HALF_WINWIDTH
     topCoord += titleRect.height
@@ -403,20 +425,20 @@ def startScreen():
     for i in range(len(instructionText)):
         instSurf = BASICFONT.render(instructionText[i], 1, TEXTCOLOR)
         instRect = instSurf.get_rect()
-        topCoord += 10 # 10 pixels will go in between each line of text.
+        topCoord += 10  # 10 pixels will go in between each line of text.
         instRect.top = topCoord
         instRect.centerx = HALF_WINWIDTH
-        topCoord += instRect.height # Adjust for the height of the line.
+        topCoord += instRect.height  # Adjust for the height of the line.
         DISPLAYSURF.blit(instSurf, instRect)
 
-    while True: # Main loop for the start screen.
+    while True:  # Main loop for the start screen.
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     terminate()
-                return # user has pressed a key, so return.
+                return  # user has pressed a key, so return.
 
         # Display the DISPLAYSURF contents to the actual screen.
         pygame.display.update()
@@ -430,10 +452,10 @@ def readLevelsFile(filename):
     content = mapFile.readlines() + ['\r\n']
     mapFile.close()
 
-    levels = [] # Will contain a list of level objects.
+    levels = []  # Will contain a list of level objects.
     levelNum = 0
-    mapTextLines = [] # contains the lines for a single level's map.
-    mapObj = [] # the map object made from the data in mapTextLines
+    mapTextLines = []  # contains the lines for a single level's map.
+    mapObj = []  # the map object made from the data in mapTextLines
     for lineNum in range(len(content)):
         # Process each line that was in the level file.
         line = content[lineNum].rstrip('\r\n')
@@ -468,10 +490,10 @@ def readLevelsFile(filename):
 
             # Loop through the spaces in the map and find the @, ., and $
             # characters for the starting game state.
-            startx = None # The x and y for the player's starting position
+            startx = None  # The x and y for the player's starting position
             starty = None
-            goals = [] # list of (x, y) tuples for each goal.
-            stars = [] # list of (x, y) for each star's starting position.
+            goals = []  # list of (x, y) tuples for each goal.
+            stars = []  # list of (x, y) for each star's starting position.
             for x in range(maxWidth):
                 for y in range(len(mapObj[x])):
                     if mapObj[x][y] in ('@', '+'):
@@ -486,9 +508,13 @@ def readLevelsFile(filename):
                         stars.append((x, y))
 
             # Basic level design sanity checks:
-            assert startx != None and starty != None, 'Level %s (around line %s) in %s is missing a "@" or "+" to mark the start point.' % (levelNum+1, lineNum, filename)
-            assert len(goals) > 0, 'Level %s (around line %s) in %s must have at least one goal.' % (levelNum+1, lineNum, filename)
-            assert len(stars) >= len(goals), 'Level %s (around line %s) in %s is impossible to solve. It has %s goals but only %s stars.' % (levelNum+1, lineNum, filename, len(goals), len(stars))
+            assert startx != None and starty != None, 'Level %s (around line %s) in %s is missing a "@" or "+" to mark the start point.' % (
+            levelNum + 1, lineNum, filename)
+            assert len(goals) > 0, 'Level %s (around line %s) in %s must have at least one goal.' % (
+            levelNum + 1, lineNum, filename)
+            assert len(stars) >= len(
+                goals), 'Level %s (around line %s) in %s is impossible to solve. It has %s goals but only %s stars.' % (
+            levelNum + 1, lineNum, filename, len(goals), len(stars))
 
             # Create level object and starting game state object.
             gameStateObj = {'player': (startx, starty),
@@ -522,14 +548,14 @@ def floodFill(mapObj, x, y, oldCharacter, newCharacter):
     if mapObj[x][y] == oldCharacter:
         mapObj[x][y] = newCharacter
 
-    if x < len(mapObj) - 1 and mapObj[x+1][y] == oldCharacter:
-        floodFill(mapObj, x+1, y, oldCharacter, newCharacter) # call right
-    if x > 0 and mapObj[x-1][y] == oldCharacter:
-        floodFill(mapObj, x-1, y, oldCharacter, newCharacter) # call left
-    if y < len(mapObj[x]) - 1 and mapObj[x][y+1] == oldCharacter:
-        floodFill(mapObj, x, y+1, oldCharacter, newCharacter) # call down
-    if y > 0 and mapObj[x][y-1] == oldCharacter:
-        floodFill(mapObj, x, y-1, oldCharacter, newCharacter) # call up
+    if x < len(mapObj) - 1 and mapObj[x + 1][y] == oldCharacter:
+        floodFill(mapObj, x + 1, y, oldCharacter, newCharacter)  # call right
+    if x > 0 and mapObj[x - 1][y] == oldCharacter:
+        floodFill(mapObj, x - 1, y, oldCharacter, newCharacter)  # call left
+    if y < len(mapObj[x]) - 1 and mapObj[x][y + 1] == oldCharacter:
+        floodFill(mapObj, x, y + 1, oldCharacter, newCharacter)  # call down
+    if y > 0 and mapObj[x][y - 1] == oldCharacter:
+        floodFill(mapObj, x, y - 1, oldCharacter, newCharacter)  # call up
 
 
 def drawMap(mapObj, gameStateObj, goals):
@@ -543,7 +569,7 @@ def drawMap(mapObj, gameStateObj, goals):
     mapSurfWidth = len(mapObj) * TILEWIDTH
     mapSurfHeight = (len(mapObj[0]) - 1) * TILEFLOORHEIGHT + TILEHEIGHT
     mapSurf = pygame.Surface((mapSurfWidth, mapSurfHeight))
-    mapSurf.fill(BGCOLOR) # start with a blank color on the surface.
+    mapSurf.fill(BGCOLOR)  # start with a blank color on the surface.
 
     # Draw the tile sprites onto this surface.
     for x in range(len(mapObj)):
@@ -587,6 +613,50 @@ def isLevelFinished(levelObj, gameStateObj):
             # Found a space with a goal but no star on it.
             return False
     return True
+
+
+def makeJump(mapObj, gameStateObj, playerMoveTo): # treto b
+    playerx, playery = gameStateObj['player']
+
+    if playerMoveTo == UP:
+        newx, newy = playerx, playery - 1
+    elif playerMoveTo == RIGHT:
+        newx, newy = playerx + 1, playery
+    elif playerMoveTo == DOWN:
+        newx, newy = playerx, playery + 1
+    elif playerMoveTo == LEFT:
+        newx, newy = playerx - 1, playery
+    else:
+        return False
+
+    if newx < 0 or newx >= len(mapObj) or newy < 0 or newy >= len(mapObj[newx]):
+        return False
+
+    if isJumpDestinationLegal(mapObj, gameStateObj, newx, newy, playerMoveTo):
+        gameStateObj['player'] = (newx, newy)
+        return True
+
+    return False
+
+
+def isJumpDestinationLegal(mapObj, gameStateObj, x, y, playerMoveTo):
+    if mapObj[x][y] == 'o':
+        return True
+    elif playerMoveTo == UP:
+        if mapObj[x][y-1] == 'o':
+            return True
+    elif playerMoveTo == RIGHT:
+        if mapObj[x+1][y] == 'o':
+            return True
+    elif playerMoveTo == DOWN:
+        if mapObj[x][y+1] == 'o':
+            return True
+    elif playerMoveTo == LEFT:
+        if mapObj[x-1][y] == 'o':
+            return True
+    elif (x, y) in gameStateObj['stars']:
+        return True
+    return False
 
 
 def terminate():
