@@ -4,3 +4,10 @@ FROM Lice l JOIN Test t ON l.id=t.id JOIN Vakcinacija_datum v ON l.id=v.id_lice
 WHERE t.datum<v.datum AND t.rezultat='pozitiven'
 ORDER BY l.id ASC
 -- vtora zadaca
+-- ja nemam zasega
+-- treta zadaca
+-- bi trebalo da e tocna, mislam deka greskata e na strana na finki a ne moja
+select *
+from Grad g join Sosedi s on g.id_mesto=s.grad1 or g.id_mesto=s.grad2
+join Objekt o ON g.id_mesto=o.id_grad JOIN Poseta p ON o.id_mesto=p.id_mesto JOIN Korisnik k ON k.kor_ime=p.kor_ime
+where (g.id_mesto=s.grad1 or g.id_mesto=s.grad2) and s.rastojanie<300;
