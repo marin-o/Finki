@@ -6,5 +6,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Simulate" />
+    <orderEntry type="module" module-name="Wormy" />
   </component>
 </module>

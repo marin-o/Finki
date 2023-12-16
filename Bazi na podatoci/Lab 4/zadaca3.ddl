@@ -1,0 +1,101 @@
+CREATE TABLE IF NOT EXISTS Korisnik(
+kor_ime VARCHAR(255), 
+ime VARCHAR(255), 
+prezime VARCHAR(255), 
+pol VARCHAR(255), 
+data_rag CHAR(10), 
+data_reg CHAR(10),
+CONSTRAINT PK_Korisnik
+    PRIMARY KEY(kor_ime)
+);
+
+CREATE TABLE IF NOT EXISTS Korisnik_email(
+kor_ime VARCHAR(255), 
+email VARCHAR(255),
+CONSTRAINT PK_Kor_email
+    PRIMARY KEY(kor_ime,email)
+CONSTRAINT FK_Kor_email
+    FOREIGN KEY(kor_ime)
+    REFERENCES Korisnik(kor_ime)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+CHECK (LENGTH(email) >= 10 AND email LIKE '%.com')
+);
+
+CREATE TABLE IF NOT EXISTS Mesto(
+id VARCHAR(255),
+ime VARCHAR(255),
+CONSTRAINT PK_Mesto
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS Poseta(
+id VARCHAR(255),
+kor_ime VARCHAR(255), 
+id_mesto VARCHAR(255), 
+datum CHAR(10),
+CONSTRAINT PK_Poseta
+    PRIMARY KEY(id),
+CONSTRAINT FK_kor_ime
+    FOREIGN KEY(kor_ime)
+    REFERENCES Korisnik(kor_ime)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL,
+CONSTRAINT FK_mesto
+    FOREIGN KEY(id_mesto)
+    REFERENCES Mesto(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+CHECK (datum <= CURRENT_DATE)
+);
+
+CREATE TABLE IF NOT EXISTS Grad(
+id_mesto VARCHAR(255), 
+drzava VARCHAR(255),
+CONSTRAINT PK_Grad
+    PRIMARY KEY(id_mesto),
+CONSTRAINT FK_Grad
+    FOREIGN KEY(id_mesto)
+    REFERENCES Mesto(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Objekt(
+id_mesto VARCHAR(255), 
+adresa VARCHAR(255),
+geo_shirina FLOAT,
+geo_dolzina FLOAT, 
+id_grad INTEGER,
+CONSTRAINT PK_Objekt
+    PRIMARY KEY(id_mesto),
+CONSTRAINT FK_Objekt
+    FOREIGN KEY(id_mesto)
+    REFERENCES Mesto(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+CONSTRAINT FK_Grad
+    FOREIGN KEY(id_grad)
+    REFERENCES Grad(id_mesto)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Sosedi(
+grad1 VARCHAR(255),
+grad2 VARCHAR(255),
+rastojanie FLOAT,
+CONSTRAINT PK_Sosedi
+    PRIMARY KEY(grad1, grad2),
+CONSTRAINT FK_grad1
+    FOREIGN KEY(grad1)
+    REFERENCES Grad(id_mesto)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+CONSTRAINT FK_grad2
+    FOREIGN KEY(grad2)
+    REFERENCES Grad(id_mesto)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+CHECK (grad1 <> grad2)
+);
