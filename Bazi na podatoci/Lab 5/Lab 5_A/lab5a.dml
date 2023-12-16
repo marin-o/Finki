@@ -1,0 +1,6 @@
+-- prva zadaca
+SELECT DISTINCT l.id
+FROM Lice l JOIN Test t ON l.id=t.id JOIN Vakcinacija_datum v ON l.id=v.id_lice
+WHERE t.datum<v.datum AND t.rezultat='pozitiven'
+ORDER BY l.id ASC
+-- vtora zadaca
