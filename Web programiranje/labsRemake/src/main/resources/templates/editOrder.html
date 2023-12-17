@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/movies/users/edited" method="POST">
+    <input id="id" type="hidden" name="orderId"
+           th:value="(${orderToEdit} != null ? ${orderToEdit.getId()} : '')">
+    <div class="form-group">
+        <label for="numTickets">Number of tickets</label>
+        <input type="number"
+               min="1"
+               max="10"
+               class="form-control"
+               id="numTickets"
+               name="numTickets"
+               th:value="(${orderToEdit} != null ? ${orderToEdit.getNumberOfTickets()} : '')"
+               required
+               placeholder="Enter number of tickets">
+    </div>
+    <div class="form-group">
+        <label for="mov">Movie title</label>
+        <select id="mov" name="movieTitle" class="form-control">
+            <option th:if="${movies} != null"
+                    th:selected="${orderToEdit != null &&
+                                orderToEdit.getMovieTitle().equals(movie.getTitle())}"
+                    th:each="movie : ${movies}"
+                    th:value="${movie.getTitle()}"
+                    th:text="${movie.getTitle()}">
+            </option>
+<!--            -->
+<!--            <option th:if="${order} == null"-->
+<!--                    th:each="prod : ${productions}"-->
+<!--                    th:value="${prod.getId()}"-->
+<!--                    th:text="${prod.getName()}">-->
+<!--            </option>-->
+        </select>
+    </div>
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    <a type="button" class="btn btn-primary" href="/movies/users">Back</a>
+</form>
+</body>
+</html>

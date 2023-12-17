@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 th:if="${selectedUser}">
+    <span th:text="'Hi '+${selectedUser.getUsername()}"></span>
+</h2>
+<form th:method="POST" th:action="@{/movies/users}">
+    <label>
+        Select user:
+        <select name="userId">
+            <option th:each="user : ${users}" th:value="${user.getId()}">
+                <th:block th:text="${user.getUsername()}"/>
+            </option>
+        </select>
+    </label>
+    <input type="submit" value="Submit">
+</form>
+<ul th:if="${currentUserTickets}" th:each="ticket : ${currentUserTickets}">
+    <a th:href="@{'/movies/users/edit-ticket/{id}' (id=${ticket.getId()})}" ><li th:text="'Movie title: '+${ticket.movieTitle}+', Number of tickets: '+${ticket.numberOfTickets}">
+
+    </li></a>
+</ul>
+<form th:method="GET" th:action="@{/movies}">
+    <input type="Submit" value="Go back to movies">
+</form>
+</body>
+</html>
