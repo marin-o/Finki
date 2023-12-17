@@ -2,7 +2,9 @@ package mk.finki.ukim.mk.lab.service.impl;
 
 import lombok.AllArgsConstructor;
 import mk.finki.ukim.mk.lab.model.Movie;
+import mk.finki.ukim.mk.lab.model.Production;
 import mk.finki.ukim.mk.lab.repository.MovieRepository;
+import mk.finki.ukim.mk.lab.repository.ProductionRepository;
 import mk.finki.ukim.mk.lab.service.MovieService;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final ProductionRepository productionRepository;
     @Override
     public List<Movie> findAll() {
         return movieRepository.findAll();
@@ -48,7 +51,9 @@ public class MovieServiceImpl implements MovieService {
     public void save( Long movieId,
                       String title,
                       String summary,
-                      Double rating ) {
+                      Double rating,
+                      Long productionId) {
+        Production production = productionRepository.findById(productionId);
         if(movieId != null) {
             Optional<Movie> movieOpt=movieRepository.findById(movieId);
             if ( movieOpt.isPresent() ) {
@@ -56,10 +61,11 @@ public class MovieServiceImpl implements MovieService {
                 movie.setTitle(title);
                 movie.setSummary(summary);
                 movie.setRating(rating);
+                movie.setProduction(production);
                 movieRepository.save(movie);
             }
         } else{
-            movieRepository.save(new Movie(title, summary, rating));
+            movieRepository.save(new Movie(title, summary, rating,production));
         }
     }
 }

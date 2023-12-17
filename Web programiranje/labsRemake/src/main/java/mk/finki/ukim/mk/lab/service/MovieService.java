@@ -18,5 +18,6 @@ public interface MovieService {
     void save( Long movieId,
                String title,
                String summary,
-               Double rating );
+               Double rating,
+               Long productionId);
 }

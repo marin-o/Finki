@@ -37,7 +37,7 @@
         </h2>
         <label th:each="movie : ${movies}" style="list-style-type: none">
             <input type="radio" name="movieTitle" th:value="${movie.getTitle()}">
-            <span  th:text="'Title: '+${movie.getTitle()}+', Summary: '+${movie.getSummary()}+', Rating: '+${movie.getRating()}"></span><br/>
+            <span  th:text="'Title: '+${movie.getTitle()}+', Summary: '+${movie.getSummary()}+', Rating: '+${movie.getRating()}+', Production: '+${movie.getProduction().getName()}"></span><br/>
 <!--            +', Production: '+${movie.getProduction().getName()}-->
             <th:block>
                <a th:href="@{'/movies/edit-form/{id}' (id=${movie.getId()})}"><i>Edit</i></a>

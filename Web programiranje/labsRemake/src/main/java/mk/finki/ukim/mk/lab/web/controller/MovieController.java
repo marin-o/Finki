@@ -3,6 +3,7 @@ package mk.finki.ukim.mk.lab.web.controller;
 import lombok.AllArgsConstructor;
 import mk.finki.ukim.mk.lab.model.Movie;
 import mk.finki.ukim.mk.lab.service.MovieService;
+import mk.finki.ukim.mk.lab.service.ProductionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MovieController {
     private final MovieService movieService;
+    private final ProductionService productionService;
 
     @GetMapping
     public String getMoviesPage( Model model ){
@@ -43,15 +45,16 @@ public class MovieController {
     }
 
     @GetMapping("/add-form")
-    public String getAddForm(){
+    public String getAddForm(Model model){
+        model.addAttribute("productions",productionService.findAll());
         return "editMovie";
     }
     @PostMapping("/add")
     public String addNewMovie(@RequestParam String title,
                               @RequestParam String summary,
-                              @RequestParam Double rating) {
-                              //@RequestParam Long production){
-        movieService.save(null, title, summary, rating);
+                              @RequestParam Double rating,
+                              @RequestParam Long production){
+        movieService.save(null, title, summary, rating,production);
         return "redirect:/movies";
     }
 
@@ -68,6 +71,7 @@ public class MovieController {
         if(movieOpt.isPresent()){
             Movie movie = movieOpt.get();
             model.addAttribute("movieToEdit",movie);
+            model.addAttribute("productions",productionService.findAll());
         }
         return "editMovie";
     }
@@ -75,9 +79,9 @@ public class MovieController {
     public String updateMovie(@RequestParam Long movieId,
                               @RequestParam String title,
                               @RequestParam String summary,
-                              @RequestParam Double rating){
-                              //@RequestParam Long production){
-        movieService.save(movieId,title,summary,rating);
+                              @RequestParam Double rating,
+                              @RequestParam Long production){
+        movieService.save(movieId,title,summary,rating, production);
         return "redirect:/movies";
     }
 
