@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class MovieRepository {
+public class InMemoryMovieRepository {
     public List<Movie> findAll(){
         return DataHolder.movies;
     }

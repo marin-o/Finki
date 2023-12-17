@@ -3,7 +3,7 @@ package mk.finki.ukim.mk.lab.service.impl;
 import lombok.AllArgsConstructor;
 import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.model.User;
-import mk.finki.ukim.mk.lab.repository.TicketOrderRepository;
+import mk.finki.ukim.mk.lab.repository.InMemoryTicketOrderRepository;
 import mk.finki.ukim.mk.lab.service.TicketOrderService;
 import org.springframework.stereotype.Service;
 
@@ -14,31 +14,31 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TicketOrderServiceImpl implements TicketOrderService {
 
-    private final TicketOrderRepository ticketOrderRepository;
+    private final InMemoryTicketOrderRepository inMemoryTicketOrderRepository;
     @Override
     public TicketOrder addNewOrder( String movieTitle, String clientName, String address, Long numberOfTickets, User user ) {
         TicketOrder ticketOrder = new TicketOrder(movieTitle,clientName,address,numberOfTickets, user);
-        return ticketOrderRepository.addOrder(ticketOrder);
+        return inMemoryTicketOrderRepository.addOrder(ticketOrder);
     }
 
     @Override
     public List<TicketOrder> findAllByUser( User user ) {
-        return ticketOrderRepository.findAllByUser(user);
+        return inMemoryTicketOrderRepository.findAllByUser(user);
     }
 
     @Override
     public Optional<TicketOrder> findById( Long ticketId ) {
-        return ticketOrderRepository.findById(ticketId);
+        return inMemoryTicketOrderRepository.findById(ticketId);
     }
 
     @Override
     public void updateOrder( Long orderId, Long numTickets, String movieTitle ) {
-        Optional<TicketOrder> ticketOrderOpt = ticketOrderRepository.findById(orderId);
+        Optional<TicketOrder> ticketOrderOpt = inMemoryTicketOrderRepository.findById(orderId);
         if(ticketOrderOpt.isPresent()){
             TicketOrder ticketOrder = ticketOrderOpt.get();
             ticketOrder.setNumberOfTickets(numTickets);
             ticketOrder.setMovieTitle(movieTitle);
-            ticketOrderRepository.addOrder(ticketOrder);
+            inMemoryTicketOrderRepository.addOrder(ticketOrder);
         }
     }
 }

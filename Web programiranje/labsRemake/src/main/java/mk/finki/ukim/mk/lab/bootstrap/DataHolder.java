@@ -1,10 +1,13 @@
 package mk.finki.ukim.mk.lab.bootstrap;
 
 import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
 import mk.finki.ukim.mk.lab.model.Movie;
 import mk.finki.ukim.mk.lab.model.Production;
 import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.model.User;
+import mk.finki.ukim.mk.lab.repository.jpa.MovieRepository;
+import mk.finki.ukim.mk.lab.repository.jpa.ProductionRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,12 +15,14 @@ import java.util.List;
 import java.util.Random;
 
 @Component
+@AllArgsConstructor
 public class DataHolder {
     public static List<Movie> movies;
     public static List<TicketOrder> ticketOrders;
     public static List<User> users;
     public static List<Production> productions;
-
+    private final ProductionRepository productionRepository;
+    private final MovieRepository movieRepository;
     @PostConstruct
     private void init(){
         movies = new ArrayList<>();
@@ -41,6 +46,9 @@ public class DataHolder {
         movies.add(new Movie("Inception", "A thief plants an idea into a CEO's mind.", 8.7, productions.get(random.nextInt(productions.size()))));
         movies.add(new Movie("The Matrix", "A computer hacker fights against controllers of his reality.", 8.7, productions.get(random.nextInt(productions.size()))));
         movies.add(new Movie("Titanic", "A love story on the ill-fated R.M.S. Titanic.", 7.8, productions.get(random.nextInt(productions.size()))));
+
+        productionRepository.saveAll(productions);
+        movieRepository.saveAll(movies);
     }
 
 
