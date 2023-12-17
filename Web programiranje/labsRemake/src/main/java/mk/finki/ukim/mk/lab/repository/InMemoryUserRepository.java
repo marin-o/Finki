@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserRepository {
+public class InMemoryUserRepository {
     public List<User> findAll(){
         return DataHolder.users;
     }

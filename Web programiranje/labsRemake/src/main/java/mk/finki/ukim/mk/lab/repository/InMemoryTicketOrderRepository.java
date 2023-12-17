@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class TicketOrderRepository {
+public class InMemoryTicketOrderRepository {
     public TicketOrder addOrder( TicketOrder ticketOrder ) {
         DataHolder.ticketOrders.removeIf(t->t.getId().equals(ticketOrder.getId()));
         DataHolder.ticketOrders.add(ticketOrder);
