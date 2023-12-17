@@ -36,23 +36,23 @@
                th:value="(${movieToEdit} != null ? ${movieToEdit.getRating()} : '')"
                placeholder="Rating">
     </div>
-<!--    <div class="form-group">-->
-<!--        <label for="production">Production</label>-->
-<!--        <select id="production" name="production" class="form-control">-->
-<!--            <option th:if="${movieToEdit} != null"-->
-<!--                    th:selected="${movieToEdit.getProduction() != null &&-->
-<!--                                movieToEdit.getProduction().getId() == prod.getId()}"-->
-<!--                    th:each="prod : ${productions}"-->
-<!--                    th:value="${prod.getId()}"-->
-<!--                    th:text="${prod.getName()}">-->
-<!--            </option>-->
-<!--            <option th:if="${movieToEdit} == null"-->
-<!--                    th:each="prod : ${productions}"-->
-<!--                    th:value="${prod.getId()}"-->
-<!--                    th:text="${prod.getName()}">-->
-<!--            </option>-->
-<!--        </select>-->
-<!--    </div>-->
+    <div class="form-group">
+        <label for="production">Production</label>
+        <select id="production" name="production" class="form-control">
+            <option th:if="${movieToEdit} != null"
+                    th:selected="${movieToEdit.getProduction() != null &&
+                                movieToEdit.getProduction().getId() == prod.getId()}"
+                    th:each="prod : ${productions}"
+                    th:value="${prod.getId()}"
+                    th:text="${prod.getName()}">
+            </option>
+            <option th:if="${movieToEdit} == null"
+                    th:each="prod : ${productions}"
+                    th:value="${prod.getId()}"
+                    th:text="${prod.getName()}">
+            </option>
+        </select>
+    </div>
     <button id="submit" type="submit" class="btn btn-primary">Submit</button>
     <a type="button" class="btn btn-primary" href="/movies">Back</a>
 </form>
