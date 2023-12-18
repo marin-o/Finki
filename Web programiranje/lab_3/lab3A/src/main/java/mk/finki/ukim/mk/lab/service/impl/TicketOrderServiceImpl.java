@@ -2,6 +2,7 @@ package mk.finki.ukim.mk.lab.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import mk.finki.ukim.mk.lab.embeddable.UserAddress;
 import mk.finki.ukim.mk.lab.model.ShoppingCart;
 import mk.finki.ukim.mk.lab.model.TicketOrder;
 import mk.finki.ukim.mk.lab.model.User;
@@ -48,7 +49,7 @@ public class TicketOrderServiceImpl implements TicketOrderService {
     @Transactional
     public void saveOrder(String movieTitle, String numTickets, String username) {
         User user = userRepository.findByUsername(username)
-                .orElseGet(() -> new User(username, "noname", "nosurname", "123", LocalDate.now()));
+                .orElseGet(() -> new User(username, "noname", "nosurname", "123", LocalDate.now(),new UserAddress("drzava","grad","adr1","adr2")));
 
         ShoppingCart cart = shoppingCartRepository.findByUser(user);
         if (cart == null) {
