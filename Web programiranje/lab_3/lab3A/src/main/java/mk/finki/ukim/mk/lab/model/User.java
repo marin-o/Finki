@@ -4,6 +4,7 @@ package mk.finki.ukim.mk.lab.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mk.finki.ukim.mk.lab.converters.UserFullNameConverter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -18,8 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String name;
-    private String surname;
+    @Convert(converter = UserFullNameConverter.class)
+    private UserFullName fullName;
     private String password;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
@@ -31,8 +32,7 @@ public class User {
     }
     public User(String username, String name, String surname, String password, LocalDate dateOfBirth) {
         this.username = username;
-        this.name=name;
-        this.surname=surname;
+        this.fullName= new UserFullName(name, surname);
         this.password=password;
         this.dateOfBirth=dateOfBirth;
         this.carts = new ArrayList<>();
