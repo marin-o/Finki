@@ -2,6 +2,7 @@ package mk.finki.ukim.mk.lab.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import mk.finki.ukim.mk.lab.embeddable.UserAddress;
 import mk.finki.ukim.mk.lab.model.Movie;
 import mk.finki.ukim.mk.lab.model.ShoppingCart;
 import mk.finki.ukim.mk.lab.model.TicketOrder;
@@ -85,7 +86,7 @@ public class UserController {
                                @RequestParam String surname,
                                @RequestParam String password) {
         // You may want to add validation and error handling here before saving the user.
-        User user = new User(username, name, surname, password, LocalDate.now());
+        User user = new User(username, name, surname, password, LocalDate.now(),new UserAddress("drzava","grad","adr1","adr2"));
         userService.save(user);
         return "redirect:/movies";
     }
