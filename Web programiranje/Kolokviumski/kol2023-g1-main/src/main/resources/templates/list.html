@@ -7,7 +7,7 @@
 
 <div>
     <!-- The form below should invoke the method PlayersController.showPlayers -->
-    <form th:method="GET" th:action="@{/players}"id="filter-form">
+    <form th:method="GET" th:action="@{/}" id="filter-form">
         <label for="pointsPerGame">Points Per Game</label>
         <input id="pointsPerGame" type="number" name="pointsPerGame"/>
         <label for="position">Position</label>
@@ -50,7 +50,7 @@
                 <!-- PlayersController.showEdit -->
                 <a th:href="@{'/players/{id}/edit' (id=${player?.id})}" class="edit-item">Edit</a>
                 <!-- PlayersController.vote -->
-                <form>
+                <form th:method="POST" th:action="@{'/players/{id}/vote' (id=${player?.id})}">
                     <button type="submit" class="like-item">Vote for Player</button>
                 </form>
             </td>
