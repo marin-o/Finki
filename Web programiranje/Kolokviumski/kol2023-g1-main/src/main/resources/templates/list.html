@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>WP Exam</title>
 </head>
 <body>
 
+<h1 th:if="${#request.getRemoteUser()!=null}" th:text="'Hello '+ ${#request.getRemoteUser()}"></h1>
 <div>
     <!-- The form below should invoke the method PlayersController.showPlayers -->
     <form th:method="GET" th:action="@{/}" id="filter-form">
@@ -20,7 +22,7 @@
     </form>
     <div>
         <!-- PlayersController.showAdd -->
-        <a th:href="@{/players/add}" class="add-item">
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/players/add}" class="add-item">
             Add new player
         </a>
     </div>
@@ -44,13 +46,13 @@
             <td th:text="${player?.votes}">[player.votes]</td>
             <td>
                 <!-- PlayersController.delete -->
-                <form th:method="POST" th:action="@{'/players/{id}/delete' (id=${player?.id})}">
+                <form sec:authorize="hasRole('ROLE_ADMIN')" th:method="POST" th:action="@{'/players/{id}/delete' (id=${player?.id})}">
                     <button type="submit" class="delete-item">Delete</button>
                 </form>
                 <!-- PlayersController.showEdit -->
-                <a th:href="@{'/players/{id}/edit' (id=${player?.id})}" class="edit-item">Edit</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/players/{id}/edit' (id=${player?.id})}" class="edit-item">Edit</a>
                 <!-- PlayersController.vote -->
-                <form th:method="POST" th:action="@{'/players/{id}/vote' (id=${player?.id})}">
+                <form sec:authorize="hasRole('ROLE_USER')" th:method="POST" th:action="@{'/players/{id}/vote' (id=${player?.id})}">
                     <button type="submit" class="like-item">Vote for Player</button>
                 </form>
             </td>

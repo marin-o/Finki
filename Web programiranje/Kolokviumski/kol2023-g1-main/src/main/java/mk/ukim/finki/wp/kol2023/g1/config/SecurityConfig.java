@@ -1,8 +1,13 @@
 package mk.ukim.finki.wp.kol2023.g1.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *  This class is used to configure user login on path '/login' and logout on path '/logout'.
@@ -11,29 +16,67 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *  Furthermore, in the "list.html" template, the 'Edit', 'Delete', 'Add' buttons should only be
  *  visible for a user with role 'ROLE_ADMIN'.
  *  The 'Vote for Player' button should only be visible for a user with role 'ROLE_USER'.
- *
- *  For login inMemory users should be used. Their credentials are given below:
+  *  For login inMemory users should be used. Their credentials are given below:
  *  [{
  *      username: "user",
  *      password: "user",
  *      role: "ROLE_USER"
  *  },
- *
- *  {
+  *  {
  *      username: "admin",
  *      password: "admin",
  *      role: "ROLE_ADMIN"
  *  }]
  */
 @Configuration
+@AllArgsConstructor
+@EnableGlobalMethodSecurity (securedEnabled=true, prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final PasswordEncoder passwordEncoder;
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure( HttpSecurity http ) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/login","/assets/**", "/register", "/api/**","/players").permitAll()
+                .antMatchers("/players/{id}/vote").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/players/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .failureUrl("/login?error=BadCredentials")
+                .defaultSuccessUrl("/players", true)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling().accessDeniedPage("/players");
+    }
+
+    @Override
+    protected void configure( AuthenticationManagerBuilder auth ) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password(passwordEncoder.encode("user"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin"))
+                .authorities("ROLE_ADMIN");
+    }
+    @Override
+    public void configure(WebSecurity web){
         web.ignoring().antMatchers("/h2**"); // do not remove this line
 
         // TODO: If you are implementing the security requirements, remove this following line
-        web.ignoring().antMatchers("/**");
+        //web.ignoring().antMatchers("/**");
 
     }
 }
