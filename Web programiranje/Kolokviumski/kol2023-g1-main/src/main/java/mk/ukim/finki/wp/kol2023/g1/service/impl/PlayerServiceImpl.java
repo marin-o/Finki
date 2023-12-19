@@ -66,16 +66,28 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<Player> listPlayersWithPointsLessThanAndPosition( Double pointsPerGame, PlayerPosition position ) {
+        if(pointsPerGame==null && position == null)
+            return playerRepository.findAll();
+        else if(position==null){
+            return playerRepository.findAllByPointsPerGameLessThan(pointsPerGame);
+        }
+        else if(pointsPerGame==null){
+            return playerRepository.findAllByPositionEquals(position);
+        }
         return playerRepository.findAllByPointsPerGameLessThanAndPositionEquals(pointsPerGame,position);
     }
 
     @Override
     public List<Player> listPlayersWithPointsLessThan( Double pointsPerGame ) {
+        if(pointsPerGame==null)
+            return playerRepository.findAll();
         return playerRepository.findAllByPointsPerGameLessThan(pointsPerGame);
     }
 
     @Override
     public List<Player> listPlayersWithPosition( PlayerPosition position ) {
+        if(position == null)
+            return playerRepository.findAll();
         return playerRepository.findAllByPositionEquals(position);
     }
 }

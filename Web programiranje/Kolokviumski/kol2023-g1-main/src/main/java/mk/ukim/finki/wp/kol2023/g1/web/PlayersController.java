@@ -33,16 +33,17 @@ public class PlayersController {
     public String showPlayers( @RequestParam(required=false) Double pointsPerGame,
                                @RequestParam(required=false) PlayerPosition position,
                                Model model ) {
-        if (pointsPerGame == null && position == null) {
-            model.addAttribute("players",this.playerService.listAllPlayers());
-        } else if(position == null){
-            model.addAttribute("players",this.playerService.listPlayersWithPointsLessThan(pointsPerGame));
-        } else if(pointsPerGame == null){
-            model.addAttribute("players",this.playerService.listPlayersWithPosition(position));
-        }
-        else {
-            model.addAttribute("players",this.playerService.listPlayersWithPointsLessThanAndPosition(pointsPerGame, position));
-        }
+//        if (pointsPerGame == null && position == null) {
+//            model.addAttribute("players",this.playerService.listAllPlayers());
+//        } else if(position == null){
+//            model.addAttribute("players",this.playerService.listPlayersWithPointsLessThan(pointsPerGame));
+//        } else if(pointsPerGame == null){
+//            model.addAttribute("players",this.playerService.listPlayersWithPosition(position));
+//        }
+//        else {
+//            model.addAttribute("players",this.playerService.listPlayersWithPointsLessThanAndPosition(pointsPerGame, position));
+//        }
+        model.addAttribute("players",playerService.listPlayersWithPointsLessThanAndPosition(pointsPerGame,position));
         model.addAttribute("positions",PlayerPosition.values());
         return "list";
     }
@@ -125,8 +126,9 @@ public class PlayersController {
      *
      * @return The view "list.html".
      */
-    public String vote(Long id) {
+    @PostMapping("/players/{id}/vote")
+    public String vote(@PathVariable Long id) {
         this.playerService.vote(id);
-        return "";
+        return "redirect:/players";
     }
 }
