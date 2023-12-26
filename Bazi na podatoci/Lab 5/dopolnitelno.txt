@@ -1,3 +1,34 @@
 da se napishe dml izraz so koj kje se vratat iminjata i preziminjata na klientite koi vo ist den napravile transakcija za uplata na shalter i transakcija na bankomat za istata smetka
+select k.ime, k.prezime 
+from Smetka s join Transakcija_shalter ts on s.MBR_k=ts.MBR_k_s
+join Transakcija_bankomat tb on s.MBR_k=tb.MBR_k_s
+join Klient k on s.MBR_k=k.MBR_k
+where tb.datum=ts.datum;
+
+-- ova pogore e prv nacin
+
+create view bankomati as 
+select k.MBR_k, k.ime,k.prezime,tb.datum,s.broj from
+(Klient k natural join Smetka s) join Transakcija_bankomat tb on s.MBR_k=tb.MBR_k_s;
+
+create view shalter as 
+select k.MBR_k, k.ime,k.prezime,ts.datum,s.broj from
+(Klient k natural join Smetka s) join Transakcija_shalter ts on s.MBR_k=ts.MBR_k_s;
+
+select bankomati.ime,bankomati.prezime from 
+bankomati join shalter
+where bankomati.broj=shalter.broj and bankomati.datum=shalter.datum
+
+
+
+
 
 da se napishe dml izraz so koj kje se vratat iminjata i preziminjata na site vraboteni koi napravile transakcija preku shalter na smetka vo povekje od dve valuti
+create view count_valuti as
+select v.ID,ime,prezime, count(valuta) as valuti
+from Vraboten v join Transakcija_shalter ts on v.ID=ts.ID_v 
+join Smetka s on s.MBR_k=ts.MBR_k_s
+group by v.ID;
+
+select ime, prezime from count_valuti
+where valuti > 2
