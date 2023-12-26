@@ -1,0 +1,3 @@
+da se napishe dml izraz so koj kje se vratat iminjata i preziminjata na klientite koi vo ist den napravile transakcija za uplata na shalter i transakcija na bankomat za istata smetka
+
+da se napishe dml izraz so koj kje se vratat iminjata i preziminjata na site vraboteni koi napravile transakcija preku shalter na smetka vo povekje od dve valuti
