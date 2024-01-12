@@ -1,0 +1,61 @@
+-- prva
+
+create trigger oninserttransakcija
+after insert on Transakcija_shalter
+for each row
+begin
+    update Klient
+    set brSmetkiTransakcii=(select count(distinct broj) from Transakcija_shalter where MBR_k=new.MBR_k)
+    where MBR_k=new.MBR_k;
+end;
+
+create trigger onupdatetransakcija
+after update on Transakcija_shalter
+for each row
+begin
+    update Klient
+    set brSmetkiTransakcii=(select count(distinct broj) from Transakcija_shalter where MBR_k=new.MBR_k)
+    where MBR_k=new.MBR_k;
+    
+    update Klient
+    set brSmetkiTransakcii=(select count(distinct broj) from Transakcija_shalter where MBR_k=old.MBR_k)
+    where MBR_k=old.MBR_k;
+end;
+
+-- vtora
+
+create trigger oninsertvakcinacija
+after insert on Vakcinacija_datum
+for each row
+begin
+    update Lice
+    set celosno_imuniziran=(select count(*)>=2 from Vakcinacija_datum where new.id_lice=id_lice)
+    where new.id_lice=id;
+end;
+
+--treta
+
+create trigger oninsertposeta
+after insert on Poseta
+for each row
+begin
+    update Mesto
+    set broj_poseti=(select count(distinct kor_ime) from Poseta where id_mesto=new.id_mesto)
+    where id=new.id_mesto;
+end;
+
+--cetvrta
+
+create trigger oninsertpreporaka
+after insert on Preporaka
+for each row
+begin
+    update Korisnik
+    set broj_preporaki=broj_preporaki+1
+    where k_ime=new.k_ime_od;
+    
+    update Korisnik
+    set broj_preporaki=broj_preporaki+1
+    where k_ime=new.k_ime_na;
+end;
+
