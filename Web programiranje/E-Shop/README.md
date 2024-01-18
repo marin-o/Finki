@@ -1,1 +1,0 @@
-Wp auditoriski cel journey
