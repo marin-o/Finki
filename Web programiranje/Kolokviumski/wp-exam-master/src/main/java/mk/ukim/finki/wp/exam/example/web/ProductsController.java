@@ -1,37 +1,53 @@
 package mk.ukim.finki.wp.exam.example.web;
 
-import mk.ukim.finki.wp.exam.example.model.User;
+import mk.ukim.finki.wp.exam.example.model.Category;
+import mk.ukim.finki.wp.exam.example.model.Product;
+import mk.ukim.finki.wp.exam.example.service.CategoryService;
 import mk.ukim.finki.wp.exam.example.service.ProductService;
-import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@Controller
 public class ProductsController {
 
     private final ProductService service;
-
-    public ProductsController(ProductService service) {
+    private final CategoryService categoryService;
+    public ProductsController(ProductService service, CategoryService categoryService) {
         this.service = service;
+        this.categoryService = categoryService;
     }
 
 
-    public String showProducts(String nameSearch, Long categoryId) {
-        if (nameSearch == null && categoryId == null) {
-            this.service.listAllProducts();
-        } else {
-            this.service.listProductsByNameAndCategory(nameSearch, categoryId);
-        }
-        return "";
+    @GetMapping({"/","/products"})
+    public String showProducts(
+            @RequestParam(required = false) String nameSearch,
+            @RequestParam(required = false) Long categoryId,
+            Model model) {
+        List<Category> categories = categoryService.listAll();
+        List<Product> products = this.service.listProductsByNameAndCategory(nameSearch, categoryId);
+        model.addAttribute("products", products);
+        model.addAttribute("categories",categories);
+        return "list";
     }
 
-    public String showAdd() {
-
-        return "";
+    @GetMapping("/products/add")
+    public String showAdd(Model model) {
+        List<Category> categories = categoryService.listAll();
+        model.addAttribute("categories",categories);
+        return "form";
     }
 
-    public String showEdit(Long id) {
-        this.service.findById(id);
-        return "";
+    @GetMapping("/products/{id}/edit")
+    public String showEdit(@PathVariable Long id, Model model) {
+        List<Category> categories = categoryService.listAll();
+        model.addAttribute("categories",categories);
+        model.addAttribute("product",this.service.findById(id));
+        return "form";
     }
 
 
