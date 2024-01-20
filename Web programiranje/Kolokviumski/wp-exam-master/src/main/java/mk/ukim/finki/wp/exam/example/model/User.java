@@ -1,11 +1,9 @@
 package mk.ukim.finki.wp.exam.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="juzer")
 public class User {
 
     public User() {
