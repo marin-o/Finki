@@ -1,8 +1,12 @@
 package mk.ukim.finki.wp.exam.example.model;
 
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.util.List;
 
+@Entity
 public class Product {
 
     public Product() {
@@ -16,6 +20,8 @@ public class Product {
     }
 
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -24,8 +30,10 @@ public class Product {
 
     private Integer quantity;
 
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Category> categories;
 
+    @ManyToOne
     private User creator;
 
 

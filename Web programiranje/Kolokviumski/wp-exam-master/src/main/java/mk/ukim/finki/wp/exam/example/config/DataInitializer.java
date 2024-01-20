@@ -1,14 +1,17 @@
 package mk.ukim.finki.wp.exam.example.config;
 
+import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.exam.example.model.Role;
 import mk.ukim.finki.wp.exam.example.model.User;
 import mk.ukim.finki.wp.exam.example.service.CategoryService;
 import mk.ukim.finki.wp.exam.example.service.ProductService;
 import mk.ukim.finki.wp.exam.example.service.UserService;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
 public class DataInitializer {
 
     public static final String ADMIN = "admin";
@@ -25,7 +28,7 @@ public class DataInitializer {
         this.productService = productService;
     }
 
-
+    @PostConstruct
     public void initData() {
         User admin = this.userService.create(ADMIN, ADMIN, Role.ROLE_ADMIN);
 
