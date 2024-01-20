@@ -1,5 +1,11 @@
 package mk.ukim.finki.wp.exam.example.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+
+@Entity
 public class User {
 
     public User() {
@@ -11,10 +17,12 @@ public class User {
         this.role = role;
     }
 
+    @Id
     private String username;
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public String getUsername() {
