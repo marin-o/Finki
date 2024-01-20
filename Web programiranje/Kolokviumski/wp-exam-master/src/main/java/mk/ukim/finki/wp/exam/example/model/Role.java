@@ -1,5 +1,12 @@
 package mk.ukim.finki.wp.exam.example.model;
 
-public enum Role {
-    ROLE_ADMIN
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
+    ROLE_ADMIN;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
