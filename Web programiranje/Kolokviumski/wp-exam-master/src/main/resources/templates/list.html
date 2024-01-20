@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>WP Exam</title>
 </head>
@@ -20,7 +20,7 @@
     </form>
     <div>
         <!-- ProductsController.showAdd -->
-        <a th:href="@{/products/add}" class="add-item">
+        <a th:href="@{/products/add}" class="add-item" sec:authorize="hasRole('ROLE_ADMIN')">
             Add new product
         </a>
     </div>
@@ -47,11 +47,11 @@
             <td th:text="${prod?.creator?.username}">[prod.creator]</td>
             <td>
                 <!-- ProductsController.delete -->
-                <form th:method="POST" th:action="@{'/products/{id}/delete' (id=${prod.id})}">
+                <form th:method="POST" th:action="@{'/products/{id}/delete' (id=${prod.id})}" sec:authorize="hasRole('ROLE_ADMIN')">
                     <button type="submit" class="delete-item">Delete</button>
                 </form>
                 <!-- ProductsController.showEdit -->
-                <a th:href="@{'/products/{id}/edit' (id=${prod.id})}" class="edit-item">Edit</a>
+                <a th:href="@{'/products/{id}/edit' (id=${prod.id})}" class="edit-item" sec:authorize="hasRole('ROLE_ADMIN')">Edit</a>
             </td>
         </tr>
     </table>
