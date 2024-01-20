@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+
+<div>
+    <!-- The form below should invoke the method ProductsController.showProducts -->
+    <form id="filter-form">
+
+        <label for="nameSearch">Name</label>
+        <input id="nameSearch" type="text" name=""/>
+        <label for="categoryId">Category</label>
+        <select id="categoryId" name="">
+            <option value="">All</option>
+            <!-- For each category you should have one <option> like below  -->
+            <option value="[cat.ID]"> [cat.name]</option>
+        </select>
+        <button id="filter" type="submit">Filter</button>
+    </form>
+    <div>
+        <!-- ProductsController.showAdd -->
+        <a href="" class="add-item">
+            Add new product
+        </a>
+    </div>
+    <table>
+        <tr>
+            <th>Product name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Categories</th>
+            <th>Creator</th>
+            <th>Actions</th>
+        </tr>
+        <!-- For each product you should have one <tr> like below -->
+        <tr class="item">
+            <td>[prod.name]</td>
+            <td>[prod.price]</td>
+            <td>[prod.quantity]</td>
+            <td>
+                <ul>
+                    <!-- For each product's category you should display one <li> element like the one below -->
+                    <li>[cat.name]</li>
+                </ul>
+            </td>
+            <td>[prod.creator]</td>
+            <td>
+                <!-- ProductsController.delete -->
+                <form>
+                    <button type="submit" class="delete-item">Delete</button>
+                </form>
+                <!-- ProductsController.showEdit -->
+                <a href="" class="edit-item">Edit</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+</body>
+</html>
