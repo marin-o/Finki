@@ -276,7 +276,6 @@ def gameOverAnimation(color=WHITE, animationSpeed=50):
 
 # treto baranje: drawbuttons funkcija koja gi crta site(i stari i novi) kvadrati
 def drawButtons():
-    # Draw buttons based on current grid size
     for x in range(GRID_WIDTH):
         for y in range(GRID_HEIGHT):
             left, top = getButtonLeftTopOfPixel(x, y)
@@ -312,7 +311,6 @@ def increaseGridSize():
     GRID_WIDTH += 1
     GRID_HEIGHT += 1
 
-    # Adjust window size accordingly
     newWindowWidth = XMARGIN * 2 + GRID_WIDTH * BUTTONSIZE + (GRID_WIDTH - 1) * BUTTONGAPSIZE
     newWindowHeight = YMARGIN * 2 + GRID_HEIGHT * BUTTONSIZE + (GRID_HEIGHT - 1) * BUTTONGAPSIZE
     DISPLAYSURF = pygame.display.set_mode((newWindowWidth, newWindowHeight))
