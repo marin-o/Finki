@@ -9,34 +9,43 @@ from pygame.locals import *
 FPS = 30
 WINDOWWIDTH = 640
 WINDOWHEIGHT = 480
-FLASHSPEED = 500 # in milliseconds
-FLASHDELAY = 200 # in milliseconds
+FLASHSPEED = 500  # in milliseconds
+FLASHDELAY = 200  # in milliseconds
 BUTTONSIZE = 200
 BUTTONGAPSIZE = 20
-TIMEOUT = 4 # seconds before game over if no button is pushed.
+TIMEOUT = 4  # seconds before game over if no button is pushed.
 
 #                R    G    B
-WHITE        = (255, 255, 255)
-BLACK        = (  0,   0,   0)
-BRIGHTRED    = (255,   0,   0)
-RED          = (155,   0,   0)
-BRIGHTGREEN  = (  0, 255,   0)
-GREEN        = (  0, 155,   0)
-BRIGHTBLUE   = (  0,   0, 255)
-BLUE         = (  0,   0, 155)
-BRIGHTYELLOW = (255, 255,   0)
-YELLOW       = (155, 155,   0)
-DARKGRAY     = ( 40,  40,  40)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+BRIGHTRED = (255, 0, 0)
+RED = (155, 0, 0)
+BRIGHTGREEN = (0, 255, 0)
+GREEN = (0, 155, 0)
+BRIGHTBLUE = (0, 0, 255)
+BLUE = (0, 0, 155)
+BRIGHTYELLOW = (255, 255, 0)
+YELLOW = (155, 155, 0)
+DARKGRAY = (40, 40, 40)
 bgColor = BLACK
 
-XMARGIN = int((WINDOWWIDTH - (2 * BUTTONSIZE) - BUTTONGAPSIZE) / 2)
-YMARGIN = int((WINDOWHEIGHT - (2 * BUTTONSIZE) - BUTTONGAPSIZE) / 2)
+# treto baranje: variables
+GRID_WIDTH = 2
+GRID_HEIGHT = 2
+
+XMARGIN = int((WINDOWWIDTH - (GRID_WIDTH * BUTTONSIZE) - (GRID_WIDTH - 1) * BUTTONGAPSIZE) / 2)
+YMARGIN = int((WINDOWHEIGHT - (GRID_HEIGHT * BUTTONSIZE) - (GRID_HEIGHT - 1) * BUTTONGAPSIZE) / 2)
 
 # Rect objects for each of the four buttons
 YELLOWRECT = pygame.Rect(XMARGIN, YMARGIN, BUTTONSIZE, BUTTONSIZE)
-BLUERECT   = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN, BUTTONSIZE, BUTTONSIZE)
-REDRECT    = pygame.Rect(XMARGIN, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
-GREENRECT  = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
+BLUERECT = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN, BUTTONSIZE, BUTTONSIZE)
+REDRECT = pygame.Rect(XMARGIN, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
+GREENRECT = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE,
+                        BUTTONSIZE)
+
+# treto baranje: variables
+BUTTON_COLORS = [BRIGHTRED, BRIGHTGREEN, BRIGHTBLUE, BRIGHTYELLOW]
+
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BEEP1, BEEP2, BEEP3, BEEP4, TIMEOUT
@@ -47,7 +56,8 @@ def main():
     pygame.display.set_caption('Simulate')
 
     BASICFONT = pygame.font.Font('freesansbold.ttf', 16)
-    infoSurf = BASICFONT.render('Match the pattern by clicking on the button or using the Q, W, A, S keys.', 1, DARKGRAY)
+    infoSurf = BASICFONT.render('Match the pattern by clicking on the button or using the Q, W, A, S keys.', 1,
+                                DARKGRAY)
     infoRect = infoSurf.get_rect()
     infoRect.topleft = (10, WINDOWHEIGHT - 25)
 
@@ -58,21 +68,19 @@ def main():
     BEEP4 = pygame.mixer.Sound('beep4.ogg')
 
     # Initialize some variables for a new game
-    pattern = [] # stores the pattern of colors
-    currentStep = 0 # the color the player must push next
-    lastClickTime = 0 # timestamp of the player's last button push
+    pattern = []  # stores the pattern of colors
+    currentStep = 0  # the color the player must push next
+    lastClickTime = 0  # timestamp of the player's last button push
     score = 0
     # when False, the pattern is playing. when True, waiting for the player to click a colored button:
     waitingForInput = False
 
-    patternChanges = 0 # vtoro baranje: variable to track pattern changes
+    patternChanges = 0  # vtoro baranje: variable to track pattern changes
 
-    # treto baranje: variables to track current grid size
-    width = 2
-    height = 2
-
-    while True: # main game loop
-        clickedButton = None # button that was clicked (set to YELLOW, RED, GREEN, or BLUE)
+    # treto baranje: variables
+    oldScore = 0
+    while True:  # main game loop
+        clickedButton = None  # button that was clicked (set to YELLOW, RED, GREEN, or BLUE)
         DISPLAYSURF.fill(bgColor)
         drawButtons()
 
@@ -84,7 +92,7 @@ def main():
         DISPLAYSURF.blit(infoSurf, infoRect)
 
         checkForQuit()
-        for event in pygame.event.get(): # event handling loop
+        for event in pygame.event.get():  # event handling loop
             if event.type == MOUSEBUTTONUP:
                 mousex, mousey = event.pos
                 clickedButton = getButtonClicked(mousex, mousey)
@@ -98,7 +106,11 @@ def main():
                 elif event.key == K_s:
                     clickedButton = GREEN
 
-
+        # treto baranje: if uslov dali da se zgolemi gridot
+        if score % 10 == 0 and score != oldScore:
+            increaseGridSize()
+            oldScore = score
+            drawButtons()
 
         if not waitingForInput:
             # play the pattern
@@ -116,7 +128,7 @@ def main():
             waitingForInput = True
         else:
             # wait for the player to enter buttons
-            #if clickedButton and clickedButton == pattern[currentStep]:
+            # if clickedButton and clickedButton == pattern[currentStep]:
             # prvo baranje: make the player have to reverse the input
             if clickedButton and clickedButton == pattern[len(pattern) - 1 - currentStep]:
                 # pushed the correct button
@@ -129,9 +141,9 @@ def main():
                     changeBackgroundAnimation()
                     score += 1
                     waitingForInput = False
-                    currentStep = 0 # reset back to first step
+                    currentStep = 0  # reset back to first step
 
-            elif (clickedButton and clickedButton != pattern[currentStep]) or (currentStep != 0 and time.time() - TIMEOUT > lastClickTime):
+            elif currentStep != 0 and time.time() - TIMEOUT > lastClickTime:
                 # pushed the incorrect button, or has timed out
                 gameOverAnimation()
                 # reset the variables for a new game:
@@ -139,6 +151,9 @@ def main():
                 currentStep = 0
                 waitingForInput = False
                 score = 0
+                oldScore = 0
+                GRID_WIDTH = 2
+                GRID_HEIGHT = 2
                 pygame.time.wait(1000)
                 changeBackgroundAnimation()
 
@@ -152,12 +167,12 @@ def terminate():
 
 
 def checkForQuit():
-    for event in pygame.event.get(QUIT): # get all the QUIT events
-        terminate() # terminate if any QUIT events are present
-    for event in pygame.event.get(KEYUP): # get all the KEYUP events
+    for event in pygame.event.get(QUIT):  # get all the QUIT events
+        terminate()  # terminate if any QUIT events are present
+    for event in pygame.event.get(KEYUP):  # get all the KEYUP events
         if event.key == K_ESCAPE:
-            terminate() # terminate if the KEYUP event was for the Esc key
-        pygame.event.post(event) # put the other KEYUP event objects back
+            terminate()  # terminate if the KEYUP event was for the Esc key
+        pygame.event.post(event)  # put the other KEYUP event objects back
 
 
 def flashButtonAnimation(color, animationSpeed=50):
@@ -183,7 +198,7 @@ def flashButtonAnimation(color, animationSpeed=50):
     flashSurf = flashSurf.convert_alpha()
     r, g, b = flashColor
     sound.play()
-    for start, end, step in ((0, 255, 1), (255, 0, -1)): # animation loop
+    for start, end, step in ((0, 255, 1), (255, 0, -1)):  # animation loop
         for alpha in range(start, end, animationSpeed * step):
             checkForQuit()
             DISPLAYSURF.blit(origSurf, (0, 0))
@@ -194,11 +209,12 @@ def flashButtonAnimation(color, animationSpeed=50):
     DISPLAYSURF.blit(origSurf, (0, 0))
 
 
-def drawButtons():
-    pygame.draw.rect(DISPLAYSURF, YELLOW, YELLOWRECT)
-    pygame.draw.rect(DISPLAYSURF, BLUE,   BLUERECT)
-    pygame.draw.rect(DISPLAYSURF, RED,    REDRECT)
-    pygame.draw.rect(DISPLAYSURF, GREEN,  GREENRECT)
+#
+# def drawButtons():
+#     pygame.draw.rect(DISPLAYSURF, YELLOW, YELLOWRECT)
+#     pygame.draw.rect(DISPLAYSURF, BLUE,   BLUERECT)
+#     pygame.draw.rect(DISPLAYSURF, RED,    REDRECT)
+#     pygame.draw.rect(DISPLAYSURF, GREEN,  GREENRECT)
 
 
 def changeBackgroundAnimation(animationSpeed=40):
@@ -208,14 +224,14 @@ def changeBackgroundAnimation(animationSpeed=40):
     newBgSurf = pygame.Surface((WINDOWWIDTH, WINDOWHEIGHT))
     newBgSurf = newBgSurf.convert_alpha()
     r, g, b = newBgColor
-    for alpha in range(0, 255, animationSpeed): # animation loop
+    for alpha in range(0, 255, animationSpeed):  # animation loop
         checkForQuit()
         DISPLAYSURF.fill(bgColor)
 
         newBgSurf.fill((r, g, b, alpha))
         DISPLAYSURF.blit(newBgSurf, (0, 0))
 
-        drawButtons() # redraw the buttons on top of the tint
+        drawButtons()  # redraw the buttons on top of the tint
 
         pygame.display.update()
         FPSCLOCK.tick(FPS)
@@ -227,16 +243,16 @@ def gameOverAnimation(color=WHITE, animationSpeed=50):
     origSurf = DISPLAYSURF.copy()
     flashSurf = pygame.Surface(DISPLAYSURF.get_size())
     flashSurf = flashSurf.convert_alpha()
-    BEEP1.play() # play all four beeps at the same time, roughly.
+    BEEP1.play()  # play all four beeps at the same time, roughly.
     BEEP2.play()
     BEEP3.play()
     BEEP4.play()
     r, g, b = color
-    for i in range(3): # do the flash 3 times
+    for i in range(3):  # do the flash 3 times
         for start, end, step in ((0, 255, 1), (255, 0, -1)):
             # The first iteration in this loop sets the following for loop
             # to go from 0 to 255, the second from 255 to 0.
-            for alpha in range(start, end, animationSpeed * step): # animation loop
+            for alpha in range(start, end, animationSpeed * step):  # animation loop
                 # alpha means transparency. 255 is opaque, 0 is invisible
                 checkForQuit()
                 flashSurf.fill((r, g, b, alpha))
@@ -247,19 +263,61 @@ def gameOverAnimation(color=WHITE, animationSpeed=50):
                 FPSCLOCK.tick(FPS)
 
 
+# def getButtonClicked(x, y):
+#     if YELLOWRECT.collidepoint((x, y)):
+#         return YELLOW
+#     elif BLUERECT.collidepoint((x, y)):
+#         return BLUE
+#     elif REDRECT.collidepoint((x, y)):
+#         return RED
+#     elif GREENRECT.collidepoint((x, y)):
+#         return GREEN
+#     return None
 
-def getButtonClicked(x, y):
-    if YELLOWRECT.collidepoint( (x, y) ):
-        return YELLOW
-    elif BLUERECT.collidepoint( (x, y) ):
-        return BLUE
-    elif REDRECT.collidepoint( (x, y) ):
-        return RED
-    elif GREENRECT.collidepoint( (x, y) ):
-        return GREEN
+# treto baranje: drawbuttons funkcija koja gi crta site(i stari i novi) kvadrati
+def drawButtons():
+    # Draw buttons based on current grid size
+    for x in range(GRID_WIDTH):
+        for y in range(GRID_HEIGHT):
+            left, top = getButtonLeftTopOfPixel(x, y)
+            color_index = (x + y) % len(BUTTON_COLORS)  # Cycle through colors
+            pygame.draw.rect(DISPLAYSURF, BUTTON_COLORS[color_index], (left, top, BUTTONSIZE, BUTTONSIZE))
+
+
+def getButtonLeftTopOfPixel(boxx, boxy):
+    left = XMARGIN + (boxx * (BUTTONSIZE + BUTTONGAPSIZE))
+    top = YMARGIN + (boxy * (BUTTONSIZE + BUTTONGAPSIZE))
+    return left, top
+
+
+# treto baranje: klik na kopce nova verzija
+def getButtonClicked(mousex, mousey):
+    for x in range(GRID_WIDTH):
+        for y in range(GRID_HEIGHT):
+            left, top = getButtonLeftTopOfPixel(x, y)
+
+            buttonRect = pygame.Rect(left, top, BUTTONSIZE, BUTTONSIZE)
+            if buttonRect.collidepoint((mousex, mousey)):
+                print((left, top))
+                print((mousex, mousey))
+                print(buttonRect.collidepoint((mousex,mousey)))
+                return buttonRect
     return None
+
+
+# treto baranje: zgolemuvanje na gridot
+def increaseGridSize():
+    global GRID_WIDTH, GRID_HEIGHT, DISPLAYSURF
+    DISPLAYSURF.fill(bgColor)
+    GRID_WIDTH += 1
+    GRID_HEIGHT += 1
+
+    # Adjust window size accordingly
+    newWindowWidth = XMARGIN * 2 + GRID_WIDTH * BUTTONSIZE + (GRID_WIDTH - 1) * BUTTONGAPSIZE
+    newWindowHeight = YMARGIN * 2 + GRID_HEIGHT * BUTTONSIZE + (GRID_HEIGHT - 1) * BUTTONGAPSIZE
+    DISPLAYSURF = pygame.display.set_mode((newWindowWidth, newWindowHeight))
+    return DISPLAYSURF
 
 
 if __name__ == '__main__':
     main()
-
