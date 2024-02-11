@@ -39,7 +39,7 @@ REDRECT    = pygame.Rect(XMARGIN, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSI
 GREENRECT  = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT, BEEP1, BEEP2, BEEP3, BEEP4
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, BEEP1, BEEP2, BEEP3, BEEP4, TIMEOUT
 
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -64,6 +64,12 @@ def main():
     score = 0
     # when False, the pattern is playing. when True, waiting for the player to click a colored button:
     waitingForInput = False
+
+    patternChanges = 0 # vtoro baranje: variable to track pattern changes
+
+    # treto baranje: variables to track current grid size
+    width = 2
+    height = 2
 
     while True: # main game loop
         clickedButton = None # button that was clicked (set to YELLOW, RED, GREEN, or BLUE)
@@ -99,13 +105,20 @@ def main():
             pygame.display.update()
             pygame.time.wait(1000)
             pattern.append(random.choice((YELLOW, BLUE, RED, GREEN)))
+            # vtoro baranje: dodaden if uslov koj go namaluva tajmautot za 1 dokolku se slucile 10 promeni,
+            # so minimum timeout od 3
+            patternChanges += 1
+            if patternChanges % 10 == 0:
+                TIMEOUT = max(3, TIMEOUT - 1)
             for button in pattern:
                 flashButtonAnimation(button)
                 pygame.time.wait(FLASHDELAY)
             waitingForInput = True
         else:
             # wait for the player to enter buttons
-            if clickedButton and clickedButton == pattern[currentStep]:
+            #if clickedButton and clickedButton == pattern[currentStep]:
+            # prvo baranje: make the player have to reverse the input
+            if clickedButton and clickedButton == pattern[len(pattern) - 1 - currentStep]:
                 # pushed the correct button
                 flashButtonAnimation(clickedButton)
                 currentStep += 1
@@ -249,3 +262,4 @@ def getButtonClicked(x, y):
 
 if __name__ == '__main__':
     main()
+
