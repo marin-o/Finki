@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-02-21T16:34:45.551Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="hd9GmZ9GhTAGPnY3BmSL" version="23.1.5" type="github">
+<mxfile host="app.diagrams.net" modified="2024-02-21T16:44:46.927Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="LJM_VqkJxIIWUUYkpNI3" version="23.1.5" type="github">
   <diagram name="Page-1" id="I2lGg5c7wZs1G68vXTzx">
-    <mxGraphModel dx="1322" dy="781" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1653" dy="679" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -186,9 +186,6 @@
         <mxCell id="epmKvIx1AX2aCllIOB9j-65" value="film" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
           <mxGeometry x="270" y="520" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="epmKvIx1AX2aCllIOB9j-71" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="epmKvIx1AX2aCllIOB9j-67" target="epmKvIx1AX2aCllIOB9j-70">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="epmKvIx1AX2aCllIOB9j-81" value="M" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="epmKvIx1AX2aCllIOB9j-67" target="epmKvIx1AX2aCllIOB9j-78">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -200,9 +197,6 @@
         </mxCell>
         <mxCell id="epmKvIx1AX2aCllIOB9j-68" value="zarabotka" style="ellipse;whiteSpace=wrap;html=1;align=center;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
           <mxGeometry x="230" y="475" width="70" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="epmKvIx1AX2aCllIOB9j-70" value="datum_premiera" style="ellipse;whiteSpace=wrap;html=1;align=center;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
-          <mxGeometry x="440" y="540" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="epmKvIx1AX2aCllIOB9j-89" value="N" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="epmKvIx1AX2aCllIOB9j-73" target="epmKvIx1AX2aCllIOB9j-86">
           <mxGeometry relative="1" as="geometry" />
