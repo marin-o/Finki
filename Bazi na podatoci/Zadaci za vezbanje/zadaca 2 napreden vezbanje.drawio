@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-02-21T17:32:56.365Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="UUTLikjtrH-3BxTh4YrX" version="23.1.5" type="github">
+<mxfile host="app.diagrams.net" modified="2024-02-21T18:26:21.583Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0" etag="birNXLqtclzIFHi33M90" version="23.1.5" type="github">
   <diagram name="Page-1" id="I2lGg5c7wZs1G68vXTzx">
-    <mxGraphModel dx="1570" dy="822" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1823" dy="822" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -356,6 +356,11 @@
             <mxPoint x="125" y="479.9999999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="epmKvIx1AX2aCllIOB9j-134" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="epmKvIx1AX2aCllIOB9j-127" target="epmKvIx1AX2aCllIOB9j-135">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="epmKvIx1AX2aCllIOB9j-127" value="kupena_od" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
           <mxGeometry x="120" y="560" width="80" height="60" as="geometry" />
         </mxCell>
@@ -368,8 +373,11 @@
         <mxCell id="epmKvIx1AX2aCllIOB9j-132" value="pripagja_na" style="shape=rhombus;double=1;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
           <mxGeometry x="100" y="705" width="70" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="epmKvIx1AX2aCllIOB9j-133" value="Korisnik(korisnicko_ime,ime, prezime, tip, datum_reg,pretplata,email)&lt;br&gt;Korisnik_tel_br(korisnicko_ime,broj)&lt;br&gt;Profil(ime_profil,korisnicko_ime*,datum_kreacija)&lt;br&gt;Lista_zelbi(ime_profil*,korisnicko_ime*)&lt;br&gt;Videozapis(naslov_zapis,vremetraenje,datum_dostapnost,datum_premiera, tip)&lt;br&gt;Zhanr(naziv)&lt;br&gt;Film(naslov_zapis*,zarabotka)&lt;br&gt;Epizoda(naslov_zapis*,sezona*)&lt;br&gt;Serija(ime_serija)&lt;br&gt;Sezona(ime_serija*,reden_broj,status)&lt;br&gt;&lt;br&gt;Izgledanost(ime_profil*,korisnicko_ime*,naslov_zapis*, chasovi, minuti,sekundi)&lt;br&gt;Omileni(ime_profil*,korisnicko_ime*,naslov_zapis*)&lt;br&gt;Preporaka(ime_profil1*,korisnicko_ime1*,ime_profil2*,korisnicko_ime2*,naslov_zapis*,datum, komentar) &lt;br&gt;Kupena_od(ime_profil1*,korisnicko_ime1*,reden_broj_sezona*,ime_serija*)&lt;br&gt;Go_sodrzi(ime_profil*, korisnicko_ime*,naslov_zapis*)&lt;br&gt;Video_zapis_zhanr(naslov_zapis*,naziv_zhanr*)&lt;br&gt;Srodni_zhanrovi(naslov_zhanr1,naslov_zhanr2)&lt;br&gt;Sezona_epizoda(reden_broj_sezona*,ime_serija*,naslov_zapis*)&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+        <mxCell id="epmKvIx1AX2aCllIOB9j-133" value="Korisnik(korisnicko_ime,ime, prezime, tip, datum_reg,pretplata,email)&lt;br&gt;Korisnik_tel_br(korisnicko_ime,broj)&lt;br&gt;Profil(ime_profil,korisnicko_ime*,datum_kreacija)&lt;br&gt;Lista_zelbi(ime_profil*,korisnicko_ime*)&lt;br&gt;Videozapis(naslov_zapis,vremetraenje,datum_dostapnost,datum_premiera, tip)&lt;br&gt;Zhanr(naziv)&lt;br&gt;Film(naslov_zapis*,zarabotka)&lt;br&gt;Epizoda(naslov_zapis*,sezona*)&lt;br&gt;Serija(ime_serija)&lt;br&gt;Sezona(ime_serija*,reden_broj,status)&lt;br&gt;&lt;br&gt;Izgledanost(ime_profil*,korisnicko_ime*,naslov_zapis*, chasovi, minuti,sekundi)&lt;br&gt;Omileni(ime_profil*,korisnicko_ime*,naslov_zapis*)&lt;br&gt;Preporaka(ime_profil1*,korisnicko_ime1*,ime_profil2*,korisnicko_ime2*,naslov_zapis*,datum, komentar) &lt;br&gt;Kupena_od(ime_profil1*,korisnicko_ime1*,reden_broj_sezona*,ime_serija*,datum)&lt;br&gt;Go_sodrzi(ime_profil*, korisnicko_ime*,naslov_zapis*)&lt;br&gt;Video_zapis_zhanr(naslov_zapis*,naziv_zhanr*)&lt;br&gt;Srodni_zhanrovi(naslov_zhanr1,naslov_zhanr2)&lt;br&gt;Sezona_epizoda(reden_broj_sezona*,ime_serija*,naslov_zapis*)&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
           <mxGeometry x="100" y="790" width="510" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="epmKvIx1AX2aCllIOB9j-135" value="datum" style="ellipse;whiteSpace=wrap;html=1;align=center;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="10" y="570" width="100" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
