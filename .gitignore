@@ -9,3 +9,6 @@ build/
 
 # Ignore target folders
 target/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
