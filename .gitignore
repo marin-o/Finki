@@ -12,3 +12,6 @@ target/
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
+
+# Ignore IS Auds Project
+Integrirani\ sistemi/EShopApp
