@@ -15,3 +15,9 @@ target/
 
 # Ignore IS Auds Project
 Integrirani\ sistemi/EShopApp
+
+# Ignore DNICK Auds Project
+DNICK/Restaurant
+
+# ABS Auds
+ABS/[Aa][Vv]*
