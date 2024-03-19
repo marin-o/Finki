@@ -12,7 +12,9 @@ policy_iteration_averages = {}
 Освен тоа, кога правев споредби за која вредност за факторот на намалување е најдобра, добивав неконзистентни резултати.
 Во различни извршувања различна вредност беше најдобра, веројатно пак поради горенаведената причина.
 Пробав и со вредности под .5 и над .9, и алгоритамот не конвергираше, играта траеше бесконечно долго, освен за gamma∈[0.4, 0.5]
+Доколку искористам seed во reset() функцијата, за сите вредности за гама се добива ист број на чекори и иста награда.
 '''
+
 
 def taxi_task(env, num_iter, discount, iteration_type):
     if iteration_type == 'value_iteration':
@@ -35,7 +37,7 @@ def taxi_task(env, num_iter, discount, iteration_type):
     averages[num_iter][discount] = {'steps': 0, 'rewards': 0}
 
     for i in range(num_iter):
-        state, _ = env.reset()
+        state, _ = env.reset(seed=42)
         terminated = False
         steps = 0
         total_reward = 0
