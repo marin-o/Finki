@@ -37,7 +37,7 @@ def taxi_task(env, num_iter, discount, iteration_type):
     averages[num_iter][discount] = {'steps': 0, 'rewards': 0}
 
     for i in range(num_iter):
-        state, _ = env.reset(seed=42)
+        state, _ = env.reset()
         terminated = False
         steps = 0
         total_reward = 0
