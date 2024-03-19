@@ -8,9 +8,9 @@ policy_iteration_averages = {}
 '''
 Решенијата за двете задачи ги комбинирав(преку iteration_type параметарот) во една скрипта во која на крајот се принтаат статистиките.
 По повеќе извршувања на скриптата изгледа дека за конкретниот проблем двата алгоритми даваат исти резултати,
-со варијанса на конечните поени и чекорите поради стохастичност.
+со варијанса на конечните поени и чекорите поради различните стартни позиции на таксито и патникот.
 Освен тоа, кога правев споредби за која вредност за факторот на намалување е најдобра, добивав неконзистентни резултати.
-Во различни извршувања различна вредност беше најдобра, веројатно пак поради стохастичноста.
+Во различни извршувања различна вредност беше најдобра, веројатно пак поради горенаведената причина.
 Пробав и со вредности под .5 и над .9, и алгоритамот не конвергираше, играта траеше бесконечно долго, освен за gamma∈[0.4, 0.5]
 '''
 
@@ -66,10 +66,12 @@ if __name__ == '__main__':
                 taxi_task(env, num_iter, discount, iteration_type)
 
     print("Comparison of Averages:")
-    for num_iter in num_iterations:
+    best_gamma_overall = {num_iter: {'gamma': None, 'average_rewards': float('-inf')} for num_iter in num_iterations}
 
+    for num_iter in num_iterations:
+        print()
+        print(f"For Number of Iterations: {num_iter}")
         for discount in discount_factors:
-            print()
             vi_steps = value_iteration_averages[num_iter][discount]['steps']
             vi_rewards = value_iteration_averages[num_iter][discount]['rewards']
             pi_steps = policy_iteration_averages[num_iter][discount]['steps']
@@ -78,8 +80,20 @@ if __name__ == '__main__':
             steps_difference = vi_steps - pi_steps
             rewards_difference = vi_rewards - pi_rewards
 
-            print(f"Num Iterations: {num_iter}, Discount Factor: {discount}")
+            print(f"Discount Factor: {discount}")
             print(f"Value Iteration - Steps: {vi_steps}, Rewards: {vi_rewards}")
             print(f"Policy Iteration - Steps: {pi_steps}, Rewards: {pi_rewards}")
             print(f"Difference - Steps: {steps_difference}, Rewards: {rewards_difference}")
+
+            # Determine the best gamma overall
+            average_rewards = (vi_rewards + pi_rewards) / 2
+            if average_rewards > best_gamma_overall[num_iter]['average_rewards']:
+                best_gamma_overall[num_iter]['gamma'] = discount
+                best_gamma_overall[num_iter]['average_rewards'] = average_rewards
+
         print("----------------------------------------------")
+
+    print("\nBest Gamma Overall:")
+    for num_iter, info in best_gamma_overall.items():
+        print(f"For {num_iter} Iterations: Gamma = {info['gamma']}, Average Rewards = {info['average_rewards']}")
+

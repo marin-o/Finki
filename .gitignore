@@ -1,3 +1,6 @@
+# Ignore python virtual environments
+venv/
+
 # Ignore IntelliJ IDEA files
 .idea/
 
