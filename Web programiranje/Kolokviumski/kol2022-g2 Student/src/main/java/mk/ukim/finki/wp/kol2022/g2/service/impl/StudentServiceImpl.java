@@ -4,18 +4,25 @@ import mk.ukim.finki.wp.kol2022.g2.model.Course;
 import mk.ukim.finki.wp.kol2022.g2.model.Student;
 import mk.ukim.finki.wp.kol2022.g2.model.StudentType;
 import mk.ukim.finki.wp.kol2022.g2.model.exceptions.InvalidCourseIdException;
+import mk.ukim.finki.wp.kol2022.g2.model.exceptions.InvalidStudentEmailException;
 import mk.ukim.finki.wp.kol2022.g2.model.exceptions.InvalidStudentIdException;
 import mk.ukim.finki.wp.kol2022.g2.repository.CourseRepository;
 import mk.ukim.finki.wp.kol2022.g2.repository.StudentRepository;
 import mk.ukim.finki.wp.kol2022.g2.service.StudentService;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService, UserDetailsService {
 
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
@@ -98,5 +105,16 @@ public class StudentServiceImpl implements StudentService {
             return studentRepository.findAllByCoursesContaining(c);
         }
         return studentRepository.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Student s = studentRepository.findByEmail(email).orElseThrow(InvalidStudentEmailException::new);
+
+        return new User(
+                s.getEmail(),
+                s.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + s.getType()))
+        );
     }
 }

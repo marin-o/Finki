@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>WP Exam</title>
 </head>
@@ -20,7 +20,7 @@
     </form>
     <div>
         <!-- CourseController.showAdd (Only ADMIN can see this element)-->
-            <a th:href="@{/students/add}" class="add-item">
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/students/add}" class="add-item" >
                 Add
             </a>
     </div>
@@ -43,11 +43,11 @@
             </td>
             <td>
                     <!-- StudentController.delete (Only ADMIN can see this element)-->
-                    <form th:method="POST" th:action="@{'/students/{id}/delete' (id=${student.id})}">
+                    <form sec:authorize="hasRole('ROLE_ADMIN')" th:method="POST" th:action="@{'/students/{id}/delete' (id=${student.id})}" >
                         <button type="submit" class="delete-item">Delete</button>
                     </form>
                     <!-- StudentController.showEdit (Only ADMIN can see this element)-->
-                    <a th:href="@{'/students/{id}/edit' (id=${student.id})}"  id="edit-item">Edit</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/students/{id}/edit' (id=${student.id})}"  id="edit-item" >Edit</a>
             </td>
         </tr>
     </table>
