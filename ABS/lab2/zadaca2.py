@@ -63,10 +63,11 @@ if __name__ == '__main__':
                 total_reward += reward
                 total_steps += 1
 
-        if total_reward / 100 > best_reward:
-            best_reward = total_reward / 100
+        if total_reward/100 > best_reward:
+            best_reward = total_reward/100
             best_q_table = key
             total_steps /= 100
+
 
     splits = best_q_table.split(",")
     episodes = splits[0]
@@ -87,14 +88,14 @@ if __name__ == '__main__':
         state, _ = env.reset()
         terminated = False
         while not terminated:
-            action = get_best_action(q_table, state)
+            action = get_action(env, q_table, state, 0.3)
 
             new_state, reward, terminated, _, _ = env.step(action)
             state = new_state
             total_reward += reward
             total_steps += 1
 
-    best_reward_epsilon = total_reward / 100
+    best_reward_epsilon = total_reward/100
     total_steps /= 100
 
     print(f"The same q-table but with epsilon-greedy policy gave us an average reward of: {best_reward_epsilon}")
