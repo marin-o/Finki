@@ -1,7 +1,7 @@
 package junit;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class VisaApplicationsTest {
     private List<String> uk; //test fixture
     private List<String> usa; //test fixture
 
-    @After
+    @AfterEach
     public void setUpAfter() {
         uk = null;
         usa = null;
@@ -55,7 +55,7 @@ public class VisaApplicationsTest {
      * Testing if uk list is null, and us list is non-empty and non-null
      */
     @Test
-    public void testTFTT(){
+    public void testFFTT(){
         usa = new ArrayList<>();
         usa.add("456");
         usa.add("789");
@@ -82,7 +82,7 @@ public class VisaApplicationsTest {
      * Testing if us list is null, and uk list is non-empty and non-null
      */
     @Test
-    public void testTTTF(){
+    public void testTTFF(){
         uk = new ArrayList<>();
         uk.add("456");
         uk.add("789");
