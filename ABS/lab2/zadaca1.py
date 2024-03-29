@@ -93,7 +93,6 @@ if __name__ == '__main__':
         terminated = False
         epsilon = initial_epsilon
         while not terminated:
-            # print(epsilon)
             action = get_action(env, q_table, state, epsilon)
 
             new_state, reward, terminated, _, _ = env.step(action)
