@@ -2,6 +2,11 @@ import gymnasium as gym
 from q_learning import get_random_action, get_best_action, get_action, \
     random_q_table, calculate_new_q_value
 
+
+'''
+    Алгоритамот не конвергира, се обидов со многу различни вредности за параметрите,
+    но не успеав да најдам комбинација која ќе доведе до конвергенција.
+'''
 if __name__ == '__main__':
     env = gym.make('FrozenLake-v1', render_mode='ansi')
 
@@ -84,16 +89,23 @@ if __name__ == '__main__':
     total_reward = 0
     total_steps = 0
     best_reward_epsilon = float('-inf')
+
+    initial_epsilon = 1.0
+    min_epsilon = 0.01
+    decay_rate = 0.85
     for _ in range(100):
         state, _ = env.reset()
         terminated = False
+        epsilon = initial_epsilon
         while not terminated:
-            action = get_action(env, q_table, state, 0.3)
+            action = get_action(env, q_table, state, epsilon)
 
             new_state, reward, terminated, _, _ = env.step(action)
             state = new_state
             total_reward += reward
             total_steps += 1
+
+            epsilon = max(initial_epsilon, epsilon * decay_rate)
 
     best_reward_epsilon = total_reward/100
     total_steps /= 100
