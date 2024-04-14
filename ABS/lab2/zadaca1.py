@@ -8,41 +8,40 @@ if __name__ == '__main__':
     num_states = env.observation_space.n
     num_actions = env.action_space.n
 
-    num_steps_per_episode = 8
+    num_steps_per_episode = 6
 
     dfs = [0.5, 0.9]
     lrs = [0.1, 0.01]
-    episode_values = [10, 20, 30]
+    episode_values = [10000, 20000]
 
     iterations = 50
 
     trained_q_tables = {}
 
-    for _ in range(iterations):
-        for episode_value in episode_values:
-            for df in dfs:
-                for lr in lrs:
-                    q_table = random_q_table(-1, 0, (num_states, num_actions))
+    for episode_value in episode_values:
+        for df in dfs:
+            for lr in lrs:
+                q_table = random_q_table(-1, 0, (num_states, num_actions))
 
-                    for episode in range(episode_value):
-                        state, _ = env.reset()
-                        terminated = False
-                        # for step in range(num_steps_per_episode):
-                        while not terminated:
-                            action = get_random_action(env)
+                for episode in range(episode_value):
+                    state, _ = env.reset()
+                    terminated = False
+                    for _ in range(num_steps_per_episode):
+                    #while not terminated:
+                        action = get_random_action(env)
 
-                            new_state, reward, terminated, _, _ = env.step(action)
+                        new_state, reward, terminated, _, _ = env.step(action)
 
-                            new_q = calculate_new_q_value(q_table,
-                                                          state, new_state,
-                                                          action, reward,
-                                                          lr, df)
+                        new_q = calculate_new_q_value(q_table,
+                                                      state, new_state,
+                                                      action, reward,
+                                                      lr, df)
 
-                            q_table[state, action] = new_q
+                        q_table[state, action] = new_q
 
-                            state = new_state
+                        state = new_state
 
-                    trained_q_tables[f"{episode_value},{df},{lr}"] = q_table
+                trained_q_tables[f"{episode_value},{df},{lr}"] = q_table
 
     best_reward = float("-inf")
     best_steps = float("-inf")
@@ -68,7 +67,6 @@ if __name__ == '__main__':
             best_q_table = key
             total_steps /= 100
 
-
     splits = best_q_table.split(",")
     episodes = splits[0]
     discount = splits[1]
@@ -88,6 +86,9 @@ if __name__ == '__main__':
     initial_epsilon = 1.0
     min_epsilon = 0.01
     decay_rate = 0.85
+
+    env = gym.make('FrozenLake-v1', render_mode='ansi')
+
     for _ in range(100):
         state, _ = env.reset()
         terminated = False
