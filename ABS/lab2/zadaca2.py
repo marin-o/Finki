@@ -4,8 +4,7 @@ from q_learning import get_random_action, get_best_action, get_action, \
 
 
 '''
-    Алгоритамот не конвергира, се обидов со многу различни вредности за параметрите,
-    но не успеав да најдам комбинација која ќе доведе до конвергенција.
+    Не дава најдобро решение на проблемот. 
 '''
 if __name__ == '__main__':
     env = gym.make('FrozenLake-v1', render_mode='ansi')
@@ -17,7 +16,7 @@ if __name__ == '__main__':
 
     dfs = [0.5, 0.9]
     lrs = [0.1, 0.01]
-    episode_values = [10000, 20000]
+    episode_values = [200000]
     iterations = 50
 
     trained_q_tables = {}
@@ -111,3 +110,16 @@ if __name__ == '__main__':
 
     print(f"The same q-table but with epsilon-greedy policy gave us an average reward of: {best_reward_epsilon}")
     print(f"Termination was reached after {total_steps} steps on average")
+
+    env = gym.make('FrozenLake-v1', render_mode='human')
+    state, _ = env.reset()
+    terminated = False
+    epsilon = initial_epsilon
+    q_table = trained_q_tables[best_q_table]
+    while not terminated:
+        action = get_best_action(q_table, state)
+
+        new_state, reward, terminated, _, _ = env.step(action)
+        state = new_state
+
+    env.render()
