@@ -106,3 +106,4 @@ if __name__ == '__main__':
 
     print(f"The same q-table but with epsilon-greedy policy gave us an average reward of: {best_reward_epsilon}")
     print(f"Termination was reached after {total_steps} steps on average")
+
