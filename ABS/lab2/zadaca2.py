@@ -7,7 +7,7 @@ from q_learning import get_random_action, get_best_action, get_action, \
     Не дава најдобро решение на проблемот. 
 '''
 if __name__ == '__main__':
-    env = gym.make('FrozenLake-v1', render_mode='ansi')
+    env = gym.make('Taxi-v3', render_mode='ansi')
 
     num_states = env.observation_space.n
     num_actions = env.action_space.n
@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     dfs = [0.5, 0.9]
     lrs = [0.1, 0.01]
-    episode_values = [200000]
+    episode_values = [100000]
     iterations = 50
 
     trained_q_tables = {}
@@ -30,6 +30,7 @@ if __name__ == '__main__':
                     state, _ = env.reset()
                     terminated = False
                     # for step in range(num_steps_per_episode):
+                    print(episode)
                     while not terminated:
                         action = get_best_action(q_table, state)
 
@@ -53,11 +54,12 @@ if __name__ == '__main__':
     for key in trained_q_tables.keys():
         q_table = trained_q_tables[key]
         total_reward = 0
-        for _ in range(100):
+        for i in range(100):
             state, _ = env.reset()
             terminated = False
             total_steps = 0
-            while not terminated:
+            print(i)
+            while not terminated and total_steps < 100000:
                 action = get_best_action(q_table, state)
 
                 new_state, reward, terminated, _, _ = env.step(action)
@@ -111,7 +113,7 @@ if __name__ == '__main__':
     print(f"The same q-table but with epsilon-greedy policy gave us an average reward of: {best_reward_epsilon}")
     print(f"Termination was reached after {total_steps} steps on average")
 
-    env = gym.make('FrozenLake-v1', render_mode='human')
+    env = gym.make('Taxi-v3', render_mode='human')
     state, _ = env.reset()
     terminated = False
     epsilon = initial_epsilon
