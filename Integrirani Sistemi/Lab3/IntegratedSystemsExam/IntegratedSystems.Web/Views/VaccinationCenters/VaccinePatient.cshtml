@@ -1,0 +1,42 @@
+﻿@model IntegratedSystems.Domain.DTO.VaccineDTO
+
+@{
+    ViewData["Title"] = "VaccinePatient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Vaccine Patient</h1>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="VaccinePatient">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+ 
+            <div class="form-group">
+                <label asp-for="manufacturer" class="control-label"></label>
+                @Html.DropDownListFor(x => Model.manufacturer, new SelectList(Model.manufacturers), new { @class = "form-control" })
+                <span asp-validation-for="manufacturer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="vaccinationDate" class="control-label"></label>
+                <input asp-for="vaccinationDate" type="datetime" class="form-control" />
+                <span asp-validation-for="vaccinationDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="patientId" class="control-label"></label>
+                @Html.DropDownListFor(x => Model.patientId, new SelectList(Model.patients, "Id", "FirstName"), new { @class = "form-control" })
+                <span asp-validation-for="patientId" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="vaccCenterId" />
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
