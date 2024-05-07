@@ -1,0 +1,13 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-static-pod
+  labels:
+    zone: prod
+    version: v1
+spec:
+  containers:
+  - name: nginx-static-lab7-container
+    image: marinojak/nginx-static-lab7:latest
+    ports:
+    - containerPort: 8080
