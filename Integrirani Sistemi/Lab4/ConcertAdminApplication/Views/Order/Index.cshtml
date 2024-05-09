@@ -1,0 +1,50 @@
+﻿﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<ConcertAdminApplication.Models.Order>
+
+
+<div class="container">
+
+    <div class="row m-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Customer details
+                    </th>
+                    <th>
+                        Number of products
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i = 0; i < Model.Count(); i++) {
+                    var item = Model[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>
+                            @item.Owner.UserName
+                        </td>
+
+                        <td>
+                            @item.ProductInOrders.Count()
+                        </td>
+                        <td>
+                            |
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">View Order</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
