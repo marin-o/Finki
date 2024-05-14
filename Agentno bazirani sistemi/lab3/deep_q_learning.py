@@ -2,7 +2,7 @@ import numpy as np
 import random
 from collections import deque
 from tensorflow.keras.layers import Input, Dense
-from tensorflow.keras.models import Model
+from tensorflow.keras import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import MeanSquaredError
 from tensorflow import reduce_mean
