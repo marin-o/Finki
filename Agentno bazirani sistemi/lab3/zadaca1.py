@@ -18,10 +18,14 @@ import os
 
 def build_model(state_space_shape, num_actions):
     model = Sequential()
-    model.add(Dense(32, input_shape=state_space_shape))
-    model.add(Dense(32))
-    model.add(Dense(num_actions, activation='linear'))
-    model.compile(SGD(0.001), loss='mse')
+    model.add(Input(state_space_shape))
+    model.add(Dense(64))
+    model.add(Dense(16))
+    model.add(Dense(8))
+    model.add(Dense(num_actions, activation='softmax'))
+
+    model.compile(Adam(), loss='mse')
+
     return model
 
 
