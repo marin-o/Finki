@@ -10,6 +10,10 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.optimizers import SGD
 import os
 
+'''
+Што и да направам или времето потребно за тренинг е преголемо, или играта не терминира. Не можам никако да го истренирам моделот за добро да ја игра играта.
+Нема никакви разлики помеѓу резултатите од овој код, и DQN верзијата.
+'''
 
 def build_model(state_space_shape, num_actions):
     model = Sequential()

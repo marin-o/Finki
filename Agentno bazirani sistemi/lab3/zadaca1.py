@@ -11,16 +11,17 @@ from tensorflow.keras.optimizers import SGD
 import os
 
 
+'''
+Што и да направам или времето потребно за тренинг е преголемо, или играта не терминира. Не можам никако да го истренирам моделот за добро да ја игра играта.
+Нема никакви разлики помеѓу резултатите од овој код, и Double DQN верзијата.
+'''
+
 def build_model(state_space_shape, num_actions):
     model = Sequential()
-    model.add(Input(state_space_shape))
-    model.add(Dense(64))
-    model.add(Dense(16))
-    model.add(Dense(8))
-    model.add(Dense(num_actions, activation='softmax'))
-
-    model.compile(Adam(), loss='mse')
-
+    model.add(Dense(32, input_shape=state_space_shape))
+    model.add(Dense(32))
+    model.add(Dense(num_actions, activation='linear'))
+    model.compile(SGD(0.001), loss='mse')
     return model
 
 
@@ -31,7 +32,7 @@ if __name__ == '__main__':
 
     state_space_shape = env.observation_space.shape
     num_actions = env.action_space.n
-    num_episodes = 20
+    num_episodes = 2000
     num_steps_per_episode = 20
 
     model = build_model(state_space_shape, num_actions)
