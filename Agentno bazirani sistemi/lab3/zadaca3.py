@@ -2,7 +2,7 @@ import gymnasium as gym
 import numpy as np
 from PIL import Image
 from tensorflow.keras import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Flatten
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import MeanSquaredError
 from deep_q_learning import DQN
@@ -10,13 +10,18 @@ from deep_q_learning import DQN
 
 def build_model(state_space_shape, num_actions, learning_rate):
     model = Sequential()
-    model.add(Conv2D(32, (8, 8), strides=4, padding='same', activation='relu', input_shape=state_space_shape))
-    model.add(Conv2D(64, (4, 4), strides=2, padding='same', activation='relu'))
-    model.add(Conv2D(64, (3, 3), strides=1, padding='same', activation='relu'))
+    model.add(Conv2D(64, (8, 8), strides=4, activation='relu', input_shape=state_space_shape))
+    model.add(MaxPool2D())
+    model.add(Conv2D(32, (4, 4), strides=2, activation='relu'))
+    model.add(MaxPool2D())
+    model.add(Conv2D(16, (3, 3), strides=1, activation='relu'))
+    model.add(MaxPool2D())
     model.add(Flatten())
-    model.add(Dense(512, activation='relu'))
+    model.add(Dense(128, activation='relu'))
     model.add(Dense(num_actions, activation='softmax'))
     model.compile(Adam(learning_rate=learning_rate), loss=MeanSquaredError())
+
+
     return model
 
 
@@ -35,7 +40,7 @@ if __name__ == '__main__':
     state_space_shape = env.observation_space.shape[:-1] + (1,)
     num_actions = env.action_space.n
 
-    num_episodes = 50
+    num_episodes = 20
     epsilon = 1.0
     epsilon_decay = 0.995
     min_epsilon = 0.1
@@ -72,7 +77,7 @@ if __name__ == '__main__':
 
     print(np.mean(total_rewards))
 
-    agent.load('pacman_z3', 50)
+    agent.load('pacman_z3', 20)
 
     done = False
     env = gym.make('ALE/MsPacman-v5', render_mode='human')
