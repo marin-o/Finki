@@ -56,11 +56,14 @@ if __name__ == '__main__':
 
         if episode > 10:
             epsilon = max(0.5, 0)
-        #if episode % 100 == 0:
-        print(episode)
+        print(f'Current episode: {episode}')
 
         if episode % 10 == 0:
             agent.update_target_model()
+
+    agent.save(model_name='pacman_z2', episode=10)
+
+    agent.load('pacman_z2', 10)
 
     env = gym.make('MountainCar-v0', render_mode='human')
     env.reset()
