@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     state_space_shape = env.observation_space.shape
     num_actions = env.action_space.n
-    num_episodes = 2000
+    num_episodes = 10
     num_steps_per_episode = 20
 
     model = build_model(state_space_shape, num_actions)
@@ -62,6 +62,10 @@ if __name__ == '__main__':
 
         if episode % 10 == 0:
             agent.update_target_model()
+
+    agent.save(model_name='pacman_z1', episode=10)
+
+    agent.load('pacman_z1', 10)
 
     env = gym.make('MountainCar-v0', render_mode='human')
     env.reset()
