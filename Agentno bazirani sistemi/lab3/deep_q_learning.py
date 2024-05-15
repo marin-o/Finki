@@ -64,7 +64,7 @@ class DQN:
                 state = state.reshape((1,) + self.state_space_shape)
             else:
                 state = state.reshape(1, self.state_space_shape)
-            return np.argmax(self.model.predict(state)[0])
+            return np.argmax(self.model.predict(state, verbose=0)[0])
 
     def load(self, model_name, episode):
         """
@@ -72,7 +72,7 @@ class DQN:
         :param model_name: name of the model
         :param episode: episode checkpoint
         """
-        self.model.load_weights(f'dqn_{model_name}_{episode}.h5')
+        self.model.load_weights(f'dqn_{model_name}_{episode}.weights.h5')
 
     def save(self, model_name, episode):
         """
@@ -80,7 +80,7 @@ class DQN:
         :param model_name: name of the model
         :param episode: episode checkpoint
         """
-        self.model.save_weights(f'dqn_{model_name}_{episode}.h5')
+        self.model.save_weights(f'dqn_{model_name}_{episode}.weights.h5')
 
     def train(self):
         """
@@ -105,12 +105,12 @@ class DQN:
                 else:
                     next_state = next_state.reshape(1, self.state_space_shape)
                 max_future_q = (reward + self.discount_factor *
-                                np.amax(self.target_model.predict(next_state)[0]))
+                                np.amax(self.target_model.predict(next_state, verbose=0)[0]))
             if isinstance(self.state_space_shape, tuple):
                 state = state.reshape((1,) + self.state_space_shape)
             else:
                 state = state.reshape(1, self.state_space_shape)
-            target_q = self.model.predict(state)[0]
+            target_q = self.model.predict(state, verbose=0)[0]
             target_q[action] = max_future_q
             states[i] = state
             actions[i] = target_q
@@ -174,7 +174,7 @@ class DDQN:
                 state = state.reshape((1,) + self.state_space_shape)
             else:
                 state = state.reshape(1, self.state_space_shape)
-            return np.argmax(self.model.predict(state)[0])
+            return np.argmax(self.model.predict(state, verbose=0)[0])
 
     def load(self, model_name, episode):
         """
@@ -214,14 +214,14 @@ class DDQN:
                     next_state = next_state.reshape((1,) + self.state_space_shape)
                 else:
                     next_state = next_state.reshape(1, self.state_space_shape)
-                max_action = np.argmax(self.model.predict(next_state)[0])
+                max_action = np.argmax(self.model.predict(next_state, verbose=0)[0])
                 max_future_q = (reward + self.discount_factor *
-                                self.target_model.predict(next_state)[0][max_action])
+                                self.target_model.predict(next_state, verbose=0)[0][max_action])
             if isinstance(self.state_space_shape, tuple):
                 state = state.reshape((1,) + self.state_space_shape)
             else:
                 state = state.reshape(1, self.state_space_shape)
-            target_q = self.model.predict(state)[0]
+            target_q = self.model.predict(state, verbose=0)[0]
             target_q[action] = max_future_q
             states[i] = state
             actions[i] = target_q
@@ -309,7 +309,7 @@ class DuelingDQN:
                 state = state.reshape((1,) + self.state_space_shape)
             else:
                 state = state.reshape(1, self.state_space_shape)
-            return np.argmax(self.model.predict(state)[0])
+            return np.argmax(self.model.predict(state, verbose=0)[0])
 
     def load(self, model_name, episode):
         """
@@ -350,12 +350,12 @@ class DuelingDQN:
                 else:
                     next_state = next_state.reshape(1, self.state_space_shape)
                 max_future_q = (reward + self.discount_factor *
-                                np.amax(self.target_model.predict(next_state)[0]))
+                                np.amax(self.target_model.predict(next_state, verbose=0)[0]))
             if isinstance(self.state_space_shape, tuple):
                 state = state.reshape((1,) + self.state_space_shape)
             else:
                 state = state.reshape(1, self.state_space_shape)
-            target_q = self.model.predict(state)[0]
+            target_q = self.model.predict(state, verbose=0)[0]
             target_q[action] = max_future_q
             states[i] = state
             actions[i] = target_q
