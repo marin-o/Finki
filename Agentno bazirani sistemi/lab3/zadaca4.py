@@ -65,22 +65,45 @@ if __name__ == '__main__':
 
     num_episodes = 20
     num_steps = 20
+    epsilon = 0.9
+    min_epsilon = 0.01
 
     agent = DuelingDQN(state_space_shape=(210, 160, 1), num_actions=env.action_space.n, learning_rate=0.05)
     agent.build_model(layers)
 
+    reward_list = []
+
     for episode in range(num_episodes):
         state, _ = env.reset()
+        reward_episode = 0
         for step in range(num_steps):
             processed_state = preprocess_state(state)
-            action = agent.get_action(processed_state, 0)
+            action = agent.get_action(processed_state, max(min_epsilon, epsilon**episode))
             new_state, reward, terminated, _, _ = env.step(action)
             processed_new_state = preprocess_state(new_state)
             state = new_state
             agent.update_memory(processed_state, action, reward, processed_new_state, terminated)
+            reward_episode += reward
+
+        reward_list.append(reward_episode)
 
         agent.train()
 
         if episode % 10 == 0:
             agent.update_target_model()
-    print()
+
+    print(np.mean(reward_list))
+
+    done = False
+    env = gym.make('ALE/MsPacman-v5', render_mode='human')
+    state, _ = env.reset()
+    state = preprocess_state(state)
+    env.render()
+    final_reward = 0
+    while not done:
+        action = agent.get_action(state, min_epsilon)
+        state, reward, done, _, _ = env.step(action)
+        state = preprocess_state(state)
+        env.render()
+        final_reward += reward
+    print(final_reward)
