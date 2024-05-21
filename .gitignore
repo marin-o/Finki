@@ -61,3 +61,5 @@ appsettings.json
 
 #Ignore sqlite databases
 *.sqlite3
+
+git-filter-repo
