@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lab8-service-v1
+spec:
+  selector:
+    app: lab8-v1
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001
+  type: NodePort
