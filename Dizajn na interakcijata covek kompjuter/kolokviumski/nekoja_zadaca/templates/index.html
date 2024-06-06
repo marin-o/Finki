@@ -8,29 +8,35 @@
 
 {% block content %}
 
-    <div class="container-fluid"
-         style="background-image: url('https://media.istockphoto.com/id/1461816749/photo/a-crowd-of-people-with-raised-arms-during-a-music-concert-with-an-amazing-light-show-black.jpg?s=612x612&w=is&k=20&c=8N8QsXX25Q7xUe0qNda-ze_lSNUqv7chbQf0jnTgw5o=') ">
+    <div class="container-fluid p-5 "
+         style=" height: 40vh;
+         background-image: 
+         url('https://media.istockphoto.com/id/1461816749/photo/a-crowd-of-people-with-raised-arms-during-a-music-concert-with-an-amazing-light-show-black.jpg?s=612x612&w=is&k=20&c=8N8QsXX25Q7xUe0qNda-ze_lSNUqv7chbQf0jnTgw5o='); background-repeat: no-repeat; background-size: 100% 40vh;">
+        <h5>2021-5-5</h5>
+        <h5>The best solutions for our clients</h5>
         <h1> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolores doloribus ex iusto labore
             odit perspiciatis repudiandae tenetur voluptas voluptate.</h1>
-
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
 
-        <div class="row">
+        <div class="row mx-5 px-5">
             {% for event in events %}
 
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ MEDIA_URL }}{{ event.poster.url }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ event.name }}</h5>
-                        <p class="card-text">{{ event.location }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="col-md-4 mb-4 border-dotted border-start border-end">
+                    <div class="card h-100">
+                        <img src="{{ MEDIA_URL }}{{ event.poster.url }}" class="card-img-top" alt="..."
+                             style="object-fit: cover; height: 200px;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.location }}</p>
+                            <a href="#" class="btn btn-primary mt-auto">Go somewhere</a>
+                        </div>
                     </div>
                 </div>
+        
 
             {% endfor %}
         </div>
-
     </div>
 
 {% endblock %}

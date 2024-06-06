@@ -12,6 +12,7 @@ from zadaca.models import Event, Band, BandEvent
 def index(request):
     if request.user.is_authenticated:
         events_user = Event.objects.filter(creator=request.user)
+
         context = {'events': events_user}
         return render(request, 'index.html', context)
     return render(request, 'index.html')
