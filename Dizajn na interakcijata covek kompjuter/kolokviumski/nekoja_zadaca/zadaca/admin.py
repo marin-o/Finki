@@ -10,8 +10,8 @@ class BandInline(admin.TabularInline):
 
 class EventAdmin(admin.ModelAdmin):
     inlines = [BandInline]
-    exclude = ('creator','participants')
-    list_display = ('name','datetime',)
+    exclude = ('creator', 'participants')
+    list_display = ('name', 'datetime',)
 
     def has_add_permission(self, request):
         if request.user.is_superuser:

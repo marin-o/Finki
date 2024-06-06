@@ -1,10 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'bootstrap.html' %}
+{% block body %}
 
-{% block content %}
-    <div class="container border-start border-end">
+    
+    
+    <div class="container border-start border-end py-2">
+    <img src="https://i.ibb.co/2n2b7b1/kocki.png" alt="kocki">
+    <h1>Ask for event</h1>
+    <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h6>
+    <h6>Est fuga iste iusto perferendis quam.</h6>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Submit form</button>        </form>
+            <div class="container d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Submit form</button>
+            </div>
+        </form>
     </div>
 {% endblock %}
