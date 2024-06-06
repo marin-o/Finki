@@ -25,4 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name='index'),
     path('newevent/', newevent, name='newevent'),
+    path('editevent/<int:event_id>', editevent, name='editevent'),
+    path('deleteevent/<int:event_id>', deleteevent, name='deleteevent'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

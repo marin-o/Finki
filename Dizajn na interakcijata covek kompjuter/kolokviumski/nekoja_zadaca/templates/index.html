@@ -24,16 +24,19 @@
 
                 <div class="col-md-4 mb-4 border-dotted border-start border-end">
                     <div class="card h-100">
-                        <img src="{{ MEDIA_URL }}{{ event.poster.url }}" class="card-img-top" alt="..."
-                             style="object-fit: cover; height: 200px;">
+                        <a href="{% url 'editevent' event_id=event.id %}"><img
+                                src="{{ MEDIA_URL }}{{ event.poster.url }}" class="card-img-top" alt="..."
+                                style="object-fit: cover; height: 200px;"></a>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ event.name }}</h5>
                             <p class="card-text">{{ event.location }}</p>
-                            <a href="#" class="btn btn-primary mt-auto">Go somewhere</a>
+                            <a class="btn btn-danger" href="{% url 'deleteevent' event_id=event.id %}"
+                               class="btn btn-primary mt-auto">Delete me
+                            </a>
                         </div>
                     </div>
                 </div>
-        
+
 
             {% endfor %}
         </div>
