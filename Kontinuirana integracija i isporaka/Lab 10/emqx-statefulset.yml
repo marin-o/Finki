@@ -1,0 +1,43 @@
+# emqx-statefulset.yml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: emqx
+spec:
+  serviceName: "emqx"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: emqx
+  template:
+    metadata:
+      labels:
+        app: emqx
+    spec:
+      containers:
+      - name: emqx
+        image: emqx/emqx:5.0.26
+        ports:
+        - containerPort: 1883
+          name: mqtt
+        - containerPort: 18083
+          name: dashboard
+        volumeMounts:
+        - name: emqx-data
+          mountPath: /opt/emqx/data
+        - name: config-volume
+          mountPath: /opt/emqx/etc/emqx.conf
+          subPath: emqx.conf
+      volumes:
+      - name: config-volume
+        configMap:
+          name: emqx-config
+  volumeClaimTemplates:
+  - metadata:
+      name: emqx-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: ""
+      resources:
+        requests:
+          storage: 1Gi

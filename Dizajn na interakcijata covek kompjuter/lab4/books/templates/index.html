@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid d-flex justify-content-end my-2">
+        <a href="{% url 'add_book' %}" class="btn btn-info">Додади нова книга</a>
+    </div>
+
+    <div class="container-fluid py-3" style="background-color: #e9eae5; padding: 20rem">
+        <div class="row d-flex justify-content-around">
+            {% for book in books %}
+                <div class="col-4 mb-2 ">
+                    <a href="{% url 'book_details' book.id %}">
+                        <div class="card p-3 h-100 ">
+                            <img src="{{ MEDIA_URL }}{{ book.image.url }}" class="card-img-top"
+                                 style="box-shadow: -3px 3px 8px gray" alt="{{ book.title }}">
+                            <div class="card-body">
+                                <div class="container d-flex justify-content-center">
+                                    <div class="flex-column text-center">
+                                        <h5 class="card-title">{{ book.title }}</h5>
+                                        <p class="card-text ">
+                                            {{ book.price }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

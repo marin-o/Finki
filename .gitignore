@@ -1,5 +1,6 @@
-# Ignore python virtual environments
+# Ignore python virtual environments and cache
 venv/
+__pycache__/
 
 # Ignore IntelliJ IDEA files
 .idea/
@@ -57,3 +58,8 @@ packages/
 
 # Ignore sensitive information
 appsettings.json
+
+#Ignore sqlite databases
+*.sqlite3
+
+git-filter-repo

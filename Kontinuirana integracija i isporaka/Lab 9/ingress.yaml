@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lab8-9-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /ver1
+        pathType: Prefix
+        backend:
+          service:
+            name: lab8-service-v1
+            port:
+              number: 80
+      - path: /ver2
+        pathType: Prefix
+        backend:
+          service:
+            name: lab8-service-v2
+            port:
+              number: 80
+  - host: ver1.1.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lab8-service-v1
+            port:
+              number: 80
+  - host: ver2.2.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lab8-service-v2
+            port:
+              number: 80

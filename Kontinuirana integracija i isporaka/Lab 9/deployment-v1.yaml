@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab8-deploy-v1
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: lab8-v1
+  template:
+    metadata:
+      labels:
+        app: lab8-v1
+    spec:
+      containers:
+      - name: lab8
+        image: REDACTED_DOCKER/lab8:1.0
+        ports:
+        - containerPort: 80
