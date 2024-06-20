@@ -15,7 +15,7 @@ def index(request):
 
         context = {'events': events_user}
         return render(request, 'index.html', context)
-    return render(request, 'index.html')
+    return render(request, 'index.html', )
 
 
 def newevent(request):

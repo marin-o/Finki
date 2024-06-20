@@ -63,3 +63,5 @@ appsettings.json
 *.sqlite3
 
 git-filter-repo
+bootstrap-*-dist/
+Dizajn\ na\ interakcijata\ covek\ kompjuter/**/media
