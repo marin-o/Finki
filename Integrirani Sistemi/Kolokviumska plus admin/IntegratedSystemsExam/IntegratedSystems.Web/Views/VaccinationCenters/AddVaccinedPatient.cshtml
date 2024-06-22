@@ -1,0 +1,50 @@
+﻿@model IntegratedSystems.Domain.DTO.VaccineDTO
+
+@{
+    ViewData["Title"] = "AddVaccinedPatient";
+}
+
+
+<h1>Add Vaccined Patient</h1>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddVaccinedPatient" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="Manufacturer" required>
+
+                    @foreach(var item in Model?.Manufacturers)
+                    {
+                        <option value="@item">@item</option>
+                    })
+
+                </select>
+
+            </div>
+            <div class="form-group">
+                <select asp-for="PatientId" required>
+
+                    @foreach(var item in Model?.Patients)
+                    {
+                        <option value="@item.Id">@item.FirstName ' ' @item.LastName</option>
+                    })
+
+                </select>
+
+            </div>
+
+            <input type="hidden" asp-for="Id" value="@Model.Id">
+            <input asp-for="DateTaken" class="form-control">
+            <input type="hidden" asp-for="Certificate" value="@Model.Certificate">
+            <input type="hidden" asp-for="VaccinationCenter" value="@Model.VaccinationCenter">
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
