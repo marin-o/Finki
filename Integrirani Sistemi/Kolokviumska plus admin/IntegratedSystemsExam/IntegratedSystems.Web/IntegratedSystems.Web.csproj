@@ -27,8 +27,4 @@
     <ProjectReference Include="..\IntegratedSystems.Service\IntegratedSystems.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="files\" />
-  </ItemGroup>
-
 </Project>

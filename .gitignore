@@ -65,3 +65,6 @@ appsettings.json
 git-filter-repo
 bootstrap-*-dist/
 Dizajn\ na\ interakcijata\ covek\ kompjuter/**/media
+
+absvenv/
+.conda/
