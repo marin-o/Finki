@@ -179,8 +179,8 @@ namespace IntegratedSystems.Web.Controllers
                 return RedirectToAction(nameof(MaxCapacity));
             }
             var patient = _patientService.GetDetailsForPatient(vaccine.PatientId);
-            //vaccine.PatientFor = patient;
-            //patient.VaccinationSchedule.Add(vaccine);
+            vaccine.PatientFor = patient;
+            //patient.VaccinationSchedule.Add(vaccine); nez dal ova linija e potrebna
             center.MaxCapacity--;
             vaccine.Center = center;
             _vaccineService.CreateNewVaccine(vaccine);
