@@ -88,10 +88,27 @@ if __name__ == '__main__':
     state, _ = env.reset()
     env.render()
     done = False
+
     while not done:
         action = agent.get_action(state, discrete=False) + noise()
         next_state, reward, done, terminated, _ = env.step(action)
-        env.render()
         reward = preprocess_reward(reward)
-        numeric_done = 1 if done else 0
         state = next_state
+    env.close()
+
+    iterations = [50, 100]
+    env = gym.make('LunarLanderContinuous-v2', render_mode='rgb_array')
+    done = False
+    for it in iterations:
+        average_reward = 0
+        for _ in range(it):
+            state, _ = env.reset()
+            done = False
+            reward = 0
+            while not done:
+                action = agent.get_action(state, discrete=False) + noise()
+                next_state, reward, done, terminated, _ = env.step(action)
+                reward = preprocess_reward(reward)
+                state = next_state
+            average_reward += reward
+        print(f'Average reward: after {it} iterations: {average_reward / it}')
