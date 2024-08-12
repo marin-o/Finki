@@ -1,0 +1,41 @@
+﻿@model Domain.DTO.HealthExaminationDTO
+
+@{
+    ViewData["Title"] = "AddAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-4">
+
+        <form asp-action="AddExamination" method="post">
+            <input type="hidden" asp-for="@Model.EmployeeId" />
+
+            <select asp-for="PolyclinicId">
+                @foreach (var item in ViewData["Clinics"] as List<Domain.Domain_Models.Polyclinic>){
+                    <option value="@item.Id">@item.PolyclinicName</option>
+                }
+            </select>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <p class="form-control" disabled>@ViewData["CompanyName"]</p>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn-info" />
+            </div>
+
+            
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

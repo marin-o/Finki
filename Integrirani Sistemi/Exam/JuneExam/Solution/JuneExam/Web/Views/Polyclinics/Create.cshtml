@@ -1,0 +1,49 @@
+﻿@model Domain.Domain_Models.Polyclinic
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Polyclinic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PolyclinicName" class="control-label"></label>
+                <input asp-for="PolyclinicName" class="form-control" />
+                <span asp-validation-for="PolyclinicName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PolyclinicAddress" class="control-label"></label>
+                <input asp-for="PolyclinicAddress" class="form-control" />
+                <span asp-validation-for="PolyclinicAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reputation" class="control-label"></label>
+                <input asp-for="Reputation" class="form-control" />
+                <span asp-validation-for="Reputation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvailableSlots" class="control-label"></label>
+                <input asp-for="AvailableSlots" class="form-control" />
+                <span asp-validation-for="AvailableSlots" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
